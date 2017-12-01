@@ -1,0 +1,43 @@
+.clear {
+	clear: both;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.align-center {
+	text-align: center;
+}
+
+.align-left {
+	text-align: left;
+}
+
+.align-right {
+	text-align: right;
+}
+
+img.aligncenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+img.alignleft {
+  float: left;
+  margin-right: 16px;
+/*   margin-top: 30px; */
+  margin-bottom: 10px;
+}
+
+img.alignright {
+  float: right;
+  margin-left: 16px;
+/*   margin-top: 30px; */
+  margin-bottom: 10px;
+}
