@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Players</h1>
+    <h1>Playerss</h1>
 
     <div class="lineup">
       <ul>
