@@ -1,23 +1,35 @@
-'use strict'
-const path = require('path')
-const utils = require('./utils')
-const config = require('../config')
-const vueLoaderConfig = require('./vue-loader.conf')
+var path = require('path')
+var utils = require('./utils')
+var config = require('../config')
+var vueLoaderConfig = require('./vue-loader.conf')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
+
+var property;
+
+if (process.env.NODE_ENV === 'production') {
+  property = 'build'
+} else if (process.env.NODE_ENV === 'cordova') {
+  property = 'cordova'
+} else if (process.env.NODE_ENV === 'staging') {
+  property = 'staging'
+} else {
+  property = 'dev'
+}
+
+var assetsPublicPath = config[property].assetsPublicPath
+var assetsRoot = config[property].assetsRoot
 
 module.exports = {
   entry: {
     app: './src/js/main.js'
   },
   output: {
-    path: config.build.assetsRoot,
+    path: assetsRoot,
     filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    publicPath: assetsPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -69,6 +81,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
+          publicPath: '../../',
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       }

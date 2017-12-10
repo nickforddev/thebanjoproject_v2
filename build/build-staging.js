@@ -1,6 +1,6 @@
 require('./check-versions')()
 
-process.env.NODE_ENV = 'production'
+process.env.NODE_ENV = 'staging'
 
 const ora = require('ora')
 const rm = require('rimraf')
@@ -9,12 +9,12 @@ const path = require('path')
 const webpack = require('webpack')
 const chalk = require('chalk')
 const config = require('../config')
-const webpack_config = require('./webpack.prod.conf')
+const webpack_config = require('./webpack.staging.conf')
 const mergeDeepRight = require('ramda/src/mergeDeepRight')
 
 const final_path = path.resolve(__dirname, '../dist')
 
-const spinner = ora('building for production...')
+const spinner = ora('building for staging...')
 spinner.start()
 
 rm(webpack_config.output.path, err => {
