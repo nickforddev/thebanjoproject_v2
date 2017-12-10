@@ -12,7 +12,8 @@ import VueCollections from 'vue-collections'
 import '../scss/styles.scss'
 
 Vue.use(VueRequests, {
-  root: 'http://thebanjoproject.org/demo/wp-json/'
+  // root: 'http://thebanjoproject.org/demo/wp-json/'
+  root: 'http://45.55.144.174/wp-json/'
 })
 Vue.use(VueModels)
 Vue.use(VueCollections)
