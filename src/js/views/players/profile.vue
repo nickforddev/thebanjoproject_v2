@@ -15,8 +15,8 @@
           </li>
         </ul>
       </div>
-
-      <div class="group" v-if="$player.acf.related_audio.length">
+      <!-- <pre>{{ $player.acf.related_audio }}</pre> -->
+      <div class="group" v-if="$player.acf.related_audio && $player.acf.related_audio.length">
         <h3>Audio</h3>
         <ul>
           <li v-for="(audio, index) in $player.acf.related_audio" :key="index">
@@ -25,7 +25,7 @@
         </ul>
       </div>
 
-      <div class="group">
+      <div class="group" v-if="videos.length">
         <h3>Videos</h3>
         <ul>
           <li v-for="(video, index) in videos" :key="index">
@@ -82,11 +82,8 @@ export default {
       })
     }
   },
-  async created() {
-    await this.fetch()
-    this.fetched = true
-    await this.fetch_relationships()
-    this.fetched_relationships = true
+  created() {
+    this.fetch()
   },
   watch: {
     $route(val) {
@@ -98,7 +95,7 @@ export default {
       this.$player = {
         id: model.id
       }
-      this.$player.fetch()
+      this.fetch()
     }
   },
   computed: {
@@ -107,11 +104,16 @@ export default {
     }
   },
   methods: {
-    fetch() {
-      this.$player.fetch()
+    async fetch() {
+      await this.$player.fetch()
+      this.fetched = true
+      await this.fetch_relationships()
+      this.fetched_relationships = true
     },
     async fetch_relationships() {
       // this.$collection.fetch()
+      this.videos = []
+      this.timeline = []
       const response = await this.$request(`related/people/${this.$player.id}`)
       console.log({response})
       this.videos = response.videos
