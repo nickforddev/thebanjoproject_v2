@@ -1,22 +1,28 @@
 <template>
-  <div class="style">
-    <a href="#" @click.prevent>{{ $style.name }}</a>
+  <div class="style" v-if="fetched">
+    <a href="#" @click.prevent="play" v-html="$audio.title.rendered"></a>
   </div>
 </template>
 
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
-import Style from '@/models/tag'
+import Audio from '@/models/audio'
+
 export default {
-  name: 'style',
+  name: 'audio',
   props: ['uid'],
+  data() {
+    return {
+      fetched: false
+    }
+  },
   models: {
-    style() {
-      return new Style({
+    audio() {
+      return new Audio({
         id: this.uid
       }, {
-        basePath: 'wp/v2/style'
+        basePath: 'wp/v2/audio'
       })
     }
   },
@@ -25,7 +31,8 @@ export default {
   },
   methods: {
     fetch() {
-      this.$style.fetch()
+      this.$audio.fetch()
+      this.fetched = true
     }
   }
 }

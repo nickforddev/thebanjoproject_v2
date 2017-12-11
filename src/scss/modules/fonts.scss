@@ -1,3 +1,4 @@
+// Interstate
 @font-face {
   font-family: 'Interstate';
   src: url('../fonts/interstate/interstate-regular-webfont.woff2') format('woff2'),
@@ -27,4 +28,38 @@
        url('../fonts/interstate/interstate-lightitalic-webfont.woff') format('woff');
   font-weight: 100;
   font-style: italic;
+}
+
+// Calendus
+
+@font-face {
+  font-family: 'Calendus Plus';
+  src: url('../fonts/calendus/calendas_plus-webfont.woff2') format('woff2'),
+       url('../fonts/calendus/calendas_plus-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Calendus Plus';
+  src: url('../fonts/calendus/calendas_plus_bold-webfont.woff2') format('woff2'),
+       url('../fonts/calendus/calendas_plus_bold-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+
+}
+@font-face {
+  font-family: 'Calendus Plus';
+  src: url('../fonts/calendus/calendas_plus_italic-webfont.woff2') format('woff2'),
+       url('../fonts/calendus/calendas_plus_italic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'League Gothic';
+  src: url('../fonts/leaguegothic/leaguegothic-regular-webfont.woff2') format('woff2'),
+       url('../fonts/leaguegothic/leaguegothic-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
 }

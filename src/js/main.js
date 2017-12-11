@@ -15,7 +15,9 @@ Vue.use(VueRequests, {
   // root: 'http://thebanjoproject.org/demo/wp-json/'
   root: 'http://45.55.144.174/wp-json/'
 })
-Vue.use(VueModels)
+Vue.use(VueModels, {
+  schemaWarnings: false
+})
 Vue.use(VueCollections)
 
 Vue.config.productionTip = false

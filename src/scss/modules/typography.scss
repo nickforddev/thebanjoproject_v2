@@ -53,7 +53,7 @@ em {
 }
 
 a {
-  color: $color-text-dark;
+  color: $color-links;
   text-decoration: none;
 
   &:hover {
@@ -61,7 +61,7 @@ a {
   }
 
   &:active {
-    color: darken($color-text-dark, 8%);
+    color: darken($color-links, 8%);
     text-decoration: none;
   }
 }

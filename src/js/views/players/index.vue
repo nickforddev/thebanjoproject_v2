@@ -1,10 +1,7 @@
 <template>
   <div>
-    <h1>Players</h1>
-
     <div class="lineup">
       <ul>
-        <!-- <li v-for="(model, index) in collection" :key="index" @click="setActive(model)"> -->
         <li v-for="(model, index) in collection" :key="index">
           <div class="tooltip">
             {{ model.title.rendered }}
@@ -17,12 +14,7 @@
       <div class="overlay" />
     </div>
 
-
     <router-view v-if="fetched" />
-
-    <!-- <div class="profile">
-      <pre>{{ active_model }}</pre>
-    </div> -->
 
   </div>
 </template>
@@ -36,13 +28,12 @@ export default {
   name: 'players',
   data() {
     return {
-      // active: null,
       fetched: false
     }
   },
   collection() {
     return new Collection({
-      basePath: 'wp/v2/peoples?per_page=100',
+      basePath: 'wp/v2/peoples?per_page=100&order=asc',
       id_attribute: 'slug'
     })
   },
@@ -60,7 +51,6 @@ export default {
     async fetch() {
       await this.$collection.fetch()
       this.fetched = true
-      console.log('FETCHED!')
     },
     setActive(model) {
       this.active = model.id
@@ -102,6 +92,7 @@ export default {
 .lineup {
   position: relative;
   height: 344px;
+  background-image: url('/static/bg_paper.gif');
   overflow: hidden;
 
   ul {
@@ -128,15 +119,28 @@ export default {
         display: block;
         // margin: 0 -70px -24px 0;
         z-index: 10;
+
+        &.router-link-active {
+          cursor: pointer;
+          z-index: 99;
+
+          img {
+            transform: scale(0.9);
+          }
+
+          // .tooltip {
+          //   opacity: 1;
+          // }
+        }
       }
 
       &:hover {
         cursor: pointer;
         z-index: 99;
 
-        img {
-          transform: scale(0.9);
-        }
+        // img {
+        //   transform: scale(0.9);
+        // }
 
         .tooltip {
           opacity: 1;
