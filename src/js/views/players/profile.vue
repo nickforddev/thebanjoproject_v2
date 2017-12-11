@@ -5,6 +5,7 @@
       <h2 class="quote" v-html="$player.acf.pull_quote"></h2>
       <div v-html="content"></div>
     </div>
+    <loading v-else />
     <div class="sidebar" v-if="fetched && fetched_relationships">
       <div class="group">
         <h3>Born {{ $player.acf.year_born }} – Died {{ $player.acf.year_died }}</h3>

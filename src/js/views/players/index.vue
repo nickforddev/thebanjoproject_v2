@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="lineup">
-      <ul>
+      <ul v-if="fetched">
         <li v-for="(model, index) in collection" :key="index">
           <div class="tooltip">
             {{ model.title.rendered }}
@@ -11,6 +11,7 @@
           </router-link>
         </li>
       </ul>
+      <loading v-else />
       <div class="overlay" />
     </div>
 
