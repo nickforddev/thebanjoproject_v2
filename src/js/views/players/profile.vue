@@ -115,7 +115,7 @@ export default {
       this.videos = []
       this.timeline = []
       const response = await this.$request(`related/people/${this.$player.id}`)
-      console.log({response})
+      // console.log({response})
       this.videos = response.videos
       this.timeline = response.timeline
     }

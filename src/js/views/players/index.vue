@@ -14,7 +14,7 @@
       <loading v-else />
       <div class="overlay" />
     </div>
-
+ 
     <router-view v-if="fetched" />
 
   </div>
