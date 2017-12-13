@@ -35,6 +35,16 @@
         </ul>
       </div>
 
+      <div class="group" v-if="timeline.length">
+        <h3>Timeline</h3>
+        <ul>
+          <li v-for="(event, index) in timeline" :key="index">
+            <a href="#" @click.prevent>{{ event.post_title }}</a>
+            <!-- <pre>{{ video }}</pre> -->
+          </li>
+        </ul>
+      </div>
+
       <div class="group">
         <h3>Related Players</h3>
         <ul>

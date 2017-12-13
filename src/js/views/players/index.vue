@@ -38,8 +38,11 @@ export default {
       id_attribute: 'slug'
     })
   },
-  created() {
-    this.fetch()
+  async created() {
+    await this.fetch()
+    if (this.$route.path === '/players') {
+      this.$router.replace('/players/uncle-dave-macon')
+    }
   },
   computed: {
     active_model() {
@@ -57,6 +60,11 @@ export default {
       this.active = model.id
     }
   }
+  // watch: {
+  //   $route(val) {
+  //     console.log(val)
+  //   }
+  // }
 }
 </script>
 
