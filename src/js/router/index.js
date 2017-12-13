@@ -21,6 +21,20 @@ export default new Router({
           }
         }
       ]
+    },
+    {
+      path: '/maps',
+      name: 'Maps',
+      component(resolve) {
+        require(['@/views/maps/'], resolve)
+      }
+    },
+    {
+      path: '/maps/:region',
+      name: 'Map',
+      component(resolve) {
+        require(['@/views/maps/region'], resolve)
+      }
     }
   ]
 })
