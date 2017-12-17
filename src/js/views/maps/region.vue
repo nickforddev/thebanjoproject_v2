@@ -1,25 +1,21 @@
 <template>
   <div>
     
-   <v-map v-if="collection" ref="map" :zoom=-1 :center="[47.413220, -1.219482]">
-     <v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></v-tilelayer>
+  <v-map v-if="collection" ref="map" :zoom=-1 :center="[47.413220, -1.219482]">
+    <v-tilelayer :url="`https://api.mapbox.com/styles/v1/mapbox/${map_id}/tiles/{z}/{x}/{y}?access_token=${access_token}`" />
 
-     <v-marker-cluster>
-       <v-marker
-        v-for="(model, index) in collection.models"
-        v-if="model.acf.location !== null"
-        :lat-lng="[model.acf.location.lat, model.acf.location.lng]"
-        :key="index">
-         <v-popup :content="model.acf.content"></v-popup>
-       </v-marker>
-     </v-marker-cluster>
-   </v-map>
-
-    <!-- <div v-if="collection">
-      <map-marker v-for="(model, index) in collection.models" :key="index" :data="model" />
-      {{ all_coordinates }}
-    </div> -->
-    <pre v-if="collection">{{ collection.models }}</pre>
+    <v-marker-cluster ref="cluster">
+      <v-marker
+      ref="marker"
+      v-for="(model, index) in collection.models"
+      v-if="model.acf.location !== null"
+      :lat-lng="[model.acf.location.lat, model.acf.location.lng]"
+      :key="index">
+        <v-popup :content="model.acf.content"></v-popup>
+      </v-marker>
+    </v-marker-cluster>
+  </v-map>
+  <!-- <pre v-if="collection">{{ collection.models }}</pre> -->
   </div>
 </template>
 
@@ -46,6 +42,7 @@ export default {
   data() {
     return {
       access_token: config.mapbox,
+      map_id: 'light-v9',
       collection: null,
       map: null
     }
@@ -73,23 +70,24 @@ export default {
         basePath: `wp/v2/maps?region=${this.$region.id}`
       })
       await this.collection.fetch()
+      // console.log(this.$refs.map.mapObject._layers)
+      setTimeout(() => {
+        console.log(this.$refs.map.mapObject.eachLayer(layer => {
+          console.log('feature', layer.feature)
+        }))
+      }, 300)
+      // setTimeout(() => {
+      //   console.log(this.$refs.marker)
+      //   const markers = this.$refs.marker.map(marker => {
+      //     return marker.mapObject
+      //   })
+      //   console.log(this.$refs.map.mapObject.featureGroup.getBounds(markers))
+      // }, 200)
+      // console.log(this.$refs.cluster.mapObject._markerCluster.clearLayers())
+      // this.$refs.map.mapObject.eachLayer((layer) => {
+      //   console.log(layer.name)
+      // })
     }
-    // async bindMap(map) {
-    //   this.map = map
-    //   await this.fetch()
-    //   console.log(this.all_coordinates)
-    //   // this.map.setZoom(-1)
-    //   this.map.fitBounds(this.all_coordinates)
-    // }
-    // async bindMarkers(map) {
-    //   await sleep(600)
-    //   this.collection.models.map(marker => {
-    //     const { lng, lat } = marker.acf.location
-    //     new mapboxgl.Marker()
-    //     .setLngLat([lng, lat])
-    //     .addTo(map)
-    //   })
-    // }
   },
   components: {
     // Mapbox,
@@ -107,6 +105,6 @@ export default {
 
 .vue2leaflet-map {
   width: 100%;
-  height: 500px;
+  height: 100vh;
 }
 </style>
