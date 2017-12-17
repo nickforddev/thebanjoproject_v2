@@ -1,19 +1,22 @@
 <template>
   <div>
     
-  <v-map v-if="collection" ref="map" :zoom=-1 :center="[47.413220, -1.219482]">
+  <v-map v-if="collection" ref="map" :zoom="-1" :center="[47.413220, -1.219482]">
     <v-tilelayer :url="`https://api.mapbox.com/styles/v1/mapbox/${map_id}/tiles/{z}/{x}/{y}?access_token=${access_token}`" />
 
-    <v-marker-cluster ref="cluster">
+    <v-marker-cluster>
       <v-marker
       ref="marker"
       v-for="(model, index) in collection.models"
       v-if="model.acf.location !== null"
       :lat-lng="[model.acf.location.lat, model.acf.location.lng]"
-      :key="index">
+      :key="index"
+      @l-popupopen="delegateOpen(index)"
+      >
         <v-popup>
-          <map-marker :data="model" />
+          <map-marker :data="model" :ref="`marker-${index}`" />
         </v-popup>
+
       </v-marker>
     </v-marker-cluster>
   </v-map>
@@ -24,15 +27,10 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
-// import mapboxgl from 'mapbox-gl'
-// import { path } from 'ramda'
-// import Mapbox from 'mapbox-gl-vue'
 import { Collection } from 'vue-collections'
 import config from '@/config'
 import Region from '@/models/region'
 import MapMarker from './marker'
-
-// import { sleep } from '@/utils'
 
 export default {
   name: 'region',
@@ -52,18 +50,6 @@ export default {
   created() {
     this.fetch()
   },
-  // computed: {
-    // all_coordinates() {
-    //   const markers = this.collection.models.map(marker => {
-    //     console.log(marker)
-    //     const { lng, lat } = marker.acf.location
-    //     return [lng, lat]
-    //   })
-    //   return markers.length > 1
-    //     ? markers
-    //     : markers[0]
-    // }
-  // },
   methods: {
     async fetch() {
       const response = await this.$request(`wp/v2/region?slug=${this.$route.params.region}`)
@@ -89,6 +75,9 @@ export default {
       // this.$refs.map.mapObject.eachLayer((layer) => {
       //   console.log(layer.name)
       // })
+    },
+    delegateOpen(index) {
+      this.$refs[`marker-${index}`][0].opened()
     }
   },
   components: {

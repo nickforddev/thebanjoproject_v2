@@ -1,9 +1,9 @@
 import { Model } from 'vue-models'
 
-export default class Audio extends Model {
+export default class Video extends Model {
   static defaults() {
     return {
-      name: 'audio'
+      name: 'video'
     }
   }
   static schema() {

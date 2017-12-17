@@ -13,6 +13,9 @@ import VueCollections from 'vue-collections'
 import Vue2Leaflet from 'vue2-leaflet'
 import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
 
+// vimeo
+import VueVimeoPlayer from 'vue-vimeo-player'
+
 // global styles
 import '../scss/styles.scss'
 
@@ -41,6 +44,7 @@ const install = (Vue) => {
     schemaWarnings: false
   })
   Vue.use(VueCollections)
+  Vue.use(VueVimeoPlayer)
 
   components.map(component => {
     Vue.component(component.name, component)
