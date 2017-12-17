@@ -4,25 +4,20 @@ import Vue from 'vue'
 import App from './components/main'
 import router from './router'
 
+// core plugins
 import VueRequests from 'vue-requests'
 import VueModels from 'vue-models'
 import VueCollections from 'vue-collections'
+
+// maps plugins
+import Vue2Leaflet from 'vue2-leaflet'
+import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
 
 // global styles
 import '../scss/styles.scss'
 
 // custom components
 import Loading from '@/components/loading'
-
-import Vue2Leaflet from 'vue2-leaflet'
-import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
-
-Vue.component('v-marker-cluster', Vue2LeafletMarkerCluster)
-
-Vue.component('v-map', Vue2Leaflet.Map)
-Vue.component('v-tilelayer', Vue2Leaflet.TileLayer)
-Vue.component('v-marker', Vue2Leaflet.Marker)
-Vue.component('v-popup', Vue2Leaflet.Popup)
 
 // eslint-disable-next-line  
 delete L.Icon.Default.prototype._getIconUrl  
@@ -37,18 +32,28 @@ const components = [
   Loading
 ]
 
-components.map(component => {
-  Vue.component(component.name, component)
-})
+const install = (Vue) => {
+  Vue.use(VueRequests, {
+    // root: 'http://thebanjoproject.org/demo/wp-json/'
+    root: 'http://45.55.144.174/wp-json/'
+  })
+  Vue.use(VueModels, {
+    schemaWarnings: false
+  })
+  Vue.use(VueCollections)
 
-Vue.use(VueRequests, {
-  // root: 'http://thebanjoproject.org/demo/wp-json/'
-  root: 'http://45.55.144.174/wp-json/'
-})
-Vue.use(VueModels, {
-  schemaWarnings: false
-})
-Vue.use(VueCollections)
+  components.map(component => {
+    Vue.component(component.name, component)
+  })
+
+  Vue.component('v-map', Vue2Leaflet.Map)
+  Vue.component('v-tilelayer', Vue2Leaflet.TileLayer)
+  Vue.component('v-marker-cluster', Vue2LeafletMarkerCluster)
+  Vue.component('v-marker', Vue2Leaflet.Marker)
+  Vue.component('v-popup', Vue2Leaflet.Popup)
+}
+
+install(Vue)
 
 Vue.config.productionTip = false
 

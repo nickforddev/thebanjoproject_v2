@@ -87,10 +87,5 @@ module.exports = {
         }
       }
     ]
-  },
-  plugins: [
-    new webpack.ProvidePlugin({
-      mapboxgl: 'mapbox-gl'
-    })
-  ]
+  }
 }
