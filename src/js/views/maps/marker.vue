@@ -6,7 +6,7 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
-import mapboxgl from 'mapbox-gl'
+// import mapboxgl from 'mapbox-gl'
 
 // const markerHeight = 50
 // const markerRadius = 10
@@ -34,21 +34,21 @@ export default {
     }
   },
   mounted() {
-    const { lng, lat } = this.data.acf.location
+    // const { lng, lat } = this.data.acf.location
     // const lnglat = [lng, lat]
 
-    const popup = new mapboxgl.Popup()
-      .setDOMContent(this.$el)
+    // const popup = new mapboxgl.Popup()
+    //   .setDOMContent(this.$el)
 
-    this.marker = new mapboxgl.Marker()
-      .setLngLat([lng, lat])
-      .setPopup(popup)
-      .addTo(this.map)
+    // this.marker = new mapboxgl.Marker()
+    //   .setLngLat([lng, lat])
+    //   .setPopup(popup)
+    //   .addTo(this.map)
   },
   computed: {
-    map() {
-      return this.$parent.map
-    }
+    // map() {
+    //   return this.$parent.map
+    // }
   }
 }
 </script>

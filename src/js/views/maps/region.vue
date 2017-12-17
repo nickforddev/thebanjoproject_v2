@@ -11,7 +11,9 @@
       v-if="model.acf.location !== null"
       :lat-lng="[model.acf.location.lat, model.acf.location.lng]"
       :key="index">
-        <v-popup :content="model.acf.content"></v-popup>
+        <v-popup>
+          <map-marker :data="model" />
+        </v-popup>
       </v-marker>
     </v-marker-cluster>
   </v-map>
@@ -28,7 +30,7 @@
 import { Collection } from 'vue-collections'
 import config from '@/config'
 import Region from '@/models/region'
-// import MapMarker from './marker'
+import MapMarker from './marker'
 
 // import { sleep } from '@/utils'
 
@@ -91,7 +93,7 @@ export default {
   },
   components: {
     // Mapbox,
-    // MapMarker
+    MapMarker
   }
 }
 </script>
@@ -106,5 +108,9 @@ export default {
 .vue2leaflet-map {
   width: 100%;
   height: 100vh;
+
+  & > div {
+    color: transparent;
+  }
 }
 </style>
