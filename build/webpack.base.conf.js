@@ -1,13 +1,14 @@
-var path = require('path')
-var utils = require('./utils')
-var config = require('../config')
-var vueLoaderConfig = require('./vue-loader.conf')
+const webpack = require('webpack')
+const path = require('path')
+const utils = require('./utils')
+const config = require('../config')
+const vueLoaderConfig = require('./vue-loader.conf')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-var property;
+let property;
 
 if (process.env.NODE_ENV === 'production') {
   property = 'build'
@@ -19,8 +20,8 @@ if (process.env.NODE_ENV === 'production') {
   property = 'dev'
 }
 
-var assetsPublicPath = config[property].assetsPublicPath
-var assetsRoot = config[property].assetsRoot
+const assetsPublicPath = config[property].assetsPublicPath
+const assetsRoot = config[property].assetsRoot
 
 module.exports = {
   entry: {
@@ -86,5 +87,10 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      mapboxgl: 'mapbox-gl'
+    })
+  ]
 }
