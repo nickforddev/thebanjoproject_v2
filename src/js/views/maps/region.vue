@@ -103,3 +103,11 @@ export default {
   }
 }
 </style>
+
+<style lang="scss">
+.leaflet-popup-content {
+  width: 500px !important;
+  min-width: 350px;
+  max-width: 100% !important;
+}
+</style>

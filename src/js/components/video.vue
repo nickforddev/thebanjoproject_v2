@@ -51,7 +51,8 @@ export default {
 
 <style lang="scss">
 iframe {
-  width: 400px;
+  // width: 400px;
+  width: 100%;
   max-width: 100%;
 }
 </style>
