@@ -22,7 +22,9 @@
     "vue-collections": "^1.1.4",
     "vue-models": "^1.4.5",
     "vue-requests": "^1.0.15",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue2-leaflet": "0.0.57",
+    "vue2-leaflet-markercluster": "^1.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

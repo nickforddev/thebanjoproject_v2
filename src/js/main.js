@@ -14,6 +14,25 @@ import '../scss/styles.scss'
 // custom components
 import Loading from '@/components/loading'
 
+import Vue2Leaflet from 'vue2-leaflet'
+import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
+
+Vue.component('v-marker-cluster', Vue2LeafletMarkerCluster)
+
+Vue.component('v-map', Vue2Leaflet.Map)
+Vue.component('v-tilelayer', Vue2Leaflet.TileLayer)
+Vue.component('v-marker', Vue2Leaflet.Marker)
+Vue.component('v-popup', Vue2Leaflet.Popup)
+
+// eslint-disable-next-line  
+delete L.Icon.Default.prototype._getIconUrl  
+// eslint-disable-next-line  
+L.Icon.Default.mergeOptions({  
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+  iconUrl: require('leaflet/dist/images/marker-icon.png'),
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+})
+
 const components = [
   Loading
 ]
