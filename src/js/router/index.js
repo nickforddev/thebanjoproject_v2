@@ -35,6 +35,13 @@ export default new Router({
       component(resolve) {
         require(['@/views/maps/region'], resolve)
       }
+    },
+    {
+      path: '/timelines',
+      name: 'Timelines',
+      component(resolve) {
+        require(['@/views/timelines/'], resolve)
+      }
     }
   ]
 })

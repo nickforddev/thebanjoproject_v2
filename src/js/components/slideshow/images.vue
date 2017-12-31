@@ -1,6 +1,8 @@
 <template>
   <div>
-    
+    <div v-for="({ image }, index) in data" :key="index">
+      <img :src="image.url" :alt="image.title">
+    </div>
   </div>
 </template>
 
@@ -10,7 +12,7 @@
 export default {
   name: 'slideshow-images',
   props: {
-    videos: Array
+    data: Array
   },
   created() {
     console.log(this.data)
@@ -21,5 +23,7 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
-  
+  img {
+    width: 100%;
+  }
 </style>

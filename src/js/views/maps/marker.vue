@@ -38,7 +38,7 @@ export default {
     },
     opened() {
       this.open = true
-      // console.log(this.data.acf.content)
+      console.log(this.data)
       if (this.acf.media === 'video') {
         console.log(this.acf.video)
       }

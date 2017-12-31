@@ -59,11 +59,11 @@ export default {
       })
       await this.collection.fetch()
       // console.log(this.$refs.map.mapObject._layers)
-      setTimeout(() => {
-        console.log(this.$refs.map.mapObject.eachLayer(layer => {
-          console.log('feature', layer.feature)
-        }))
-      }, 300)
+      // setTimeout(() => {
+      //   console.log(this.$refs.map.mapObject.eachLayer(layer => {
+      //     console.log('feature', layer.feature)
+      //   }))
+      // }, 300)
       // setTimeout(() => {
       //   console.log(this.$refs.marker)
       //   const markers = this.$refs.marker.map(marker => {
@@ -109,5 +109,7 @@ export default {
   width: 500px !important;
   min-width: 350px;
   max-width: 100% !important;
+  max-height: 50vh;
+  overflow-y: scroll;
 }
 </style>
