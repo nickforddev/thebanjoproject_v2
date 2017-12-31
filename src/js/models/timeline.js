@@ -8,6 +8,12 @@ export default class Timeline extends Model {
   }
   static schema() {
     return {
+      id: {
+        type: Number
+      },
+      title: {
+        type: Object
+      },
       acf: {
         type: Object,
         properties: {
@@ -15,6 +21,9 @@ export default class Timeline extends Model {
             type: Number
           }
         }
+      },
+      slug: {
+        type: String
       }
     }
   }

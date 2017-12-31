@@ -26,6 +26,7 @@ $nav-width: 160px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  height: 100%;
   /* margin-top: 60px; */
 }
 nav {
@@ -35,6 +36,8 @@ main {
   position: relative;
   left: $nav-width;
   width: calc(100% - #{$nav-width});
+  height: 100%;
   overflow-x: hidden;
+  overflow-y: auto
 }
 </style>

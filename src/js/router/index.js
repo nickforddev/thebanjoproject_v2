@@ -41,7 +41,16 @@ export default new Router({
       name: 'Timelines',
       component(resolve) {
         require(['@/views/timelines/'], resolve)
-      }
+      },
+      children: [
+        {
+          path: ':slug',
+          name: 'Timeline',
+          component(resolve) {
+            require(['@/views/timelines/view'], resolve)
+          }
+        }
+      ]
     }
   ]
 })

@@ -3,6 +3,9 @@
 import Vue from 'vue'
 import App from './components/main'
 import router from './router'
+import store from './store'
+
+import filters from './modules/filters'
 
 // core plugins
 import VueRequests from 'vue-requests'
@@ -36,6 +39,9 @@ const components = [
 ]
 
 const install = (Vue) => {
+  for (let key in filters) {
+    Vue.filter(key, filters[key])
+  }
   Vue.use(VueRequests, {
     // root: 'http://thebanjoproject.org/demo/wp-json/'
     root: 'http://45.55.144.174/wp-json/'
@@ -65,6 +71,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })
