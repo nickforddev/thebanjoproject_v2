@@ -24,6 +24,9 @@ export default class Timeline extends Model {
       },
       slug: {
         type: String
+      },
+      _links: {
+        type: Object
       }
     }
   }

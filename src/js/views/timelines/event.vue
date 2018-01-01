@@ -1,6 +1,10 @@
 <template>
   <div class="timeline-event" :style="{ top }" @click="goToEvent">
-    <router-link @click.native.stop :to="`/timelines/${this.data.slug}`" class="timeline-event-dot" :style="{ 'background-color': color }" />
+    <router-link
+      @click.native.stop
+      :to="`/timelines/${this.data.slug}`"
+      class="timeline-event-dot"
+      :style="{ 'background-color': color }" />
     <div class="tooltip">
       {{ data.acf.date }} – {{ data.title.rendered | limit }}
     </div>

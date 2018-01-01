@@ -1,21 +1,13 @@
 <template>
-  <div v-if="open">
-    <!-- <div v-if="data.acf.media === 'video'">
-      
-    </div> -->
-    <component v-if="data.acf.media !== 'none'" :is="`${data.acf.media}-slideshow`" :data="data.acf[data.acf.media]" />
-    <!-- <button @click="test"></button> -->
-    <div v-html="data.acf.content" />
+  <div class="map-marker" v-if="open">
+    <slideshow :data="data" />
+    <div class="map-marker-content" v-html="data.acf.content" />
   </div>
 </template>
 
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
-import VideoSlideshow from '@/components/slideshow/video'
-import AudioSlideshow from '@/components/slideshow/audio'
-import ImagesSlideshow from '@/components/slideshow/images'
-
 export default {
   name: 'marker',
   props: {
@@ -33,21 +25,9 @@ export default {
     }
   },
   methods: {
-    test() {
-      console.log('ok')
-    },
     opened() {
       this.open = true
-      console.log(this.data)
-      if (this.acf.media === 'video') {
-        console.log(this.acf.video)
-      }
     }
-  },
-  components: {
-    VideoSlideshow,
-    AudioSlideshow,
-    ImagesSlideshow
   }
 }
 </script>
@@ -55,5 +35,10 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
-  
+.map-marker {
+  max-height: inherit;
+}
+.map-marker-content {
+  max-height: inherit;
+}
 </style>

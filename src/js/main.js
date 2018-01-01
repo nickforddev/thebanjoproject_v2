@@ -24,6 +24,7 @@ import '../scss/styles.scss'
 
 // custom components
 import Loading from '@/components/loading'
+import Slideshow from '@/components/slideshow'
 
 // eslint-disable-next-line  
 delete L.Icon.Default.prototype._getIconUrl  
@@ -35,7 +36,8 @@ L.Icon.Default.mergeOptions({
 })
 
 const components = [
-  Loading
+  Loading,
+  Slideshow
 ]
 
 const install = (Vue) => {

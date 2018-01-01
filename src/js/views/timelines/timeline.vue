@@ -1,6 +1,11 @@
 <template>
   <div class="timeline">
-    <timeline-event v-for="(event, index) in collection" :key="index" :data="event" :color="data.acf.color" :id="`event-${event.id}`" />
+    <timeline-event
+      v-for="(event, index) in collection"
+      :key="index"
+      :data="event"
+      :color="data.acf.color"
+      :id="`event-${event.id}`" />
     <div class="line" :style="{ 'background-color': data.acf.color }" />
   </div>
 </template>
@@ -45,11 +50,9 @@ export default {
     position: relative;
     width: 10px;
     height: 100%;
-    // z-index: 2;
   }
   .line {
     position: absolute;;
-    // border-left: 1px solid red;
     top: 0;
     bottom: 0;
     width: 2px;

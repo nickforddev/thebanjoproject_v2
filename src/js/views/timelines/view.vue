@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="content" v-if="fetched">
-      <div class="media"></div>
+      <div class="media">
+        <slideshow :data="event" />
+      </div>
       <div class="body">
         <div class="meta">
           <div class="date">
@@ -14,9 +16,9 @@
         </div>
         <h2 v-html="event.title.rendered"></h2>
         <div v-html="event.content.rendered"></div>
+        <pre>{{ event }}</pre>
       </div>
     </div>
-    <!-- <pre>{{ event }}</pre> -->
   </div>
 </template>
 
@@ -56,7 +58,7 @@ export default {
     async fetch() {
       this.fetched = false
       this.event = null
-      const response = await this.$request(`wp/v2/timelines?slug=${this.$route.params.slug}`)
+      const response = await this.$request(`wp/v2/timelines?slug=${this.$route.params.slug}&_embed`)
       this.event = response[0]
       this.fetched = true
     }
@@ -67,13 +69,18 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
+@import '~%/colors';
+
 .media {
   height: 50vh;
   min-height: 40vh;
-  background: grey;
+  overflow: hidden;
+  background: $color-slideshow-background;
 }
 .body {
   padding: 20px;
+  height: 50vh;
+  overflow: auto;
 }
 .meta {
   margin-bottom: 10px;

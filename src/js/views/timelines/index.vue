@@ -119,6 +119,7 @@ export default {
 
 .content {
   flex: 1;
+  overflow: hidden;
 }
 
 .sidebar {
@@ -141,7 +142,6 @@ export default {
   position: relative;
   width: 50px;
   height: 100%;
-  // min-height: 100vh;
   padding: 0 14px;
   font-family: 'Myriad Pro', monospace;
 
@@ -154,7 +154,6 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
-  // width: 300px;
   padding: 20px;
   text-align: right;
 

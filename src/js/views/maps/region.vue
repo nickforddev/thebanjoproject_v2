@@ -111,5 +111,9 @@ export default {
   max-width: 100% !important;
   max-height: 50vh;
   overflow-y: scroll;
+
+  & > div {
+    max-height: inherit;
+  }
 }
 </style>

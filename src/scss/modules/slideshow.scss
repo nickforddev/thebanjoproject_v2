@@ -1,0 +1,62 @@
+@import '~%/colors';
+
+$control-size: 60px;
+$arrow-size: $control-size / 4;
+
+.controls {
+  & > div {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: $control-size;
+    width: $control-size / 2;
+    overflow: hidden;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .background {
+    height: $control-size;
+    width: $control-size;
+    border-radius: 100%;
+    background-color: $color-controls-background;
+    position: absolute;
+    top: 0;
+    z-index: -1;
+  }
+  .arrow {
+    position: relative;
+    top: 10px;
+    width: $arrow-size;
+    height: $arrow-size;
+    border-left: 1px solid white;
+    border-bottom: 1px solid white;
+    margin-top: 10px;
+    z-index: 2;
+  }
+  .controls-prev {
+    left: 0;
+
+    .arrow {
+      left: 10px;
+      transform: rotate(45deg);
+
+    }
+    .background {
+      left: -#{$control-size / 2};
+    }
+  }
+  .controls-next {
+    right: 0;
+
+    .arrow {
+      right: -5px;
+      transform: rotate(-135deg);
+    }
+
+    .background {
+      right: -#{$control-size / 2};
+    }
+  }
+}

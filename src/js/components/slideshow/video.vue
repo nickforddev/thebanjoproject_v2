@@ -1,6 +1,6 @@
 <template>
   <div>
-    <video-slide v-for="(video, index) in data" :data="video" :key="index" />
+    <video-slide v-for="(video, index) in data.acf.video" :data="video" :key="index" />
   </div>
 </template>
 
@@ -12,7 +12,7 @@ import VideoSlide from '@/components/video'
 export default {
   name: 'slideshow-video',
   props: {
-    data: Array
+    data: Object
   },
   created() {
     console.log(this.data)
