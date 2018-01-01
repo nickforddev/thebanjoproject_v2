@@ -19,11 +19,11 @@ export default {
       open: false
     }
   },
-  computed: {
-    acf() {
-      return this.data.acf
-    }
-  },
+  // computed: {
+  //   acf() {
+  //     return this.data.acf
+  //   }
+  // },
   methods: {
     opened() {
       this.open = true
