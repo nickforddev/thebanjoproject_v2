@@ -77,8 +77,15 @@ export default {
 }
 .meta {
   margin-bottom: 10px;
+
   & > div {
     display: inline-block;
+  }
+
+  .date {
+    margin-right: 10px;
+    font-family: 'Myriad Pro', monospace;
+    font-weight: bold;
   }
 }
 .tag-key {

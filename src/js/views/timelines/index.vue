@@ -44,6 +44,9 @@ export default {
       basePath: 'wp/v2/timeline?per_page=99'
     })
   },
+  beforeDestroy() {
+    this.$store.dispatch('set_active_event', null)
+  },
   computed: {
     date_markers() {
       const array = []
@@ -82,7 +85,7 @@ export default {
       if (val) {
         const $event = document.getElementById(`event-${val.id}`)
         if ($event) {
-          this.active_event_offset = $event.offsetTop
+          this.active_event_offset = $event.offsetTop - 5
         }
       }
     }
@@ -130,6 +133,7 @@ export default {
   flex: 1;
   height: 100%;
   padding: 0 100px 0 20px;
+  overflow: hidden;
 }
 
 .markers {
@@ -139,6 +143,7 @@ export default {
   height: 100%;
   // min-height: 100vh;
   padding: 0 14px;
+  font-family: 'Myriad Pro', monospace;
 
   .marker {
     position: absolute;
