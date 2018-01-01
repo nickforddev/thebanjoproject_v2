@@ -1,6 +1,6 @@
 <template>
   <div class="timeline">
-    <timeline-event v-for="(event, index) in collection" :key="index" :data="event" :color="data.acf.color" />
+    <timeline-event v-for="(event, index) in collection" :key="index" :data="event" :color="data.acf.color" :id="`event-${event.id}`" />
     <div class="line" :style="{ 'background-color': data.acf.color }" />
   </div>
 </template>
@@ -29,7 +29,6 @@ export default {
     })
   },
   created() {
-    // console.log(this.data.acf.color)
     this.$collection.fetch()
   },
   components: {
@@ -45,14 +44,16 @@ export default {
     display: inline-block;
     position: relative;
     width: 10px;
-    height: 100vh;
+    height: 100%;
     // z-index: 2;
   }
   .line {
-    position: absolute;
+    position: absolute;;
     // border-left: 1px solid red;
+    top: 0;
+    bottom: 0;
     width: 2px;
-    left: 5px;
+    left: 4px;
     height: 100%;
     z-index: 1;
   }

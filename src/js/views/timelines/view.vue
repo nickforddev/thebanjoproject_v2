@@ -1,8 +1,20 @@
 <template>
   <div>
     <div class="content" v-if="fetched">
-      <h2 v-html="event.title.rendered"></h2>
-      <div class="body" v-html="event.content.rendered"></div>
+      <div class="media"></div>
+      <div class="body">
+        <div class="meta">
+          <div class="date">
+            {{ event.acf.date }}
+          </div>
+          <div class="tag">
+            <div class="tag-key" :style="{ background: timeline.acf.color }"/>
+            {{ timeline.name }}
+          </div>
+        </div>
+        <h2 v-html="event.title.rendered"></h2>
+        <div v-html="event.content.rendered"></div>
+      </div>
     </div>
     <!-- <pre>{{ event }}</pre> -->
   </div>
@@ -11,6 +23,8 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'timeline-view',
   data() {
@@ -25,7 +39,18 @@ export default {
   watch: {
     $route() {
       this.fetch()
+    },
+    event(val) {
+      this.$store.dispatch('set_active_event', val)
     }
+  },
+  computed: {
+    timeline() {
+      return this.timelines.find(timeline => timeline.id === this.event.timeline[0])
+    },
+    ...mapGetters([
+      'timelines'
+    ])
   },
   methods: {
     async fetch() {
@@ -42,5 +67,23 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
-  
+.media {
+  height: 50vh;
+  min-height: 40vh;
+  background: grey;
+}
+.body {
+  padding: 20px;
+}
+.meta {
+  margin-bottom: 10px;
+  & > div {
+    display: inline-block;
+  }
+}
+.tag-key {
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+}
 </style>
