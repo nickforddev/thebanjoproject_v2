@@ -74,6 +74,7 @@ export default {
 .media {
   height: 50vh;
   min-height: 40vh;
+  max-height: 50vh;
   overflow: hidden;
   background: $color-slideshow-background;
 }

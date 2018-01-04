@@ -1,5 +1,5 @@
 <template>
-  <div class="slideshow-images">
+  <div class="slideshow-images" :class="[is_full]">
     <div
       :class="['slide', isActive(index)]"
       v-for="({ image }, index) in images"
@@ -7,8 +7,9 @@
       <img :src="image.url" :alt="image.title">
     </div>
     <div class="controls" v-if="images.length > 1">
-      <next @click="next" />
-      <prev @click="prev" />
+      <next @click="next" :disabled="active === images.length - 1" />
+      <prev @click="prev" :disabled="active ===  0" />
+      <button @click="toggleFullscreen">{{ toggle_label }}</button>
     </div>
   </div>
 </template>
@@ -16,6 +17,7 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
+import fscreen from 'fscreen'
 import Next from '@/components/controls/next'
 import Prev from '@/components/controls/prev'
 
@@ -26,7 +28,8 @@ export default {
   },
   data() {
     return {
-      active: 0
+      active: 0,
+      full: false
     }
   },
   computed: {
@@ -39,7 +42,25 @@ export default {
             title: this.data._embedded['wp:featuredmedia'][0].title.rendered
           }
         }]
+    },
+    is_full() {
+      if (this.full) {
+        return 'fullscreen'
+      }
+    },
+    toggle_label() {
+      return this.full
+        ? 'Exit Fullscren'
+        : 'Fullscreen'
     }
+  },
+  mounted() {
+    fscreen.addEventListener('fullscreenchange', (e) => {
+      this.full = !!(fscreen.fullscreenElement)
+    })
+  },
+  beforeDestroy() {
+    fscreen.removeEventListener('fullscreenchange')
   },
   methods: {
     next() {
@@ -55,6 +76,13 @@ export default {
     isActive(index) {
       if (index === this.active) {
         return 'active'
+      }
+    },
+    toggleFullscreen() {
+      if (this.full) {
+        fscreen.exitFullscreen()
+      } else {
+        fscreen.requestFullscreen(document.querySelector('.slideshow'))
       }
     }
   },
@@ -73,6 +101,16 @@ export default {
   position: relative;
   height: 100%;
   max-height: inherit;
+  user-select: none;
+
+  &.fullscreen {
+    position: fixed !important;
+    height: 100vh;
+    width: 100vw;
+    left: 0;
+    top: 0;
+    max-height: 100vh;
+  }
 }
 .slide {
   height: 100%;
@@ -93,5 +131,13 @@ img {
   // max-height: 100%;
   max-height: inherit;
   margin: auto;
+}
+
+.controls {
+  button {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+  }
 }
 </style>

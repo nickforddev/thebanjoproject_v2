@@ -12,6 +12,7 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "fscreen": "^1.0.2",
     "glob-move": "^1.0.1",
     "node-sass": "^4.6.0",
     "ramda": "^0.25.0",

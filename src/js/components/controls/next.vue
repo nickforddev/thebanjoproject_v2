@@ -1,5 +1,5 @@
 <template>
-  <div class="controls-next" @click="emitClick">
+  <div class="controls-next" @click="emitClick" :class="[is_disabled]">
     <div class="arrow" />
     <div class="background" />
   </div>
@@ -10,6 +10,19 @@
 <script>
 export default {
   name: 'control-next',
+  props: {
+    disabled: {
+      type: Boolean,
+      default: false
+    }
+  },
+  computed: {
+    is_disabled() {
+      if (this.disabled) {
+        return 'disabled'
+      }
+    }
+  },
   methods: {
     emitClick(e) {
       this.$emit('click', e)
@@ -21,6 +34,10 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
+.disabled {
+  opacity: 0.25;
+  pointer-events: none;
+}
 // @import '~%/colors';
 
 // .controls-next {

@@ -20,12 +20,13 @@ export default {
   props: ['data', 'color'],
   computed: {
     top() {
-      return `${4 + (this.data.acf.date - this.min) * this.scale}px`
+      return `${(2 + (this.data.acf.date - this.min) * this.scale) + this.padding}px`
     },
     ...mapGetters({
       min: 'timeline:min',
       max: 'timeline:max',
-      scale: 'timeline:scale'
+      scale: 'timeline:scale',
+      padding: 'timeline:padding'
     })
   },
   methods: {

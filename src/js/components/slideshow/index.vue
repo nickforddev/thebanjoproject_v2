@@ -14,8 +14,25 @@ import ImagesSlideshow from '@/components/slideshow/images'
 export default {
   name: 'slideshow',
   props: ['data'],
+  // data() {
+  //   return {
+  //     full: false
+  //   }
+  // },
   // mounted() {
-  //   console.log(this.data)
+  //   fscreen.addEventListener('fullscreenchange', (e) => {
+  //     this.full = !!(fscreen.fullscreenElement)
+  //   })
+  // },
+  // beforeDestroy() {
+  //   fscreen.removeEventListener('fullscreenchange')
+  // },
+  // computed: {
+  //   is_full() {
+  //     if (this.full) {
+  //       return 'fullscreen'
+  //     }
+  //   }
   // },
   components: {
     VideoSlideshow,
@@ -29,7 +46,15 @@ export default {
 
 <style scoped lang="scss">
 .slideshow {
+  position: relative;
   height: 100%;
   max-height: inherit;
 }
+// .controls {
+//   button {
+//     position: absolute;
+//     bottom: 5px;
+//     right: 5px;
+//   }
+// }
 </style>

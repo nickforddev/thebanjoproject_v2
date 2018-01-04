@@ -4,6 +4,7 @@ export default {
       min: 1800,
       max: 1990,
       scale: 4,
+      padding: 20,
       timelines: null,
       active_event: null
     }
@@ -18,6 +19,9 @@ export default {
     'timeline:scale': (state) => {
       return state.scale
     },
+    'timeline:padding': (state) => {
+      return state.padding
+    },
     'timelines': (state) => {
       return state.timelines
     },
@@ -31,6 +35,12 @@ export default {
     },
     SET_ACTIVE_EVENT(state, data) {
       state.active_event = data
+    },
+    SET_MIN(state, min) {
+      state.min = min
+    },
+    SET_MAX(state, max) {
+      state.max = max
     }
   },
   actions: {
@@ -39,6 +49,12 @@ export default {
     },
     set_active_event({ commit }, data) {
       commit('SET_ACTIVE_EVENT', data)
+    },
+    set_min({ commit }, min) {
+      commit('SET_MIN', min)
+    },
+    set_max({ commit }, max) {
+      commit('SET_MAX', max)
     }
   }
 }

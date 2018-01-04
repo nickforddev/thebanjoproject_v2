@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="slideshow-video">
     <video-slide v-for="(video, index) in data.acf.video" :data="video" :key="index" />
   </div>
 </template>
@@ -26,5 +26,7 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
-  
+.slideshow-video {
+  height: 100%;
+}
 </style>

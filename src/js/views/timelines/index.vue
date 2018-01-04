@@ -58,7 +58,7 @@ export default {
       return array
     },
     height() {
-      return `${(this.max + 5 - this.min) * this.scale}px`
+      return `${((this.max + 5 - this.min) * this.scale) + this.padding}px`
     },
     active_timeline() {
       return this.active_event
@@ -76,6 +76,7 @@ export default {
       min: 'timeline:min',
       max: 'timeline:max',
       scale: 'timeline:scale',
+      padding: 'timeline:padding',
       timelines: 'timelines',
       active_event: 'active_event'
     })
@@ -91,12 +92,27 @@ export default {
     }
   },
   async created() {
+    this.fetchAll()
     const timelines = await this.$collection.fetch()
     this.$store.dispatch('set_timelines', timelines)
   },
   methods: {
     getTop(year) {
-      return `${(year - this.min) * this.scale}px`
+      return `${((year - this.min) * this.scale) + this.padding}px`
+    },
+    async fetchAll() {
+      console.log('start')
+      const collection = new Collection({
+        basePath: 'wp/v2/timelines?per_page=99'
+      })
+      const response = await collection.fetch()
+      const dates = response.map(model => parseInt(model.acf.date))
+      const padding = 20
+      const min = (Math.floor(Math.min.apply(Math, dates) / 10) * 10) - padding
+      const max = (Math.ceil(Math.max.apply(Math, dates) / 10) * 10) + padding
+      this.$store.dispatch('set_min', min)
+      this.$store.dispatch('set_max', max)
+      console.log(min, max)
     }
   },
   components: {
@@ -133,6 +149,7 @@ export default {
 .timelines {
   flex: 1;
   height: 100%;
+  min-height: 100vh;
   padding: 0 100px 0 20px;
   overflow: hidden;
 }
@@ -142,6 +159,7 @@ export default {
   position: relative;
   width: 50px;
   height: 100%;
+  min-height: 100vh;
   padding: 0 14px;
   font-family: 'Myriad Pro', monospace;
 
@@ -174,6 +192,7 @@ export default {
   position: relative;
   width: 8px;
   height: 100%;
+  min-height: 100vh;
   background: grey;
 
   .pointer {

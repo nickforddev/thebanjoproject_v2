@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-if="fetched">
+  <div class="video-container">
+    <div v-if="fetched" class="video">
       <vimeo-player ref="player" :video-id="video_id" />
     </div>
   </div>
@@ -50,9 +50,20 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style lang="scss">
+.video-container {
+  height: 100%;
+}
+.video {
+  height: 100%;
+
+  & > div {
+    height: 100%;
+  }
+}
 iframe {
   // width: 400px;
   width: 100%;
   max-width: 100%;
+  height: 100%;
 }
 </style>
