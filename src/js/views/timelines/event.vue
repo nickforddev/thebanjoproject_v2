@@ -78,7 +78,7 @@ $triangle-size: 8px;
     bottom: #{$point-radius / 2};
     left: $point-radius;
     padding: 4px;
-    width: 100px;
+    // width: 100px;
     background: $color-background-light;
     color: $color-text-dark;
     font-size: 10px;

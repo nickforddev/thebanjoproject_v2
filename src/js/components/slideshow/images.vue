@@ -1,5 +1,11 @@
 <template>
-  <div class="slideshow-images" :class="[is_full]">
+  <div
+    class="slideshow-images"
+    :class="[is_full]"
+    ref="images"
+    @keyup.left="prev"
+    @keyup.right="next"
+    tabindex="0">
     <div
       :class="['slide', isActive(index)]"
       v-for="({ image }, index) in images"
@@ -55,6 +61,7 @@ export default {
     }
   },
   mounted() {
+    this.$refs.images.focus()
     fscreen.addEventListener('fullscreenchange', (e) => {
       this.full = !!(fscreen.fullscreenElement)
     })

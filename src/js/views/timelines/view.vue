@@ -16,7 +16,7 @@
         </div>
         <h2 v-html="event.title.rendered"></h2>
         <div v-html="event.content.rendered"></div>
-        <pre>{{ event }}</pre>
+        <!-- <pre>{{ event }}</pre> -->
       </div>
     </div>
   </div>

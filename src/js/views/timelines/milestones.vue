@@ -1,6 +1,6 @@
 <template>
-  <div class="timeline">
-    <timeline-event
+  <div class="milestones">
+    <milestone-event
       v-for="(event, index) in collection"
       :key="index"
       :data="event"
@@ -16,10 +16,10 @@
 // import { mapGetters } from 'vuex'
 import { Collection } from 'vue-collections'
 import Timeline from '@/models/timeline'
-import TimelineEvent from './event'
+import MilestoneEvent from './milestone_event'
 
 export default {
-  name: 'timeline',
+  name: 'milestones',
   props: ['data'],
   collection() {
     return new Collection({
@@ -37,7 +37,7 @@ export default {
     this.$collection.fetch()
   },
   components: {
-    TimelineEvent
+    MilestoneEvent
   }
 }
 </script>
@@ -45,11 +45,13 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
-  .timeline {
+  .milestones {
     display: inline-block;
     position: relative;
     width: 10px;
     height: 100%;
+    margin-left: 20px;
+    // min-height: 100vh;
   }
   .line {
     position: absolute;;

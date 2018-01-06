@@ -13,12 +13,13 @@
         </div>
       </div>
       <div class="timelines" :style="{ height }">
-        <timeline v-for="(timeline, index) in collection" :key="index" :data="timeline" ref="timeline" />
+        <timeline v-for="(timeline, index) in collection_filtered" :key="index" :data="timeline" ref="timeline" />
+        <milestones v-if="milestones" :data="milestones" />
       </div>
       <div class="keys">
         <div v-for="(timeline, index) in collection" :key="index" class="key">
-          {{ timeline.name }}
           <div class="key-color" :style="{ background: timeline.acf.color }" />
+          {{ timeline.name }}
         </div>
       </div>
     </div>
@@ -31,6 +32,7 @@
 import { mapGetters } from 'vuex'
 import { Collection } from 'vue-collections'
 import Timeline from './timeline'
+import Milestones from './milestones'
 
 export default {
   name: 'timelines',
@@ -48,6 +50,13 @@ export default {
     this.$store.dispatch('set_active_event', null)
   },
   computed: {
+    collection_filtered() {
+      return this.collection.filter(timeline => timeline.slug !== 'milestones')
+    },
+    milestones() {
+      console.log(this.collection.find(timeline => timeline.slug === 'milestones'))
+      return this.collection.find(timeline => timeline.slug === 'milestones')
+    },
     date_markers() {
       const array = []
       let date = this.min
@@ -83,17 +92,16 @@ export default {
   },
   watch: {
     active_event(val) {
+      // console.log({val})
       if (val) {
-        const $event = document.getElementById(`event-${val.id}`)
-        if ($event) {
-          this.active_event_offset = $event.offsetTop - 5
-        }
+        this.setActiveIndicator(val)
       }
     }
   },
   async created() {
     this.fetchAll()
     const timelines = await this.$collection.fetch()
+    // console.log(timelines)
     this.$store.dispatch('set_timelines', timelines)
   },
   methods: {
@@ -101,22 +109,35 @@ export default {
       return `${((year - this.min) * this.scale) + this.padding}px`
     },
     async fetchAll() {
-      console.log('start')
+      // console.log('start')
       const collection = new Collection({
         basePath: 'wp/v2/timelines?per_page=99'
       })
       const response = await collection.fetch()
       const dates = response.map(model => parseInt(model.acf.date))
       const padding = 20
-      const min = (Math.floor(Math.min.apply(Math, dates) / 10) * 10) - padding
-      const max = (Math.ceil(Math.max.apply(Math, dates) / 10) * 10) + padding
+      const min = (Math.floor(Math.min(...dates) / 10) * 10) - padding
+      const max = (Math.ceil(Math.max(...dates) / 10) * 10) + padding
       this.$store.dispatch('set_min', min)
       this.$store.dispatch('set_max', max)
-      console.log(min, max)
+      // console.log(min, max)
+    },
+    setActiveIndicator(val) {
+      // console.log(document.querySelector('.timeline-event-dot'))
+      const $event = document.getElementById(`event-${val.id}`)
+      // const $active = document.querySelector('.timeline-event-dot.router-link-active')
+      // console.log('set', $active)
+      // if ($active) {
+      // const $event = $active.parentNode
+      if ($event) {
+        this.active_event_offset = $event.offsetTop - 5
+      }
+      // }
     }
   },
   components: {
-    Timeline
+    Timeline,
+    Milestones
   }
 }
 </script>
@@ -150,7 +171,8 @@ export default {
   flex: 1;
   height: 100%;
   min-height: 100vh;
-  padding: 0 100px 0 20px;
+  padding: 0 180px 0 4px;
+  white-space: nowrap;
   overflow: hidden;
 }
 
@@ -173,7 +195,10 @@ export default {
   top: 0;
   right: 0;
   padding: 20px;
-  text-align: right;
+  padding-bottom: 10px;
+  width: 170px;
+  background: #282834;
+  // text-align: right;
 
   .key {
     margin-bottom: 6px;
@@ -184,7 +209,8 @@ export default {
     display: inline-block;
     width: 10px;
     height: 10px;
-    margin-left: 4px;
+    // margin-left: 4px;
+    margin-right: 4px;
   }
 }
 
