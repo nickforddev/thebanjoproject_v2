@@ -11,6 +11,7 @@ import filters from './modules/filters'
 import VueRequests from 'vue-requests'
 import VueModels from 'vue-models'
 import VueCollections from 'vue-collections'
+import VeeValidate from 'vee-validate'
 
 // maps plugins
 import Vue2Leaflet from 'vue2-leaflet'
@@ -52,6 +53,7 @@ const install = (Vue) => {
     schemaWarnings: false
   })
   Vue.use(VueCollections)
+  Vue.use(VeeValidate)
   Vue.use(VueVimeoPlayer)
 
   components.map(component => {

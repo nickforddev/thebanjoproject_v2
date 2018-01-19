@@ -51,6 +51,13 @@ export default new Router({
           }
         }
       ]
+    },
+    {
+      path: '/search',
+      name: 'Search',
+      component(resolve) {
+        require(['@/views/search'], resolve)
+      }
     }
   ]
 })

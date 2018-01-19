@@ -41,7 +41,7 @@
 <script>
 import Logo from '@/components/logo'
 export default {
-  name: 'nav',
+  name: 'navigation',
   components: {
     Logo
   }
