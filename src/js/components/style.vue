@@ -9,7 +9,7 @@
 <script>
 import Style from '@/models/tag'
 export default {
-  name: 'style',
+  name: 'style-tag',
   props: ['uid'],
   models: {
     style() {

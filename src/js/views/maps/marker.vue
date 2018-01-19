@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'marker',
+  name: 'map-marker',
   props: {
     data: Object
   },

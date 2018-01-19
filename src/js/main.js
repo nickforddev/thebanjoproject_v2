@@ -25,6 +25,8 @@ import '../scss/styles.scss'
 
 // custom components
 import Loading from '@/components/loading'
+import Field from '@/components/field'
+import Validation from '@/components/validation'
 import Slideshow from '@/components/slideshow'
 
 // eslint-disable-next-line  
@@ -38,6 +40,8 @@ L.Icon.Default.mergeOptions({
 
 const components = [
   Loading,
+  Field,
+  Validation,
   Slideshow
 ]
 

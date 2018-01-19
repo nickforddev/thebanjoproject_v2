@@ -1,13 +1,18 @@
 <template>
-  <div>
+  <div class="page">
     <h1>Search</h1>
     <form @submit.prevent="validate">
-      <input type="search" v-model="search_term" v-validate.disable="'required'">
+      <field name="search" :errors="errors">
+        <input type="search" v-model="search_term" v-validate.disable="'required'" name="search">
+      </field>
       <button>Search</button>
-      {{ errors }}
     </form>
     <div class="results" v-if="results">
-      <pre>{{ results }}</pre>
+      <h2>Results</h2>
+      <!-- <pre>{{ results }}</pre> -->
+      <div class="result" v-for="(result, index) in results" :key="index">
+        {{ result.type }}: {{ result.title.rendered }}
+      </div>
     </div>
   </div>
 </template>
@@ -42,5 +47,14 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
+.page {
+  padding: 20px;
+}
+.results {
+  margin-top: 30px;
 
+  .result {
+    margin-bottom: 10px;
+  }
+}
 </style>

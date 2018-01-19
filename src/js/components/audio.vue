@@ -10,7 +10,7 @@
 import Audio from '@/models/audio'
 
 export default {
-  name: 'audio',
+  name: 'audio-player',
   props: ['uid'],
   data() {
     return {
