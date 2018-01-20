@@ -58,6 +58,13 @@ export default new Router({
       component(resolve) {
         require(['@/views/search'], resolve)
       }
+    },
+    {
+      path: '/search/:term',
+      name: 'Search',
+      component(resolve) {
+        require(['@/views/search'], resolve)
+      }
     }
   ]
 })
