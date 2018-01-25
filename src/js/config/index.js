@@ -1,10 +1,4 @@
 export default {
-  mapbox: 'pk.eyJ1Ijoibmlja2ZvcmRkZXNpZ24iLCJhIjoiWlhxWDdUNCJ9.pnGwac6qU_VDgGfhGJ9EbQ',
-  permalinks: {
-    timelines: 'timelines',
-    peoples: 'players',
-    maps: 'maps',
-    videos: 'videos',
-    audio: 'audio'
-  }
+  api: 'http://45.55.144.174/',
+  mapbox: 'pk.eyJ1Ijoibmlja2ZvcmRkZXNpZ24iLCJhIjoiWlhxWDdUNCJ9.pnGwac6qU_VDgGfhGJ9EbQ'
 }

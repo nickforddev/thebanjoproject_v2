@@ -23,6 +23,8 @@ import VueVimeoPlayer from 'vue-vimeo-player'
 // global styles
 import '../scss/styles.scss'
 
+import config from '@/config'
+
 // custom components
 import Loading from '@/components/loading'
 import Field from '@/components/field'
@@ -50,8 +52,7 @@ const install = (Vue) => {
     Vue.filter(key, filters[key])
   }
   Vue.use(VueRequests, {
-    // root: 'http://thebanjoproject.org/demo/wp-json/'
-    root: 'http://45.55.144.174/wp-json/'
+    root: `${config.api}wp-json/`
   })
   Vue.use(VueModels, {
     schemaWarnings: false

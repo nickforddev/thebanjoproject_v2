@@ -10,7 +10,7 @@
     <div class="results" v-if="results">
       <h2>Results</h2>
       <!-- <pre>{{ results }}</pre> -->
-      <router-link class="result" v-for="(result, index) in results" :to="`${convertPermalinks(result.type)}/${result.slug}`" :key="index">
+      <router-link class="result" v-for="(result, index) in results" :to="`/${convertPermalinks(result.type)}/${result.slug}`" :key="index">
         <div class="type">
           {{ convertPermalinks(result.type) }}
         </div>

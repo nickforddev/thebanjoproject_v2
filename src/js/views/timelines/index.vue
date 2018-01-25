@@ -196,8 +196,10 @@ export default {
   right: 0;
   padding: 20px;
   padding-bottom: 10px;
-  width: 170px;
+  // width: 170px;
+  width: 150px;
   background: #282834;
+  pointer-events: none;
   // text-align: right;
 
   .key {
