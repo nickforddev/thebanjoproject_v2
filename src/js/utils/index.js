@@ -8,7 +8,9 @@ const permalinks = {
   timelines: 'timelines',
   maps: 'maps',
   videos: 'videos',
-  audio: 'audio'
+  audio: 'audio',
+  texts: 'text',
+  page: 'pages'
 }
 
 export function convertPermalinks (type) {

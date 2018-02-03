@@ -42,3 +42,15 @@ export default {
   max-height: inherit;
 }
 </style>
+
+<style lang="scss">
+.map-marker {
+  .slideshow {
+    .slideshow-video {
+      .video-container {
+        height: 320px;
+      }
+    }
+  }
+}
+</style>

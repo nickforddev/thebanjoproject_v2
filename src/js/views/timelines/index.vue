@@ -2,6 +2,8 @@
   <div class="flex">
     <div class="content">
       <router-view />
+      <loading v-if="!active_event" />
+      <!-- {{ active_event }} -->
     </div>
     <div class="sidebar">
       <div class="active-indicator" :style="{ height, background: active_event_color }">
@@ -31,6 +33,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { Collection } from 'vue-collections'
+import { sleep } from '@/utils'
 import Timeline from './timeline'
 import Milestones from './milestones'
 
@@ -38,7 +41,8 @@ export default {
   name: 'timelines',
   data() {
     return {
-      active_event_offset: null
+      active_event_offset: null,
+      all_events: null
     }
   },
   collection() {
@@ -46,15 +50,15 @@ export default {
       basePath: 'wp/v2/timeline?per_page=99'
     })
   },
-  beforeDestroy() {
-    this.$store.dispatch('set_active_event', null)
-  },
+  // beforeDestroy() {
+    // this.$store.dispatch('set_active_event', null)
+  // },
   computed: {
     collection_filtered() {
       return this.collection.filter(timeline => timeline.slug !== 'milestones')
     },
     milestones() {
-      console.log(this.collection.find(timeline => timeline.slug === 'milestones'))
+      // console.log(this.collection.find(timeline => timeline.slug === 'milestones'))
       return this.collection.find(timeline => timeline.slug === 'milestones')
     },
     date_markers() {
@@ -99,22 +103,29 @@ export default {
     }
   },
   async created() {
-    this.fetchAll()
+    await this.fetchAll()
     const timelines = await this.$collection.fetch()
     // console.log(timelines)
     this.$store.dispatch('set_timelines', timelines)
+    if (!this.active_event) {
+      this.selectRandomEvent()
+    } else {
+      // console.log(this.$route.path.split('/'))
+      if (this.$route.path.split('/').filter(item => !!item).length === 1) {
+        this.$router.push(`/timelines/${this.active_event.slug}`)
+      }
+    }
   },
   methods: {
     getTop(year) {
       return `${((year - this.min) * this.scale) + this.padding}px`
     },
     async fetchAll() {
-      // console.log('start')
       const collection = new Collection({
         basePath: 'wp/v2/timelines?per_page=99'
       })
-      const response = await collection.fetch()
-      const dates = response.map(model => parseInt(model.acf.date))
+      this.all_events = await collection.fetch()
+      const dates = this.all_events.map(model => parseInt(model.acf.date))
       const padding = 20
       const min = (Math.floor(Math.min(...dates) / 10) * 10) - padding
       const max = (Math.ceil(Math.max(...dates) / 10) * 10) + padding
@@ -123,16 +134,20 @@ export default {
       // console.log(min, max)
     },
     setActiveIndicator(val) {
-      // console.log(document.querySelector('.timeline-event-dot'))
       const $event = document.getElementById(`event-${val.id}`)
-      // const $active = document.querySelector('.timeline-event-dot.router-link-active')
-      // console.log('set', $active)
-      // if ($active) {
-      // const $event = $active.parentNode
       if ($event) {
         this.active_event_offset = $event.offsetTop - 5
       }
-      // }
+    },
+    async selectRandomEvent() {
+      await sleep(1500)
+      const $events = document.querySelectorAll('.timeline-event a')
+      if ($events) {
+        $events[Math.floor(Math.random() * $events.length)].click()
+      }
+      // console.log(this.all_events)
+      // const random_event = this.all_events[Math.floor(Math.random() * this.all_events.length)]
+      // console.log()
     }
   },
   components: {
@@ -155,6 +170,7 @@ export default {
 }
 
 .content {
+  position: relative;
   flex: 1;
   overflow: hidden;
 }

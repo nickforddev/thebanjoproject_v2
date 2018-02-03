@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="content">
     <h1>Maps</h1>
     <div v-if="fetched" class="grid">
-      <div v-for="(region, index) in collection" :key="index" class="region grid__col grid__col--1-of-4" @click="goToMap(region)">
-        <div class="thumbnail"></div>
-        {{ region.name }}
-      </div>
+      <thumbnail
+        v-for="(region, index) in collection"
+        :data="region"
+        :key="index" />
     </div>
   </div>
 </template>
@@ -14,6 +14,7 @@
 
 <script>
 import { Collection } from 'vue-collections'
+import Thumbnail from './thumbnail'
 
 export default {
   name: 'maps',
@@ -24,7 +25,7 @@ export default {
   },
   collection() {
     return new Collection({
-      basePath: 'wp/v2/region',
+      basePath: 'wp/v2/region?per_page=99',
       id_attribute: 'slug'
     })
   },
@@ -35,11 +36,10 @@ export default {
     async fetch() {
       await this.$collection.fetch()
       this.fetched = true
-    },
-    goToMap(region) {
-      console.log(region)
-      this.$router.push(`/maps/${region.slug}`)
     }
+  },
+  components: {
+    Thumbnail
   }
 }
 </script>
@@ -47,18 +47,7 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
-.region {
-  // height: 100px;
-  margin-bottom: 20px;
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  .thumbnail {
-    height: 0;
-    padding-top: 75%;
-    background: grey;
-  }
+.content {
+  margin: 20px;
 }
 </style>

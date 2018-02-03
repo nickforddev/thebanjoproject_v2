@@ -16,6 +16,9 @@ export default class Region extends Model {
       },
       name: {
         type: String
+      },
+      acf: {
+        type: Object
       }
     }
   }
