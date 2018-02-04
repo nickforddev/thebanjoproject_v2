@@ -53,6 +53,22 @@ export default new Router({
       ]
     },
     {
+      path: '/videos',
+      name: 'Videos',
+      component(resolve) {
+        require(['@/views/videos'], resolve)
+      },
+      children: [
+        {
+          path: ':slug',
+          name: 'Video',
+          component(resolve) {
+            require(['@/views/videos/view'], resolve)
+          }
+        }
+      ]
+    },
+    {
       path: '/search',
       name: 'Search',
       component(resolve) {

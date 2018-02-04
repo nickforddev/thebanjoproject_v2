@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="active_event">
     <div class="content" v-if="fetched">
       <div class="media">
         <slideshow :data="event" />
@@ -48,10 +48,11 @@ export default {
   },
   computed: {
     timeline() {
-      return this.timelines.find(timeline => timeline.id === this.event.timeline[0])
+      return this.timelines && this.timelines.find(timeline => timeline.id === this.event.timeline[0])
     },
     ...mapGetters([
-      'timelines'
+      'timelines',
+      'active_event'
     ])
   },
   methods: {

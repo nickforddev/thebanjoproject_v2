@@ -74,7 +74,7 @@ export default {
       return `${((this.max + 5 - this.min) * this.scale) + this.padding}px`
     },
     active_timeline() {
-      return this.active_event
+      return this.active_event && this.timelines
         ? this.timelines.find(timeline => {
           return timeline.id === this.active_event.timeline[0]
         })
