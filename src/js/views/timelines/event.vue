@@ -5,9 +5,7 @@
       :to="`/timelines/${this.data.slug}`"
       class="timeline-event-dot"
       :style="{ 'background-color': color }" />
-    <div class="tooltip">
-      {{ data.acf.date }} – {{ data.title.rendered | limit }}
-    </div>
+    <div class="tooltip" v-html="tooltip_text" />
   </div>
 </template>
 
@@ -15,12 +13,17 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import filters from '@/modules/filters'
+
 export default {
   name: 'event',
   props: ['data', 'color'],
   computed: {
     top() {
       return `${(2 + (this.data.acf.date - this.min) * this.scale) + this.padding}px`
+    },
+    tooltip_text() {
+      return filters.limit(`${this.data.acf.date} – ${this.data.title.rendered}`, 40)
     },
     ...mapGetters({
       min: 'timeline:min',

@@ -23,7 +23,7 @@ export default {
   props: ['data'],
   collection() {
     return new Collection({
-      basePath: `wp/v2/timelines?timeline=${this.data.id}`,
+      basePath: `wp/v2/timelines?timeline=${this.data.id}&per_page=99`,
       model: Timeline
     })
   },
