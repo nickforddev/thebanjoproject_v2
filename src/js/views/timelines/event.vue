@@ -85,6 +85,7 @@ $triangle-size: 8px;
     background: $color-background-light;
     color: $color-text-dark;
     font-size: 10px;
+    pointer-events: none;
     z-index: 100;
 
     &:after {

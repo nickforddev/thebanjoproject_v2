@@ -10,6 +10,7 @@
 import VideoSlideshow from '@/components/slideshow/video'
 import AudioSlideshow from '@/components/slideshow/audio'
 import ImagesSlideshow from '@/components/slideshow/images'
+import ModelSlideshow from '@/components/slideshow/models'
 
 export default {
   name: 'slideshow',
@@ -37,7 +38,8 @@ export default {
   components: {
     VideoSlideshow,
     AudioSlideshow,
-    ImagesSlideshow
+    ImagesSlideshow,
+    ModelSlideshow
   }
 }
 </script>
