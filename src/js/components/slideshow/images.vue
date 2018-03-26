@@ -12,10 +12,13 @@
       :key="index">
       <img :src="image.url" :alt="image.title">
     </div>
-    <div class="controls" v-if="images.length > 1">
-      <next @click="next" :disabled="active === images.length - 1" />
-      <prev @click="prev" :disabled="active ===  0" />
-      <button @click="toggleFullscreen">{{ toggle_label }}</button>
+    <div class="controls">
+      <div class="navigation" v-if="images.length > 1">
+        <next @click="next" :disabled="active === images.length - 1" />
+        <prev @click="prev" :disabled="active ===  0" />
+      </div>
+      test
+      <full-screen @click="toggleFullscreen" />
     </div>
   </div>
 </template>
@@ -26,6 +29,7 @@
 import fscreen from 'fscreen'
 import Next from '@/components/controls/next'
 import Prev from '@/components/controls/prev'
+import FullScreen from '@/components/controls/full_screen'
 
 export default {
   name: 'slideshow-images',
@@ -95,7 +99,8 @@ export default {
   },
   components: {
     Next,
-    Prev
+    Prev,
+    FullScreen
   }
 }
 </script>
@@ -141,7 +146,7 @@ img {
 }
 
 .controls {
-  button {
+  .controls-full-screen {
     position: absolute;
     bottom: 5px;
     right: 5px;
