@@ -1,5 +1,5 @@
 <template>
-  <div v-if="active_event">
+  <div v-if="active_event && timeline">
     <div class="content" v-if="fetched">
       <div class="media">
         <slideshow :data="event" />
@@ -48,7 +48,7 @@ export default {
   },
   computed: {
     timeline() {
-      return this.timelines && this.timelines.find(timeline => timeline.id === this.event.timeline[0])
+      return this.timelines && this.event && this.timelines.find(timeline => timeline.id === this.event.timeline[0])
     },
     ...mapGetters([
       'timelines',
@@ -72,10 +72,15 @@ export default {
 <style scoped lang="scss">
 @import '~%/colors';
 
+$media-height: 70vh;
+
 .media {
-  height: 50vh;
-  min-height: 40vh;
-  max-height: 50vh;
+  // height: 50vh;
+  // min-height: 40vh;
+  // max-height: 50vh;
+  height: $media-height;
+  min-height: $media-height;
+  max-height: $media-height;
   overflow: hidden;
   background: $color-slideshow-background;
 }

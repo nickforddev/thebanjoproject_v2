@@ -13,7 +13,6 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
-// import { mapGetters } from 'vuex'
 import { Collection } from 'vue-collections'
 import Timeline from '@/models/timeline'
 import TimelineEvent from './event'
@@ -27,12 +26,6 @@ export default {
       model: Timeline
     })
   },
-  // computed: {
-  //   ...mapGetters({
-  //     min: 'timeline:min',
-  //     max: 'timeline:max'
-  //   })
-  // },
   created() {
     this.$collection.fetch()
   },
@@ -49,6 +42,7 @@ export default {
     display: inline-block;
     position: relative;
     width: 10px;
+    margin: 0 2px;
     height: 100%;
   }
   .line {

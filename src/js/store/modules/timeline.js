@@ -3,7 +3,7 @@ export default {
     return {
       min: 1800,
       max: 1990,
-      scale: 10,
+      scale: 8,
       padding: 20,
       timelines: null,
       active_event: null

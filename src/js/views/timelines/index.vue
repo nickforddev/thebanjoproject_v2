@@ -3,7 +3,6 @@
     <div class="content">
       <router-view />
       <loading v-if="!active_event" />
-      <!-- {{ active_event }} -->
     </div>
     <div class="sidebar">
       <div class="active-indicator" :style="{ height, background: active_event_color }">
@@ -50,15 +49,11 @@ export default {
       basePath: 'wp/v2/timeline?per_page=99'
     })
   },
-  // beforeDestroy() {
-    // this.$store.dispatch('set_active_event', null)
-  // },
   computed: {
     collection_filtered() {
       return this.collection.filter(timeline => timeline.slug !== 'milestones')
     },
     milestones() {
-      // console.log(this.collection.find(timeline => timeline.slug === 'milestones'))
       return this.collection.find(timeline => timeline.slug === 'milestones')
     },
     date_markers() {
@@ -95,8 +90,8 @@ export default {
     })
   },
   watch: {
-    active_event(val) {
-      // console.log({val})
+    async active_event(val) {
+      await this.$nextTick()
       if (val) {
         this.setActiveIndicator(val)
       }
@@ -105,15 +100,15 @@ export default {
   async created() {
     await this.fetchAll()
     const timelines = await this.$collection.fetch()
-    // console.log(timelines)
     this.$store.dispatch('set_timelines', timelines)
     if (!this.active_event) {
       this.selectRandomEvent()
     } else {
-      // console.log(this.$route.path.split('/'))
       if (this.$route.path.split('/').filter(item => !!item).length === 1) {
         this.$router.push(`/timelines/${this.active_event.slug}`)
       }
+      await sleep(1000)
+      this.setActiveIndicator(this.active_event)
     }
   },
   methods: {
@@ -131,12 +126,14 @@ export default {
       const max = (Math.ceil(Math.max(...dates) / 10) * 10) + padding
       this.$store.dispatch('set_min', min)
       this.$store.dispatch('set_max', max)
-      // console.log(min, max)
     },
-    setActiveIndicator(val) {
+    async setActiveIndicator(val) {
+      await this.$nextTick()
       const $event = document.getElementById(`event-${val.id}`)
       if ($event) {
         this.active_event_offset = $event.offsetTop - 5
+        console.log(this.active_event_offset, this.$el.querySelector('.sidebar').scrollTop)
+        this.checkScrollPosition()
       }
     },
     async selectRandomEvent() {
@@ -145,9 +142,12 @@ export default {
       if ($events) {
         $events[Math.floor(Math.random() * $events.length)].click()
       }
-      // console.log(this.all_events)
-      // const random_event = this.all_events[Math.floor(Math.random() * this.all_events.length)]
-      // console.log()
+    },
+    checkScrollPosition() {
+      const $sidebar = this.$el.querySelector('.sidebar')
+      if (this.active_event_offset > $sidebar.scrollTop + $sidebar.offsetHeight) {
+        $sidebar.scrollTop = this.active_event_offset
+      }
     }
   },
   components: {
