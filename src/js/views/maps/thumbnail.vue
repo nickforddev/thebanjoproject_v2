@@ -74,6 +74,17 @@ export default {
     .vue2leaflet-map {
       position: absolute;
       top: 0;
+      z-index: 1;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 9;
     }
   }
 }
@@ -83,6 +94,9 @@ export default {
 .map-thumbnail {
   .leaflet-control-zoom {
     visibility: hidden;
+  }
+  .leaflet-bottom.leaflet-right {
+    display: none;
   }
 }
 </style>

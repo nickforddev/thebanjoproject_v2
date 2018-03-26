@@ -3,7 +3,7 @@
     <h1>Maps</h1>
     <div v-if="fetched" class="grid">
       <thumbnail
-        v-for="(region, index) in collection"
+        v-for="(region, index) in filtered_collection"
         :data="region"
         :key="index" />
     </div>
@@ -13,6 +13,7 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
+import { path } from 'ramda'
 import { Collection } from 'vue-collections'
 import Thumbnail from './thumbnail'
 
@@ -31,6 +32,14 @@ export default {
   },
   async created() {
     await this.fetch()
+  },
+  computed: {
+    filtered_collection() {
+      return this.collection.filter(region => {
+        const hide = path(['acf', 'hide', 0], region)
+        return !hide
+      })
+    }
   },
   methods: {
     async fetch() {
