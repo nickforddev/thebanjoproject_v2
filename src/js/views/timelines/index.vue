@@ -132,7 +132,6 @@ export default {
       const $event = document.getElementById(`event-${val.id}`)
       if ($event) {
         this.active_event_offset = $event.offsetTop - 5
-        console.log(this.active_event_offset, this.$el.querySelector('.sidebar').scrollTop)
         this.checkScrollPosition()
       }
     },

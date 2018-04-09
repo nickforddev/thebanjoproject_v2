@@ -10,7 +10,7 @@
             {{ event.acf.date }}
           </div>
           <div class="tag">
-            <div class="tag-key" :style="{ background: timeline.acf.color }"/>
+            <div class="tag-key" :style="{ background: timeline.acf.color }" />
             {{ timeline.name }}
           </div>
         </div>
