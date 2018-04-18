@@ -7,6 +7,20 @@ export default new Router({
   mode: 'history',
   routes: [
     {
+      path: '/narratives',
+      name: 'Narratives',
+      component(resolve) {
+        require(['@/views/narratives'], resolve)
+      }
+    },
+    {
+      path: '/narratives/:slug',
+      name: 'Narrative',
+      component(resolve) {
+        require(['@/views/narratives/view'], resolve)
+      }
+    },
+    {
       path: '/players',
       name: 'Players',
       component(resolve) {
