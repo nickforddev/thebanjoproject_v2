@@ -1,14 +1,31 @@
 <template>
   <div class="content">
-    Coming Soon
+    <component v-if="template" :is="template" />
+    <div v-else>
+      Coming Soon
+    </div>
   </div>
 </template>
 
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
+import ThreeBanjoSongsters from './templates/ThreeBanjoSongsters'
 export default {
-  name: 'narrative'
+  name: 'narrative',
+  data() {
+    return {
+      template: null
+    }
+  },
+  mounted() {
+    if (this.$route.params.slug === 'three-banjo-songsters') {
+      this.template = 'ThreeBanjoSongsters'
+    }
+  },
+  components: {
+    ThreeBanjoSongsters
+  }
 }
 </script>
 
