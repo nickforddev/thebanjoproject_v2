@@ -86,7 +86,7 @@ $media-height: 70vh;
 }
 .body {
   padding: 20px;
-  height: 50vh;
+  height: 30vh;
   overflow: auto;
 }
 .meta {
