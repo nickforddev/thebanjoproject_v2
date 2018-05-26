@@ -153,6 +153,16 @@ export default {
     font-size: 0.9em;
   }
 }
+.profile {
+  .content {
+    p {
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+  }
+}
 </style>
 
 <style scoped lang="scss">
@@ -176,6 +186,7 @@ $gutter-width: 30px;
   padding-right: $gutter-width;
   margin-right: $gutter-width;
   border-right: 1px solid #ccc;
+  // background: yellow;
 }
 .sidebar {
   display: inline-block;

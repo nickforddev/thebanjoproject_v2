@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <navigation />
+    
     <main>
+      <audio-player />
       <router-view />
     </main>
   </div>
@@ -9,11 +11,13 @@
 
 <script>
 import Navigation from '@/components/nav'
+import AudioPlayer from '@/components/audioplayer'
 
 export default {
   name: 'app',
   components: {
-    Navigation
+    Navigation,
+    AudioPlayer
   }
 }
 </script>
@@ -22,10 +26,6 @@ export default {
 $nav-width: 160px;
 
 #app {
-  font-family: 'Interstate', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
   height: 100%;
 }
 nav {
