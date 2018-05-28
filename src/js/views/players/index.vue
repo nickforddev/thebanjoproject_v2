@@ -1,17 +1,25 @@
 <template>
   <div>
     <div class="lineup">
-      <ul v-if="fetched">
+      <ul v-if="fetched" ref="scrollable">
         <li v-for="(model, index) in collection" :key="index">
-          <div class="tooltip">
-            {{ model.title.rendered }}
-          </div>
           <router-link :to="`/players/${model.slug}`">
+            <div class="tooltip">
+              {{ model.title.rendered }}
+            </div>
             <img :src="model.acf.lineup_photo.url" :alt="`${model.slug}`">
           </router-link>
         </li>
       </ul>
       <loading v-else />
+      <div class="controls" v-if="fetched">
+        <next
+          @mouseout="scrollRight(false)"
+          @mouseover="scrollRight(true)" />
+        <prev
+          @mouseout="scrollLeft(false)"
+          @mouseover="scrollLeft(true)" />
+      </div>
       <div class="overlay" />
     </div>
  
@@ -24,6 +32,8 @@
 
 <script>
 import { Collection } from 'vue-collections'
+import Next from '@/components/controls/next'
+import Prev from '@/components/controls/prev'
 
 export default {
   name: 'players',
@@ -58,13 +68,37 @@ export default {
     },
     setActive(model) {
       this.active = model.id
+    },
+    scroll(amount) {
+      const $scrollable = this.$refs.scrollable
+      const scrollLeft = $scrollable.scrollLeft
+      $scrollable.scrollLeft = scrollLeft + amount
+    },
+    async scrollRight(bool) {
+      if (bool) {
+        await this.$nextTick()
+        this.$options.interval = setInterval(() => {
+          this.scroll(4)
+        }, 20)
+      } else {
+        clearInterval(this.$options.interval)
+      }
+    },
+    async scrollLeft(bool) {
+      if (bool) {
+        await this.$nextTick()
+        this.$options.interval = setInterval(() => {
+          this.scroll(-4)
+        }, 20)
+      } else {
+        clearInterval(this.$options.interval)
+      }
     }
+  },
+  components: {
+    Next,
+    Prev
   }
-  // watch: {
-  //   $route(val) {
-  //     console.log(val)
-  //   }
-  // }
 }
 </script>
 
@@ -118,41 +152,27 @@ export default {
     li {
       display: inline-block;
       position: relative;
-      // display: inline-block;
       margin: 0 -70px -24px 0;
       width: 280px;
-      // z-index: 10;
 
       a {
         position: relative;
         display: block;
-        // margin: 0 -70px -24px 0;
         z-index: 10;
 
         &.router-link-active {
-          cursor: pointer;
-          z-index: 99;
-
           img {
             transform: scale(0.9);
           }
-
-          // .tooltip {
-          //   opacity: 1;
-          // }
         }
-      }
 
-      &:hover {
-        cursor: pointer;
-        z-index: 99;
+        &:hover, &.router-link-active {
+          cursor: pointer;
+          z-index: 99;
 
-        // img {
-        //   transform: scale(0.9);
-        // }
-
-        .tooltip {
-          opacity: 1;
+          .tooltip {
+            opacity: 1;
+          }
         }
       }
 
@@ -176,6 +196,16 @@ export default {
     pointer-events: none;
     opacity: 1;
     z-index: 11;
+  }
+}
+
+.controls {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+
+  & > div {
+    z-index: 9999;
   }
 }
 </style>

@@ -1,7 +1,12 @@
 <template>
-  <div class="controls-next" @click="emitClick" :class="[is_disabled]">
+  <div
+    class="controls-next"
+    :class="[is_disabled]">
     <div class="arrow" />
-    <div class="background" />
+    <div class="background"
+      @click="emitEvent($event, 'click')"
+      @mouseover="emitEvent($event, 'mouseover')"
+      @mouseout="emitEvent($event, 'mouseout')"/>
   </div>
 </template>
 
@@ -24,8 +29,8 @@ export default {
     }
   },
   methods: {
-    emitClick(e) {
-      this.$emit('click', e)
+    emitEvent(e, type) {
+      this.$emit(type, e)
     }
   }
 }
@@ -36,6 +41,9 @@ export default {
 <style scoped lang="scss">
 .disabled {
   opacity: 0.25;
+  pointer-events: none;
+}
+.arrow {
   pointer-events: none;
 }
 // @import '~%/colors';
