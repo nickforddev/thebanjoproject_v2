@@ -1,5 +1,5 @@
 <template>
-  <div v-if="initialized">
+  <div v-if="initialized" class="audioplayer">
     <iframe
       ref="iframe"
       :src="`https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/${song}&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&visual=true`" />
@@ -25,16 +25,16 @@ export default {
     async song(val) {
       if (!this.initialized) {
         await this.init()
+      } else {
+        await this.updateSong()
       }
       if (val) {
         this.$store.dispatch('play')
+        this.widget.play()
       }
     },
     async playing(val) {
-      console.log(this.ready)
       if (this.ready) {
-        // await sleep(1000)
-        // this.widget.toggle()
         const method = val
           ? 'play'
           : 'pause'
@@ -42,7 +42,6 @@ export default {
       }
     },
     ready() {
-      console.log('ready changed')
       this.widget.play()
     }
   },
@@ -54,13 +53,28 @@ export default {
   },
   methods: {
     async init() {
-      console.log(this.$refs)
       this.initialized = true
       await this.$nextTick()
       this.widget = new SoundcloudWidget(this.$refs.iframe)
       this.widget.on(SoundcloudWidget.events.READY, () => {
         this.ready = true
       })
+    },
+    async updateSong() {
+      const url = `https://api.soundcloud.com/${this.song}`
+      var options = {
+        auto_play: true
+        // buying: buying.checked
+        // liking: liking.checked,
+        // download: download.checked,
+        // sharing: sharing.checked,
+        // show_artwork: show_artwork.checked,
+        // show_comments: show_comments.checked,
+        // show_playcount: show_playcount.checked,
+        // show_user: show_user.checked,
+        // start_track: Number(start_track.value)
+      }
+      return this.widget.load(url, options)
     }
   }
 }
@@ -69,5 +83,12 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
-
+iframe {
+  visibility: hidden;
+}
+.audioplayer {
+  height: 0;
+  position: fixed;
+  z-index: -9999;
+}
 </style>

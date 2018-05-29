@@ -10,10 +10,12 @@ const modules = [
   audio
 ]
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   modules
   // mutations: {
   // },
   // actions: {
   // }
 })
+
+export default store

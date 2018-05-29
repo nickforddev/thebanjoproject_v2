@@ -17,7 +17,6 @@
         <next @click="next" :disabled="active === images.length - 1" />
         <prev @click="prev" :disabled="active ===  0" />
       </div>
-      test
       <full-screen @click="toggleFullscreen" />
     </div>
   </div>

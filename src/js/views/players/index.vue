@@ -39,7 +39,8 @@ export default {
   name: 'players',
   data() {
     return {
-      fetched: false
+      fetched: false,
+      pace: 4
     }
   },
   collection() {
@@ -69,30 +70,29 @@ export default {
     setActive(model) {
       this.active = model.id
     },
+    // setPace(amount) {
+    //   this.pace = amount
+    // },
+    async setScrolling(bool, direction) {
+      if (bool) {
+        await this.$nextTick()
+        this.$options.interval = setInterval(() => {
+          this.scroll(this.pace * direction)
+        }, 20)
+      } else {
+        clearInterval(this.$options.interval)
+      }
+    },
     scroll(amount) {
       const $scrollable = this.$refs.scrollable
       const scrollLeft = $scrollable.scrollLeft
       $scrollable.scrollLeft = scrollLeft + amount
     },
-    async scrollRight(bool) {
-      if (bool) {
-        await this.$nextTick()
-        this.$options.interval = setInterval(() => {
-          this.scroll(4)
-        }, 20)
-      } else {
-        clearInterval(this.$options.interval)
-      }
+    scrollRight(bool) {
+      this.setScrolling(bool, 1)
     },
-    async scrollLeft(bool) {
-      if (bool) {
-        await this.$nextTick()
-        this.$options.interval = setInterval(() => {
-          this.scroll(-4)
-        }, 20)
-      } else {
-        clearInterval(this.$options.interval)
-      }
+    scrollLeft(bool) {
+      this.setScrolling(bool, -1)
     }
   },
   components: {
