@@ -83,7 +83,7 @@ nav {
     color: inherit;
 
     &.router-link-active {
-      color: $color-hightlight;
+      color: $color-highlight;
     }
   }
 

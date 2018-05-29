@@ -17,6 +17,7 @@
     "node-sass": "^4.6.0",
     "ramda": "^0.25.0",
     "sass-loader": "^6.0.6",
+    "soundcloud-widget": "^0.2.1",
     "vee-validate": "^2.0.3",
     "vue-collections": "^1.1.4",
     "vue-models": "^1.4.5",
