@@ -1,35 +1,43 @@
 <template>
   <div id="app">
-    <navigation />
-    
-    <main>
-      <audio-player />
+    <div v-if="$route.name == 'Intro'">
+      <navigation-horizontal />
       <router-view />
-    </main>
+    </div>
+    <div v-else>
+      <navigation />
+
+      <main>
+        <audio-player />
+        <router-view />
+      </main>
+    </div>
   </div>
 </template>
 
 <script>
 import Navigation from '@/components/nav'
+import NavigationHorizontal from '@/components/nav/horizontal'
 import AudioPlayer from '@/components/audioplayer'
 
 export default {
   name: 'app',
+  created() {
+    console.log(this.$route)
+  },
   components: {
     Navigation,
+    NavigationHorizontal,
     AudioPlayer
   }
 }
 </script>
 
 <style lang="scss">
-$nav-width: 160px;
+@import '~%/variables';
 
 #app {
   height: 100%;
-}
-nav {
-  width: $nav-width;
 }
 main {
   position: relative;

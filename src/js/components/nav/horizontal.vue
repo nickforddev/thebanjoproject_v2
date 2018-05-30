@@ -1,6 +1,8 @@
 <template>
   <nav>
-    <logo />
+    <router-link to="/">
+      <logo />
+    </router-link>
     <ul>
       <li>
         <router-link to="/narratives">Narratives</router-link>
@@ -21,15 +23,6 @@
         <router-link to="/search">Search</router-link>
       </li>
     </ul>
-    <div class="divider" />
-    <ul class="small">
-      <li>
-        <router-link to="/about">About</router-link>
-      </li>
-      <li>
-        <router-link to="/resources">Resources</router-link>
-      </li>
-    </ul>
   </nav>
 </template>
 
@@ -38,7 +31,7 @@
 <script>
 import Logo from '@/components/logo'
 export default {
-  name: 'navigation',
+  name: 'navigation-horizontal',
   components: {
     Logo
   }
@@ -53,41 +46,51 @@ export default {
 $nav-padding: 20px;
 
 nav {
+  display: flex;
+  align-items: center;
   position: fixed;
   top: 0;
-  bottom: 0;
+  // bottom: 0;
   left: 0;
-  // width: $nav-width;
+  width: 100%;
   padding: $nav-padding;
   background: $color-nav-background;
   color: $color-text-light;
 
   .logo {
-    margin-bottom: 20px;
+    display: inline-block;
+    width: 120px;
+    // margin-bottom: 20px;
+    color: $color-text-light;
   }
 
   ul {
+    display: inline-block;
+    flex-grow: 1;
     margin: 0;
+    text-align: right;
 
     li {
+      display: inline-block;
       margin: 0;
-    }
-  }
 
-  a {
-    display: block;
-    padding: 6px 0;
-    color: inherit;
+      a {
+        // display: block;
+        // padding: 6px 0;
+        padding: 6px 14px;
+        color: inherit;
 
-    &.router-link-active {
-      color: $color-highlight;
-    }
-  }
+        &.router-link-active {
+          color: $color-highlight;
+        }
+      }
 
-  .small {
-    a {
-      font-size: 0.75em;
-      padding: 3px 0;
+      .small {
+        a {
+          font-size: 0.75em;
+          padding: 3px 0;
+        }
+      }
     }
   }
 

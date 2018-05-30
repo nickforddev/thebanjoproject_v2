@@ -8,6 +8,13 @@ const router = new Router({
   mode: 'history',
   routes: [
     {
+      path: '/',
+      name: 'Intro',
+      component(resolve) {
+        require(['@/views/intro'], resolve)
+      }
+    },
+    {
       path: '/narratives',
       name: 'Narratives',
       component(resolve) {
