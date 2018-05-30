@@ -44,7 +44,9 @@ export default {
 
 svg {
   display: inline-block;
-  width: 20px;
+  // width: 20px;
+  width: 18px;
+  margin-bottom: -2px;
 
   &:hover {
     cursor: pointer;

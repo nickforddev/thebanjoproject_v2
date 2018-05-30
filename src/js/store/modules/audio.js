@@ -18,9 +18,11 @@ export default {
       state.active_song = data
     },
     PLAY(state) {
+      // console.log('PLAY')
       state.playing = true
     },
     PAUSE(state) {
+      // console.log('PAUSE')
       state.playing = false
     }
   },
