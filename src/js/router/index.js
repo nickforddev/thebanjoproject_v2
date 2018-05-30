@@ -96,6 +96,13 @@ const router = new Router({
       component(resolve) {
         require(['@/views/search'], resolve)
       }
+    },
+    {
+      path: '/resources',
+      name: 'Resources',
+      component(resolve) {
+        require(['@/views/resources'], resolve)
+      }
     }
   ]
 })

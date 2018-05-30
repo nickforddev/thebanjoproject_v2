@@ -1,11 +1,15 @@
 <template>
-  <div class="content">
-    <h1>Maps</h1>
-    <div v-if="fetched" class="grid">
-      <thumbnail
-        v-for="(region, index) in filtered_collection"
-        :data="region"
-        :key="index" />
+  <div>
+    <header>
+      <h1>Maps</h1>
+    </header>
+    <div class="content">
+      <div v-if="fetched" class="grid">
+        <thumbnail
+          v-for="(region, index) in filtered_collection"
+          :data="region"
+          :key="index" />
+      </div>
     </div>
   </div>
 </template>

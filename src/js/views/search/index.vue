@@ -1,22 +1,26 @@
 <template>
-  <div class="page">
-    <h1>Search</h1>
-    <form @submit.prevent="validate">
-      <field name="search" :errors="errors">
-        <input type="search" v-model="search_term" v-validate.disable="'required'" name="search">
-      </field>
-      <button>Search</button>
-    </form>
-    <div class="results" v-if="results">
-      <h2>Results</h2>
-      <!-- <pre>{{ results }}</pre> -->
-      <router-link class="result" v-for="(result, index) in results" :to="`/${convertPermalinks(result.type)}/${result.slug}`" :key="index">
-        <div class="type">
-          {{ convertPermalinks(result.type) }}
-        </div>
-        <div class="title" v-html="result.title.rendered" />
-        
-      </router-link>
+  <div>
+    <header>
+      <h1>Search</h1>
+    </header>
+    <div class="content">
+      <form @submit.prevent="validate">
+        <field name="search" :errors="errors">
+          <input type="search" v-model="search_term" v-validate.disable="'required'" name="search">
+        </field>
+        <button>Search</button>
+      </form>
+      <div class="results" v-if="results">
+        <h2>Results</h2>
+        <!-- <pre>{{ results }}</pre> -->
+        <router-link class="result" v-for="(result, index) in results" :to="`/${convertPermalinks(result.type)}/${result.slug}`" :key="index">
+          <div class="type">
+            {{ convertPermalinks(result.type) }}
+          </div>
+          <div class="title" v-html="result.title.rendered" />
+
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -66,9 +70,6 @@ export default {
 <style scoped lang="scss">
 @import '~%/colors';
 
-.page {
-  padding: 20px;
-}
 .results {
   margin-top: 30px;
 

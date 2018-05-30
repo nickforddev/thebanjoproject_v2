@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div>
     <component v-if="template" :is="template" />
     <div v-else>
       Coming Soon
@@ -32,8 +32,8 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
-.content {
-  max-width: 1068px;
-  margin: 20px;
-}
+// .content {
+//   max-width: 1068px;
+//   margin: 20px;
+// }
 </style>

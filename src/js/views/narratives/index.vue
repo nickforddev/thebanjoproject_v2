@@ -1,20 +1,24 @@
 
 <template>
-  <div class="content">
-    <h1>Narratives</h1>
-    <div v-if="fetched_page">
-      <div v-html="data.content.rendered" />
-    </div>
-    <div v-if="fetched_collection">
-      <h2>Guided Narratives</h2>
-      <div class="narrative" v-for="(model, index) in collection" :key="index">
-        <router-link class="thumbnail" :to="`/narratives/${model.slug}`">
-          <img :src="model._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url" />
-        </router-link>
-        <div class="meta">
-          <h3 v-html="model.title.rendered" />
-          <div v-html="model.excerpt.rendered"></div>
-          <router-link :to="`/narratives/${model.slug}`">Explore</router-link>
+  <div>
+    <header>
+      <h1>Narratives</h1>
+    </header>
+    <div class="content">
+      <div v-if="fetched_page">
+        <div v-html="data.content.rendered" />
+      </div>
+      <div v-if="fetched_collection">
+        <h2>Guided Narratives</h2>
+        <div class="narrative" v-for="(model, index) in collection" :key="index">
+          <router-link class="thumbnail" :to="`/narratives/${model.slug}`">
+            <img :src="model._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url" />
+          </router-link>
+          <div class="meta">
+            <h3 v-html="model.title.rendered" />
+            <div v-html="model.excerpt.rendered"></div>
+            <router-link :to="`/narratives/${model.slug}`">Explore</router-link>
+          </div>
         </div>
       </div>
     </div>

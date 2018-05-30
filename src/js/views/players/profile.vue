@@ -1,6 +1,6 @@
 <template>
   <div class="profile">
-    <div class="content" v-if="fetched">
+    <div class="profile-content" v-if="fetched">
       <h1>{{ $player.title.rendered }}</h1>
       <h2 class="quote" v-html="$player.acf.pull_quote"></h2>
       <div v-html="content"></div>
@@ -178,7 +178,7 @@ $gutter-width: 30px;
   line-height: 1.3em;
 }
 
-.content {
+.profile-content {
   display: inline-block;
   width: 768px;
   max-width: calc(100% - #{$sidebar-width + ($gutter-width * 2)});

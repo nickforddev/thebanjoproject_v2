@@ -27,10 +27,7 @@
         <router-link to="/about">About</router-link>
       </li>
       <li>
-        <router-link to="/bibliography">Bibliography</router-link>
-      </li>
-      <li>
-        <router-link to="/contact">Contact</router-link>
+        <router-link to="/resources">Resources</router-link>
       </li>
     </ul>
   </nav>

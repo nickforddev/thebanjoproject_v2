@@ -1,14 +1,18 @@
 <template>
-  <div class="content">
-    <h1>Videos</h1>
-    <div v-if="fetched" class="grid">
-      <thumbnail
-        v-for="(video, index) in collection"
-        :data="video"
-        :key="index" />
+  <div>
+    <header>
+      <h1>Videos</h1>
+    </header>
+    <div class="content">
+      <div v-if="fetched" class="grid">
+        <thumbnail
+          v-for="(video, index) in collection"
+          :data="video"
+          :key="index" />
+      </div>
+      <loading v-else />
+      <router-view />
     </div>
-    <loading v-else />
-    <router-view />
   </div>
 </template>
 

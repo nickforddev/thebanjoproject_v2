@@ -1,13 +1,17 @@
 <template>
   <div v-if="fetched">
-    <h1 v-html="data.title.rendered" />
-    <!-- <pre>{{ data }}</pre> -->
-    <img :src="data._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url" >
-    <div v-html="data.content.rendered"></div>
-    <div v-if="fetched_parts" v-for="(part, index) in parts" :key="index">
-      <h2 v-html="part.title.rendered" />
-      <div v-html="part.content.rendered"/>
-      <pre>{{ part }}</pre>
+    <header>
+      <h1 v-html="data.title.rendered" />
+    </header>
+    <div class="content">
+      <!-- <pre>{{ data }}</pre> -->
+      <img :src="data._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url" >
+      <div v-html="data.content.rendered"></div>
+      <div v-if="fetched_parts" v-for="(part, index) in parts" :key="index">
+        <h2 v-html="part.title.rendered" />
+        <div v-html="part.content.rendered"/>
+        <pre>{{ part }}</pre>
+      </div>
     </div>
   </div>
 </template>

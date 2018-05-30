@@ -1,6 +1,6 @@
 <template>
   <div v-if="active_event && timeline">
-    <div class="content" v-if="fetched">
+    <div class="event-content" v-if="fetched">
       <div class="media">
         <slideshow :data="event" />
       </div>

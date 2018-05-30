@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <div class="content">
+    <div class="timeline-content">
       <router-view />
       <loading v-if="!active_event" />
     </div>
@@ -168,7 +168,7 @@ export default {
   overflow: hidden;
 }
 
-.content {
+.timeline-content {
   position: relative;
   flex: 1;
   overflow: hidden;
