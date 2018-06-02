@@ -22,9 +22,9 @@ import AudioPlayer from '@/components/audioplayer'
 
 export default {
   name: 'app',
-  created() {
-    console.log(this.$route)
-  },
+  // created() {
+  //   console.log(this.$route)
+  // },
   components: {
     Navigation,
     NavigationHorizontal,
@@ -43,7 +43,8 @@ main {
   position: relative;
   left: $nav-width;
   width: calc(100% - #{$nav-width});
-  height: 100%;
+  // height: 100%;
+  height: 100vh;
   overflow-x: hidden;
   overflow-y: auto
 }

@@ -8,7 +8,7 @@
       @next="onSelect" />
     <footer>
       <div
-        @click="test"
+        @click="goToLink"
         class="meta"
         :class="{ emphasize: ended }">
         {{ active_video.title }} &rarr;
@@ -16,6 +16,7 @@
       <div class="thumbnails">
         <div
           class="thumbnail"
+          :class="{ active: video === active_video}"
           v-for="(video, index) in data.acf.videos"
           @click="setActiveVideo(video)"
           :key="index">
@@ -64,8 +65,12 @@ export default {
     setRandomVideo() {
       this.active_video = getRandomFromArray(this.data.acf.videos)
     },
-    test() {
-      console.log(this.active_video)
+    goToLink() {
+      const url_string = this.active_video.link || this.active_video.link_custom
+      if (url_string) {
+        const url = new URL(url_string, window.location.origin)
+        this.$router.push(url.pathname)
+      }
     },
     onEnd() {
       this.ended = true
@@ -142,6 +147,10 @@ footer {
 
   .thumbnail {
     width: 160px;
+
+    &.active {
+      border: 1px solid white;
+    }
 
     &:hover {
       cursor: pointer;

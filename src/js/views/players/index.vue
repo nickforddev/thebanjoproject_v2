@@ -53,6 +53,8 @@ export default {
     await this.fetch()
     if (this.$route.path === '/players') {
       this.$router.replace('/players/uncle-dave-macon')
+    } else {
+      this.scrollToPlayer()
     }
   },
   computed: {
@@ -93,6 +95,31 @@ export default {
     },
     scrollLeft(bool) {
       this.setScrolling(bool, -1)
+    },
+    scrollToPlayer() {
+      const $player = this.$el.querySelector(`a[href="${this.$route.path}"]`)
+      if (!this.elementInViewport($player)) {
+        this.$refs.scrollable.scrollLeft = $player.parentNode.offsetLeft
+      }
+    },
+    elementInViewport(el) {
+      let top = el.offsetTop
+      let left = el.offsetLeft
+      let width = el.offsetWidth
+      let height = el.offsetHeight
+
+      while (el.offsetParent) {
+        el = el.offsetParent
+        top += el.offsetTop
+        left += el.offsetLeft
+      }
+
+      return (
+        top < (window.pageYOffset + window.innerHeight) &&
+        left < (window.pageXOffset + window.innerWidth) &&
+        (top + height) > window.pageYOffset &&
+        (left + width) > window.pageXOffset
+      )
     }
   },
   components: {
