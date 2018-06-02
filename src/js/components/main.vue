@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <div v-if="$route.name == 'Intro'">
-      <navigation-horizontal />
-      <router-view />
-    </div>
-    <div v-else>
+    <div v-if="$route.path !== '/'">
       <navigation />
 
       <main>
         <audio-player />
         <router-view />
       </main>
+    </div>
+    <div v-else>
+      <navigation-horizontal />
+      <router-view />
     </div>
   </div>
 </template>

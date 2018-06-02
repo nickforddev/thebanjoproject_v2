@@ -2,6 +2,10 @@ export function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
+export function getRandomFromArray(array) {
+  return array[Math.floor(Math.random() * array.length)]
+}
+
 const permalinks = {
   peoples: 'players',
   narratives: 'narratives',

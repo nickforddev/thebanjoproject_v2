@@ -42,6 +42,7 @@ export default {
 
 <style scoped lang="scss">
 @import '~%/colors';
+@import '~%/variables';
 
 $nav-padding: 20px;
 
@@ -50,9 +51,9 @@ nav {
   align-items: center;
   position: fixed;
   top: 0;
-  // bottom: 0;
   left: 0;
   width: 100%;
+  height: $nav-horizontal-height;
   padding: $nav-padding;
   background: $color-nav-background;
   color: $color-text-light;
