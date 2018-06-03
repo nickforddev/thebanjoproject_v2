@@ -1,8 +1,8 @@
 <template>
   <div>
     <component v-if="template" :is="template" />
-    <div v-else>
-      Coming Soon
+    <div class="content" v-else>
+      <coming-soon />
     </div>
   </div>
 </template>

@@ -1,9 +1,12 @@
 <template>
   <div class="profile">
     <div class="profile-content" v-if="fetched">
-      <h1>{{ $player.title.rendered }}</h1>
-      <h2 class="quote" v-html="$player.acf.pull_quote"></h2>
-      <div v-html="content"></div>
+      <div v-if="!$player.acf.disabled">
+        <h1>{{ $player.title.rendered }}</h1>
+        <h2 class="quote" v-html="$player.acf.pull_quote"></h2>
+        <div v-html="content"></div>
+      </div>
+      <coming-soon v-else />
     </div>
     <loading v-else />
     <div class="sidebar" v-if="fetched && fetched_relationships">
@@ -29,8 +32,9 @@
         <h3>Videos</h3>
         <ul>
           <li v-for="(video, index) in videos" :key="index">
-            <a href="#" @click.prevent>{{ video.post_title }}</a>
-            <!-- <pre>{{ video }}</pre> -->
+            <router-link :to="`/videos/${video.post_name}`">
+              {{ video.post_title }}
+            </router-link>
           </li>
         </ul>
       </div>
@@ -39,18 +43,21 @@
         <h3>Timeline</h3>
         <ul>
           <li v-for="(event, index) in timeline" :key="index">
-            <a href="#" @click.prevent>{{ event.post_title }}</a>
-            <!-- <pre>{{ video }}</pre> -->
+            <router-link :to="`/timelines/${event.post_name}`">
+              {{ event.post_title }}
+            </router-link>
           </li>
         </ul>
       </div>
 
-      <div class="group">
+      <div class="group" v-if="$player.acf.influences">
         <h3>Related Players</h3>
         <ul>
           <li v-for="(player, index) in $player.acf.influences" :key="index">
             <!-- <pre>{{ player.from_database }}</pre> -->
-            <router-link :to="`/players/${player.from_database[0].post_name}`">
+            <router-link
+              v-if="player.from_database[0]"
+              :to="`/players/${player.from_database[0].post_name}`">
               {{ player.from_database[0].post_title }}
             </router-link>
           </li>
@@ -58,7 +65,6 @@
       </div>
 
     </div>
-    <!-- <pre>{{ $player }}</pre> -->
   </div>
 </template>
 

@@ -30,6 +30,7 @@ import Loading from '@/components/loading'
 import Field from '@/components/field'
 import Validation from '@/components/validation'
 import Slideshow from '@/components/slideshow'
+import ComingSoon from '@/components/comingsoon'
 
 // eslint-disable-next-line  
 delete L.Icon.Default.prototype._getIconUrl  
@@ -44,7 +45,8 @@ const components = [
   Loading,
   Field,
   Validation,
-  Slideshow
+  Slideshow,
+  ComingSoon
 ]
 
 const install = (Vue) => {

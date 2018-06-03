@@ -1,6 +1,9 @@
 <template>
   <div class="style">
-    <a href="#" @click.prevent>{{ $style.name }}</a>
+    <router-link :to="`/search/${$style.slug}`">
+      {{ $style.name }}
+    </router-link>
+    <!-- <a href="#" @click.prevent>{{ $style.name }}</a> -->
   </div>
 </template>
 

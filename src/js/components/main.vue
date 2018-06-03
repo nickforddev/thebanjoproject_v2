@@ -1,21 +1,25 @@
 <template>
-  <div id="app">
-    <div v-if="$route.path !== '/'">
-      <navigation />
+  <transition name="fade">
+    <div id="app" v-if="loaded">
+      <div v-if="$route.path !== '/'">
+        <navigation />
 
-      <main>
-        <audio-player />
+        <main>
+          <audio-player />
+          <router-view />
+        </main>
+      </div>
+      <div v-else>
+        <navigation-horizontal />
         <router-view />
-      </main>
+      </div>
     </div>
-    <div v-else>
-      <navigation-horizontal />
-      <router-view />
-    </div>
-  </div>
+    <firstload v-else @loaded="onLoaded" />
+  </transition>
 </template>
 
 <script>
+import Firstload from '@/components/firstload'
 import Navigation from '@/components/nav'
 import NavigationHorizontal from '@/components/nav/horizontal'
 import AudioPlayer from '@/components/audioplayer'
@@ -25,7 +29,18 @@ export default {
   // created() {
   //   console.log(this.$route)
   // },
+  data() {
+    return {
+      loaded: false
+    }
+  },
+  methods: {
+    onLoaded() {
+      this.loaded = true
+    }
+  },
   components: {
+    Firstload,
     Navigation,
     NavigationHorizontal,
     AudioPlayer

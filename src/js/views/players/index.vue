@@ -2,13 +2,23 @@
   <div>
     <div class="lineup">
       <ul v-if="fetched" ref="scrollable">
-        <li v-for="(model, index) in collection" :key="index">
-          <router-link :to="`/players/${model.slug}`">
+        <li
+          v-for="(model, index) in collection"
+          :key="index"
+          :class="{ disabled: model.acf.disabled }">
+          <router-link v-if="!model.acf.disabled" :to="`/players/${model.slug}`">
             <div class="tooltip">
               {{ model.title.rendered }}
             </div>
             <img :src="model.acf.lineup_photo.url" :alt="`${model.slug}`">
           </router-link>
+          <a :href="`/players/${model.slug}`" v-else @click.prevent>
+            <div class="tooltip align-center">
+              {{ model.title.rendered }}
+              <div class="small">Coming Soon</div>
+            </div>
+            <img :src="model.acf.lineup_photo.url" :alt="`${model.slug}`">
+          </a>
         </li>
       </ul>
       <loading v-else />
@@ -67,6 +77,9 @@ export default {
   methods: {
     async fetch() {
       await this.$collection.fetch()
+      this.$collection.models.sort(model => {
+        return model.acf.disabled ? 1 : -1
+      })
       this.fetched = true
     },
     setActive(model) {
@@ -98,7 +111,7 @@ export default {
     },
     scrollToPlayer() {
       const $player = this.$el.querySelector(`a[href="${this.$route.path}"]`)
-      if (!this.elementInViewport($player)) {
+      if ($player && !this.elementInViewport($player)) {
         this.$refs.scrollable.scrollLeft = $player.parentNode.offsetLeft
       }
     },
@@ -182,6 +195,13 @@ export default {
       margin: 0 -70px -24px 0;
       width: 280px;
 
+      &.disabled {
+        // background: red;
+        a {
+          opacity: 0.3;
+        }
+      }
+
       a {
         position: relative;
         display: block;
@@ -234,5 +254,11 @@ export default {
   & > div {
     z-index: 9999;
   }
+}
+
+.small {
+  margin-top: 4px;
+  font-size: 0.7em;
+  text-transform: uppercase;
 }
 </style>
