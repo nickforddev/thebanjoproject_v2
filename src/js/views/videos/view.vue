@@ -1,7 +1,6 @@
 <template>
   <div class="video-container" @click.self="close">
     <div class="video" v-if="fetched">
-      <!-- <pre>{{ data }}</pre> -->
       <vimeo-player ref="player" :video-id="video_id" />
     </div>
     <loading v-else />
@@ -11,8 +10,6 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
-// import Video from '@/models/video'
-
 export default {
   name: 'video-view',
   data() {
@@ -40,18 +37,14 @@ export default {
       this.fetched = true
     }
   }
-  // models: {
-  //   video() {
-  //     return new Video({
-  //       id: this.
-  //     })
-  //   }
 }
 </script>
 
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
+@import '~%/breakpoints';
+
 .video-container {
   position: fixed;
   top: 0;
@@ -66,6 +59,31 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 60vw;
+  }
+}
+
+@media (max-width: $breakpoint-large) {
+  .video-container {
+    .video {
+      width: 70vw;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-medium) {
+  .video-container {
+    .video {
+      width: 80vw;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-small) {
+  .video-container {
+    .video {
+      width: 90vw;
+    }
   }
 }
 </style>
