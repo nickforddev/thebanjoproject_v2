@@ -3,15 +3,25 @@
     <header>
       <h1>Videos</h1>
     </header>
+    <ul class="tabs">
+      <li>
+        <router-link to="/videos/full-interviews">
+          Full Interviews
+        </router-link>
+      </li>
+      <li>
+        <router-link to="/videos/performances">
+          Performances
+        </router-link>
+      </li>
+      <li>
+        <router-link to="/videos/mini-narratives">
+          Mini Narratives
+        </router-link>
+      </li>
+    </ul>
     <div class="content">
-      <div v-if="fetched" class="grid">
-        <thumbnail
-          v-for="(video, index) in collection"
-          :data="video"
-          :key="index" />
-      </div>
-      <loading v-else />
-      <router-view />
+      <router-view :type="$route.params.type" />
     </div>
   </div>
 </template>
@@ -19,33 +29,22 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
-import { Collection } from 'vue-collections'
-import Thumbnail from './thumbnail'
-
 export default {
   name: 'videos',
-  data() {
-    return {
-      fetched: false
-    }
-  },
-  collection() {
-    return new Collection({
-      basePath: 'wp/v2/videos?per_page=99&_embed',
-      id_attribute: 'slug'
-    })
-  },
   mounted() {
-    this.fetch()
+    this.checkRoute()
+  },
+  watch: {
+    $route() {
+      this.checkRoute()
+    }
   },
   methods: {
-    async fetch() {
-      await this.$collection.fetch()
-      this.fetched = true
+    checkRoute() {
+      if (!this.$route.params.type) {
+        this.$router.push('/videos/full-interviews')
+      }
     }
-  },
-  components: {
-    Thumbnail
   }
 }
 </script>
@@ -54,7 +53,6 @@ export default {
 
 <style scoped lang="scss">
 .content {
-  max-width: 1068px;
-  margin: 20px;
+  margin-top: 0;
 }
 </style>

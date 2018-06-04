@@ -1,0 +1,25 @@
+@import '~%/colors';
+
+.tabs {
+  margin-bottom: 0;
+  
+  li {
+    display: inline-block;
+
+    a {
+      display: inline-block;
+      padding: 20px 8px;
+
+      &.router-link-exact-active {
+        // color: $color-highlight;
+        text-decoration: underline;
+      }
+    }
+
+    &:first-child {
+      a {
+        padding-left: 20px;
+      }
+    }
+  }
+}

@@ -81,11 +81,18 @@ const router = new Router({
         require(['@/views/videos'], resolve)
       },
       children: [
+        // {
+        //   path: 'watch/:slug',
+        //   name: 'Video',
+        //   component(resolve) {
+        //     require(['@/views/videos/view'], resolve)
+        //   }
+        // },
         {
-          path: ':slug',
-          name: 'Video',
+          path: ':type',
+          name: 'Video Type',
           component(resolve) {
-            require(['@/views/videos/view'], resolve)
+            require(['@/views/videos/list'], resolve)
           }
         }
       ]

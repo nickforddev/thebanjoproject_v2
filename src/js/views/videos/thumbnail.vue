@@ -20,7 +20,8 @@ export default {
   },
   methods: {
     goToVideo() {
-      this.$router.push(`/videos/${this.data.slug}`)
+      this.$store.dispatch('set_active_video', this.data.slug)
+      // this.$router.push(`/videos/watch/${this.data.slug}`)
     }
   }
 }

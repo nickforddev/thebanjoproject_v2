@@ -1,5 +1,5 @@
 <template>
-  <div class="video-container" @click.self="close">
+  <div class="video-container" v-if="video_slug" @click.self="close">
     <div class="video" v-if="fetched">
       <vimeo-player ref="player" :video-id="video_id" />
     </div>
@@ -10,6 +10,8 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'video-view',
   data() {
@@ -18,21 +20,34 @@ export default {
       fetched: false
     }
   },
-  mounted() {
-    this.fetch()
+  // mounted() {
+  //   this.fetch()
+  // },
+  watch: {
+    video_slug(val) {
+      if (val) {
+        this.fetch()
+      } else {
+        this.data = null
+      }
+    }
   },
   computed: {
+    ...mapGetters({
+      video_slug: 'video:active_video'
+    }),
     video_id() {
       return this.data.acf.video_url.split('/').pop()
     }
   },
   methods: {
     close() {
-      this.$router.push('/videos')
+      this.$store.dispatch('set_active_video', null)
+      // this.$router.push('/videos')
     },
     async fetch() {
       this.fetched = false
-      const response = await this.$request(`wp/v2/videos?slug=${this.$route.params.slug}&_embed`)
+      const response = await this.$request(`wp/v2/videos?slug=${this.video_slug}&_embed`)
       this.data = response[0]
       this.fetched = true
     }
@@ -53,6 +68,7 @@ export default {
   left: 0;
   background: rgba(0,0,0, 0.8);
   color: white;
+  z-index: 99999;
 
   .video {
     position: absolute;

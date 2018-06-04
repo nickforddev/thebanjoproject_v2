@@ -6,6 +6,7 @@
 
         <main>
           <audio-player />
+          <video-player />
           <router-view />
         </main>
       </div>
@@ -23,6 +24,7 @@ import Firstload from '@/components/firstload'
 import Navigation from '@/components/nav'
 import NavigationHorizontal from '@/components/nav/horizontal'
 import AudioPlayer from '@/components/audioplayer'
+import VideoPlayer from '@/components/videoplayer'
 
 export default {
   name: 'app',
@@ -43,7 +45,8 @@ export default {
     Firstload,
     Navigation,
     NavigationHorizontal,
-    AudioPlayer
+    AudioPlayer,
+    VideoPlayer
   }
 }
 </script>
