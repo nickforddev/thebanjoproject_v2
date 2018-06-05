@@ -1,7 +1,7 @@
 <template>
   <div class="video-thumbnail grid__col grid__col--1-of-4" @click="goToVideo">
     <img :src="image_url" />
-    <h4>{{ data.title.rendered }}</h4>
+    <h4 v-html="data.title.rendered" />
   </div>
 </template>
 

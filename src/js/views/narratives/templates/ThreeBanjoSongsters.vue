@@ -5,12 +5,21 @@
     </header>
     <div class="content">
       <!-- <pre>{{ data }}</pre> -->
-      <img :src="data._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url" >
+      <!-- <img :src="data._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url" > -->
       <div v-html="data.content.rendered"></div>
+      <div class="divider" />
       <div v-if="fetched_parts" v-for="(part, index) in parts" :key="index">
         <h2 v-html="part.title.rendered" />
         <div v-html="part.content.rendered"/>
-        <pre>{{ part }}</pre>
+        <div class="videos grid">
+          <video-thumbnail
+            v-for="({video}, index) in part.acf.videos"
+            :key="index"
+            :id="video.ID" />
+        </div>
+
+        <div class="divider" v-if="index < parts.length - 1" />
+        <!-- <pre>{{ part }}</pre> -->
       </div>
     </div>
   </div>
@@ -19,6 +28,8 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
+import VideoThumbnail from './thumbnail'
+
 export default {
   name: 'three-banjo-songsters',
   data() {
@@ -44,6 +55,9 @@ export default {
       this.parts = (await this.$request(`wp/v2/narratives?parent=${this.data.id}&_embed`))
       this.fetched_parts = true
     }
+  },
+  components: {
+    VideoThumbnail
   }
 }
 </script>
@@ -51,7 +65,15 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
+@import '~%/colors';
+
 img {
   width: 100%;
+}
+
+.divider {
+  height: 1px;
+  background: $color-text-dark;
+  margin: 20px 0;
 }
 </style>
