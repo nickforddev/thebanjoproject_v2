@@ -1,6 +1,6 @@
 <template>
   <div v-if="fetched">
-    <header>
+    <header :style="{background: `url(${data.acf.banner.url})`}">
       <h1 v-html="data.title.rendered" />
     </header>
     <div class="content">
@@ -52,7 +52,7 @@ export default {
     },
     async fetchParts() {
       this.fetched_parts = false
-      this.parts = (await this.$request(`wp/v2/narratives?parent=${this.data.id}&_embed`))
+      this.parts = (await this.$request(`wp/v2/narratives?parent=${this.data.id}&_embed&order=asc`))
       this.fetched_parts = true
     }
   },
@@ -66,6 +66,11 @@ export default {
 
 <style scoped lang="scss">
 @import '~%/colors';
+
+header {
+  height: 180px;
+  text-shadow: 0px 2px 3px rgba(0,0,0, 0.4);
+}
 
 img {
   width: 100%;
