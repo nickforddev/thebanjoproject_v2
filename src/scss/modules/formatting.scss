@@ -1,3 +1,5 @@
+@import '~%/colors';
+
 .clear {
 	clear: both;
 }
@@ -42,6 +44,9 @@
   margin-bottom: 10px;
 }
 
-// iframe {
-//   width: 100%;
-// }
+.divider {
+  height: 1px;
+  // background: $color-text-dark;
+  background: #ccc;
+  margin: 20px 0;
+}

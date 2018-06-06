@@ -14,4 +14,12 @@ $color-slideshow-background: #1c1c23;
 
 $color-controls-background: rgba(0,0,0, 0.6);
 
+$color-status-neutral: $color-background-dark;
+$color-status-success: #0ca449;
+$color-status-warning: #f7d114;
 $color-status-danger: rgb(219, 54, 54);
+
+$color-button-background: $color-status-neutral;
+$color-button-text: $color-text-light;
+$color-button-primary-background: $color-status-neutral;
+$color-button-secondary-background: $color-links;

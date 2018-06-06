@@ -9,7 +9,7 @@
       <coming-soon v-else />
     </div>
     <loading v-else />
-    <div class="sidebar" v-if="fetched && fetched_relationships">
+    <sidebar v-if="fetched && fetched_relationships">
       <div class="group">
         <h3>Born {{ $player.acf.year_born }} – Died {{ $player.acf.year_died }}</h3>
         <ul>
@@ -67,7 +67,7 @@
         </ul>
       </div>
 
-    </div>
+    </sidebar>
   </div>
 </template>
 
@@ -76,6 +76,7 @@
 <script>
 // import { Model } from 'vue-models'
 import Player from '@/models/player'
+import Sidebar from '@/components/sidebar'
 import StyleTag from '@/components/style'
 import AudioLink from '@/components/audio'
 
@@ -143,6 +144,7 @@ export default {
     }
   },
   components: {
+    Sidebar,
     StyleTag,
     AudioLink
   }
@@ -152,14 +154,6 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style lang="scss">
-.credit  {
-  width: 100%;
-  display: inline-block;
-  font-family: 'Interstate';
-  font-size: 0.7em;
-  text-align: right;
-  color: #9aa7b4;
-}
 .sidebar {
   a {
     font-size: 0.9em;
@@ -178,21 +172,15 @@ export default {
 </style>
 
 <style scoped lang="scss">
-$sidebar-width: 200px;
-$gutter-width: 30px;
+@import '~%/variables';
 
 .profile {
   padding: 30px;
 }
-.quote {
-  font-family: 'Calendus Plus';
-  font-style: italic;
-  line-height: 1.3em;
-}
 
 .profile-content {
   display: inline-block;
-  width: 768px;
+  width: 1068px;
   max-width: calc(100% - #{$sidebar-width + ($gutter-width * 2)});
   vertical-align: top;
   padding-right: $gutter-width;
@@ -200,20 +188,5 @@ $gutter-width: 30px;
   border-right: 1px solid #ccc;
   // background: yellow;
 }
-.sidebar {
-  display: inline-block;
-  width: $sidebar-width;
-  vertical-align: top;
 
-  h3 {
-    font-family: 'League Gothic', sans-serif;
-    font-size: 1.4em;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-
-  .group {
-    margin-bottom: 30px;
-  }
-}
 </style>

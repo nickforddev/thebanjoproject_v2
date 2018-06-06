@@ -75,10 +75,4 @@ header {
 img {
   width: 100%;
 }
-
-.divider {
-  height: 1px;
-  background: $color-text-dark;
-  margin: 20px 0;
-}
 </style>

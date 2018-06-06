@@ -175,7 +175,7 @@ export default {
 .lineup {
   position: relative;
   height: 344px;
-  background-image: url('/static/bg_paper.gif');
+  background-image: url('/static/bg-paper.gif');
   overflow: hidden;
 
   ul {

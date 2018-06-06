@@ -87,3 +87,17 @@ pre {
   font-family: 'Monosten', 'Consolas', courier, monospace;
   font-size: 0.75em;
 }
+
+.quote {
+  font-family: 'Calendus Plus';
+  // font-style: italic;
+  line-height: 1.3em;
+}
+
+.credit  {
+  width: 100%;
+  display: inline-block;
+  font-size: 0.7em;
+  font-weight: bold;
+  text-align: right;
+}
