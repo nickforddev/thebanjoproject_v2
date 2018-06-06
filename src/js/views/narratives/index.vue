@@ -5,7 +5,7 @@
       <h1>Narratives</h1>
     </header>
     <div class="content">
-      <div class="narratives-content">
+      <div class="layout-left">
         <div v-if="fetched_page">
           <div v-html="data.content.rendered" />
         </div>
@@ -80,17 +80,17 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
-@import '~%/variables';
+// @import '~%/variables';
 
-.narratives-content {
-  display: inline-block;
-  width: 1068px;
-  max-width: calc(100% - #{$sidebar-width + ($gutter-width * 2)});
-  vertical-align: top;
-  padding-right: $gutter-width;
-  margin-right: $gutter-width;
-  border-right: 1px solid #ccc;
-}
+// .narratives-content {
+//   display: inline-block;
+//   width: 1068px;
+//   max-width: calc(100% - #{$sidebar-width + ($gutter-width * 2)});
+//   vertical-align: top;
+//   padding-right: $gutter-width;
+//   margin-right: $gutter-width;
+//   border-right: 1px solid #ccc;
+// }
 .narrative {
   display: flex;
   margin-bottom: 20px;

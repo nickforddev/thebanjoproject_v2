@@ -83,12 +83,12 @@ nav {
           color: $color-highlight;
         }
       }
+    }
 
-      .small {
-        a {
-          font-size: 0.75em;
-          padding: 3px 0;
-        }
+    &.small {
+      a {
+        font-size: 0.75em;
+        padding: 3px 0;
       }
     }
   }

@@ -4,7 +4,7 @@
       <router-view />
       <loading v-if="!active_event" />
     </div>
-    <div class="sidebar">
+    <div class="timeline-sidebar">
       <div class="active-indicator" :style="{ height, background: active_event_color }">
         <div class="pointer" v-if="active_event" :style="{ top: `${active_event_offset}px`}" />
       </div>
@@ -174,7 +174,7 @@ export default {
   overflow: hidden;
 }
 
-.sidebar {
+.timeline-sidebar {
   display: flex;
   height: 100%;
   background: $color-background-dark;

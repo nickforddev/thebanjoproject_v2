@@ -5,6 +5,9 @@
       <div class="tagline">
         A Digital Musem
       </div>
+      <div>
+        CONTENT ADVISORY: The banjo has a long and contested history that includes racist and misogynistic images and language.  For a fuller understanding of the music, its players and audiences, we’ve included potentially offensive content and tried to put it in its cultural context, which should in no way be seen as excusing or condoning it.
+      </div>
     </div>
   </div>
 </template>

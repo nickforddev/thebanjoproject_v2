@@ -1,6 +1,6 @@
 <template>
   <div class="profile">
-    <div class="profile-content" v-if="fetched">
+    <div class="layout-left" v-if="fetched">
       <div v-if="!$player.acf.disabled">
         <h1>{{ $player.title.rendered }}</h1>
         <h2 class="quote" v-html="$player.acf.pull_quote"></h2>
@@ -172,21 +172,10 @@ export default {
 </style>
 
 <style scoped lang="scss">
-@import '~%/variables';
+// @import '~%/variables';
 
 .profile {
   padding: 30px;
-}
-
-.profile-content {
-  display: inline-block;
-  width: 1068px;
-  max-width: calc(100% - #{$sidebar-width + ($gutter-width * 2)});
-  vertical-align: top;
-  padding-right: $gutter-width;
-  margin-right: $gutter-width;
-  border-right: 1px solid #ccc;
-  // background: yellow;
 }
 
 </style>
