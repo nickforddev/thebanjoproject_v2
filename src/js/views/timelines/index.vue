@@ -90,6 +90,11 @@ export default {
     })
   },
   watch: {
+    $route() {
+      if (!this.$route.params.slug) {
+        this.selectRandomEvent()
+      }
+    },
     async active_event(val) {
       await this.$nextTick()
       if (val) {
@@ -143,7 +148,8 @@ export default {
       }
     },
     checkScrollPosition() {
-      const $sidebar = this.$el.querySelector('.sidebar')
+      // await this.$nextTick()
+      const $sidebar = this.$el.querySelector('.timeline-sidebar')
       if (this.active_event_offset > $sidebar.scrollTop + $sidebar.offsetHeight) {
         $sidebar.scrollTop = this.active_event_offset
       }

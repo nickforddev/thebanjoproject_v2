@@ -4,7 +4,7 @@
       <h1>About</h1>
     </header>
     <div class="content" v-if="fetched">
-      <div class="about-content">
+      <div class="layout-left">
         <h2 class="quote">
           "{{ data.acf.pull_quote }}"
           <span class="credit">– {{ data.acf.attribution }}</span>
@@ -55,17 +55,6 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
-@import '~%/variables';
-
-.about-content {
-  display: inline-block;
-  width: 1068px;
-  max-width: calc(100% - #{$sidebar-width + ($gutter-width * 2)});
-  vertical-align: top;
-  padding-right: $gutter-width;
-  margin-right: $gutter-width;
-  border-right: 1px solid #ccc;
-}
 
 .images {
   position: relative;
