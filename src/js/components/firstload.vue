@@ -41,7 +41,7 @@ export default {
     },
     async showWarning() {
       this.warning = true
-      await sleep(5000)
+      await sleep(7000)
     },
     emitLoaded() {
       this.$emit('loaded')
