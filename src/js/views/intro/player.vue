@@ -30,7 +30,7 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
-// import { sleep } from '@/utils'
+import { sleep } from '@/utils'
 export default {
   name: 'intro-player',
   props: {
@@ -86,10 +86,9 @@ export default {
       this.$emit('ended')
       this.startCountdown()
     },
-    startCountdown() {
-      setTimeout(() => {
-        this.$emit('next', this.next_index)
-      }, 5000)
+    async startCountdown() {
+      await sleep(5000)
+      this.emitNext()
     },
     emitNext() {
       this.$emit('next', this.next_index)

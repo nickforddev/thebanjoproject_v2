@@ -129,7 +129,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  store.dispatch('pause')
+  store.dispatch('pause_audio')
   next()
 })
 

@@ -2,7 +2,7 @@ export default {
   state() {
     return {
       active_song: null,
-      playing: false
+      audio_playing: false
     }
   },
   getters: {
@@ -10,31 +10,29 @@ export default {
       return state.active_song
     },
     'audio:playing': state => {
-      return state.playing
+      return state.audio_playing
     }
   },
   mutations: {
     SET_ACTIVE_SONG(state, data) {
       state.active_song = data
     },
-    PLAY(state) {
-      // console.log('PLAY')
-      state.playing = true
+    PLAY_AUDIO(state) {
+      state.audio_playing = true
     },
-    PAUSE(state) {
-      // console.log('PAUSE')
-      state.playing = false
+    PAUSE_AUDIO(state) {
+      state.audio_playing = false
     }
   },
   actions: {
     set_active_song({ commit }, data) {
       commit('SET_ACTIVE_SONG', data)
     },
-    play({ commit }) {
-      commit('PLAY')
+    play_audio({ commit }) {
+      commit('PLAY_AUDIO')
     },
-    pause({ commit }) {
-      commit('PAUSE')
+    pause_audio({ commit }) {
+      commit('PAUSE_AUDIO')
     }
   }
 }

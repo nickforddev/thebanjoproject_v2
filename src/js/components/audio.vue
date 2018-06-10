@@ -1,16 +1,7 @@
 <template>
   <div class="audio" v-if="fetched">
     <playpause :playing="is_playing" @play="play" @pause="pause" />
-    <!-- <div v-if="is_active_song">
-      Active
-      <div v-if="is_playing">
-        <a href="#" @click.prevent="pause">Pause</a>
-      </div>
-      <div v-else>
-        <a href="#" @click.prevent="play">Play</a>
-      </div>
-    </div> -->
-    <a href="#" @click.prevent="toggle" v-html="$audio.title.rendered"></a>
+    <a href="#" @click.prevent="toggle" v-html="$audio.title.rendered" />
   </div>
 </template>
 
@@ -63,13 +54,13 @@ export default {
     },
     play() {
       if (this.is_active_song) {
-        this.$store.dispatch('play')
+        this.$store.dispatch('play_audio')
       } else {
         this.setSong()
       }
     },
     pause() {
-      this.$store.dispatch('pause')
+      this.$store.dispatch('pause_audio')
     },
     toggle() {
       const method = this.is_playing
