@@ -4,7 +4,7 @@
       ref="iframe"
       width="100%" height="300" scrolling="no" frameborder="no"
       allow="autoplay"
-      :src="`https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/${song}&auto_play=true&hide_related=false&show_comments=false&show_user=false&show_reposts=false&visual=true`" />
+      :src="`https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/${song}&auto_play=false&hide_related=false&show_comments=false&show_user=false&show_reposts=false&visual=true`" />
   </div>
 </template>
 
@@ -27,7 +27,12 @@ export default {
       if (!this.initialized) {
         await this.init()
       } else {
-        this.widget.play()
+        // console.log('song changed, already initted')
+        // await this.$nextTick()
+        setTimeout(() => {
+          this.widget.play()
+        }, 300)
+        // this.widget.play()
       }
       this.$store.dispatch('play_audio')
     },
@@ -55,19 +60,19 @@ export default {
       return new Promise(resolve => {
         this.widget.on(SoundcloudWidget.events.READY, () => {
           this.ready = true
-          // this.attachEventListeners()
+          this.attachEventListeners()
           resolve()
         })
       })
+    },
+    attachEventListeners() {
+      this.widget.on(SoundcloudWidget.events.PLAY, () => {
+        console.log('play event!!!!!')
+      })
+      this.widget.on(SoundcloudWidget.events.PAUSE, (e) => {
+        console.log('pause event!!!!')
+      })
     }
-    // attachEventListeners() {
-    //   this.widget.on(SoundcloudWidget.events.PLAY, () => {
-    //     console.log('play event!!!!!')
-    //   })
-    //   this.widget.on(SoundcloudWidget.events.PAUSE, (e) => {
-    //     console.log('pause event!!!!')
-    //   })
-    // }
   }
 }
 </script>

@@ -59,6 +59,13 @@ const router = new Router({
       }
     },
     {
+      path: '/maps/:region/:slug',
+      name: 'Map Marker',
+      component(resolve) {
+        require(['@/views/maps/region'], resolve)
+      }
+    },
+    {
       path: '/timelines',
       name: 'Timelines',
       component(resolve) {

@@ -2,7 +2,7 @@ export function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-export function getRandomFromArray(array) {
+export function getRandomFromArray (array) {
   return array[Math.floor(Math.random() * array.length)]
 }
 
@@ -14,9 +14,20 @@ const permalinks = {
   videos: 'videos',
   audio: 'audio',
   texts: 'text',
-  page: 'pages'
+  page: {
+    name: 'pages',
+    slug: ''
+  }
 }
 
-export function convertPermalinks (type) {
-  return permalinks[type]
+export function convertPermalinks (type, target = 'name') {
+  const model = permalinks[type]
+  const data = {
+    name: model.name === undefined ? model : model.name,
+    slug: model.slug === undefined ? model : model.slug
+  }
+  if (data.slug) {
+    data.slug = '/' + data.slug
+  }
+  return data[target]
 }

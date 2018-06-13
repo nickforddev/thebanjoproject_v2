@@ -11,15 +11,21 @@
         <button>Search</button>
       </form>
       <div class="results" v-if="results">
-        <h2>Results</h2>
-        <!-- <pre>{{ results }}</pre> -->
-        <router-link class="result" v-for="(result, index) in results" :to="`/${convertPermalinks(result.type)}/${result.slug}`" :key="index">
-          <div class="type">
-            {{ convertPermalinks(result.type) }}
-          </div>
-          <div class="title" v-html="result.title.rendered" />
+        <div v-if="results.length">
+          <h2>
+            Results
+            {{ results && `(${results.length})` }}
+          </h2>
+          <!-- <pre>{{ results }}</pre> -->
 
-        </router-link>
+          <result
+            v-for="(result, index) in results"
+            :key="index"
+            :data="result" />
+        </div>
+        <div v-else>
+          No results found
+        </div>
       </div>
     </div>
   </div>
@@ -28,7 +34,8 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
-import { convertPermalinks } from '@/utils'
+// import { convertPermalinks } from '@/utils'
+import Result from './result'
 
 export default {
   name: 'search',
@@ -55,12 +62,15 @@ export default {
     async search() {
       const term = this.search_term.split(' ').join('+')
       this.$router.push(`/search/${term}`)
-      const response = await this.$request(`wp/v2/search/${term}`)
-      this.results = response
-    },
-    convertPermalinks(type) {
-      return convertPermalinks(type)
+      // const response = await this.$request(`wp/v2/search/${term}`)
+      const response = await this.$request(`swp_api/search?s=${term}&posts_per_page=99&_embed`)
+      this.results = response.sort((a, b) => {
+        return a.type < b.type ? -1 : 1
+      })
     }
+  },
+  components: {
+    Result
   }
 }
 </script>
@@ -68,26 +78,9 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
-@import '~%/colors';
+// @import '~%/colors';
 
 .results {
   margin-top: 30px;
-
-  .result {
-    display: block;
-    margin-bottom: 10px;
-  }
-
-  .type {
-    display: inline-block;
-    background: grey;
-    padding: 4px 6px;
-    border-radius: 4px;
-    color: $color-text-light;
-  }
-
-  .title {
-    display: inline-block;
-  }
 }
 </style>
