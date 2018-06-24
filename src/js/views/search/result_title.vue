@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="result-title">
     <div class="type">
       {{ typeName }}
     </div>
-    <div class="title" v-html="title" />
+    <div class="title" v-if="showTitle" v-html="title" />
   </div>
 </template>
 
@@ -14,7 +14,11 @@ export default {
   name: 'result-title',
   props: {
     typeName: String,
-    title: String
+    title: String,
+    showTitle: {
+      type: Boolean,
+      default: true
+    }
   }
 }
 </script>
@@ -22,5 +26,10 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
+@import '~%/colors';
 
+.result-title {
+  // margin-bottom: 10px;
+  color: $color-links;
+}
 </style>

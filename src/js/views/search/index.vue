@@ -10,7 +10,9 @@
         </field>
         <button>Search</button>
       </form>
-      <div class="results" v-if="results">
+      <loading v-if="loading" />
+      <div v-else>
+        <div class="results" v-if="results">
         <div v-if="results.length">
           <h2>
             Results
@@ -27,6 +29,7 @@
           No results found
         </div>
       </div>
+      </div>
     </div>
   </div>
 </template>
@@ -34,13 +37,13 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
-// import { convertPermalinks } from '@/utils'
 import Result from './result'
 
 export default {
   name: 'search',
   data() {
     return {
+      loading: false,
       search_term: null,
       results: null
     }
@@ -52,6 +55,11 @@ export default {
       this.search()
     }
   },
+  computed: {
+    term() {
+      return this.search_term.split(' ').join('+')
+    }
+  },
   methods: {
     async validate() {
       const passed = await this.$validator.validateAll()
@@ -60,13 +68,14 @@ export default {
       }
     },
     async search() {
-      const term = this.search_term.split(' ').join('+')
+      this.loading = true
+      const term = this.term
       this.$router.push(`/search/${term}`)
-      // const response = await this.$request(`wp/v2/search/${term}`)
       const response = await this.$request(`swp_api/search?s=${term}&posts_per_page=99&_embed`)
       this.results = response.sort((a, b) => {
         return a.type < b.type ? -1 : 1
       })
+      this.loading = false
     }
   },
   components: {

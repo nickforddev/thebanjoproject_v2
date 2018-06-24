@@ -8,6 +8,12 @@
       @next="onSelect" />
     <footer>
       <div
+        v-if="hover_title"
+        class="meta">
+        {{ hover_title.title }} &rarr;
+      </div>
+      <div
+        v-else
         @click="goToLink"
         class="meta"
         :class="{ emphasize: ended }">
@@ -19,7 +25,13 @@
           :class="{ active: video === active_video}"
           v-for="(video, index) in data.acf.videos"
           @click="setActiveVideo(video)"
+          @mouseover="showTitle(video)"
+          @mouseout="clearTitle"
           :key="index">
+          <svg class="play" viewBox="0 0 34.142 34.199">
+            <path d="M17.081,0.039c-9.423,0-17.06,7.638-17.06,17.06c0,9.423,7.638,17.06,17.06,17.06c9.422,0,17.06-7.638,17.06-17.06C34.142,7.677,26.504,0.039,17.081,0.039z"/>
+            <polygon points="13.788,23.164 13.789,11.035 23.81,17.1 "/>
+          </svg>
           <img :src="video.thumbnail.sizes.thumbnail" />
         </div>
       </div>
@@ -40,7 +52,8 @@ export default {
       fetched: false,
       data: null,
       active_video: null,
-      ended: false
+      ended: false,
+      hover_title: null
     }
   },
   async created() {
@@ -77,6 +90,12 @@ export default {
     },
     onSelect(index) {
       this.setActiveVideo(this.data.acf.videos[index])
+    },
+    showTitle(video) {
+      this.hover_title = video
+    },
+    clearTitle() {
+      this.hover_title = null
     }
   },
   components: {
@@ -146,24 +165,48 @@ footer {
 .thumbnails {
   display: flex;
   align-items: center;
+  margin: 0 -5px -5px;
 
   .thumbnail {
+    position: relative;
     width: 160px;
+    padding: 5px;
 
     &.active {
-      border: 1px solid white;
+      img {
+        border: 1px solid white;
+      }
     }
 
     &:hover {
       cursor: pointer;
     }
 
-    &:not(:last-child) {
-      margin-right: 10px;
-    }
-
     img {
       width: 100%;
+      box-sizing: content-box;
+    }
+
+    .play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 30px;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+
+      polygon {
+        fill: white;
+      }
+    }
+
+    &:hover {
+      .play {
+        opacity: 1;
+        transition: opacity 0.4s;
+      }
     }
   }
 }

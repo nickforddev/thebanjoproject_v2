@@ -65,7 +65,9 @@ export default {
 
 .search-result {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
+  padding: 10px;
+  border: 1px solid $color-divider;
 
   &:hover {
     cursor: pointer;
@@ -76,15 +78,18 @@ export default {
   }
 
   .type {
+    position: relative;
     display: inline-block;
+    top: -13px;
+    left: -13px;
     background: grey;
     padding: 4px 6px;
     border-radius: 4px;
     color: $color-text-light;
   }
 
-  .title {
-    display: inline-block;
-  }
+  // .title {
+    // display: inline-block;
+  // }
 }
 </style>

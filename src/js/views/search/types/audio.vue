@@ -1,6 +1,9 @@
 <template>
   <div>
-    <result-title :typeName="typeName" :title="data.title.rendered" />
+    <result-title
+      :typeName="typeName"
+      :title="data.title.rendered"
+      :show-title="false" />
     <audio-link :uid="data.id" />
   </div>
 </template>

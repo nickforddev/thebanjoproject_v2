@@ -2,6 +2,9 @@
   <nav>
     <router-link to="/">
       <logo />
+      <!-- <div class="tagline">
+        Stories of America's Instrument
+      </div> -->
     </router-link>
     <ul>
       <li>
@@ -29,7 +32,7 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
-import Logo from '@/components/logo'
+import Logo from '@/components/logo_horizontal'
 export default {
   name: 'navigation-horizontal',
   components: {
@@ -60,10 +63,12 @@ nav {
 
   .logo {
     display: inline-block;
-    width: 120px;
+    width: 220px;
     // margin-bottom: 20px;
     color: $color-text-light;
   }
+
+  // .tagline {}
 
   ul {
     display: inline-block;
