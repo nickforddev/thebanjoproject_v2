@@ -1,6 +1,9 @@
 <template>
   <div class="map-marker" v-if="open">
-    <slideshow :data="data" />
+    <div class="flex">
+      <div class="title" v-html="data.title.rendered" />
+      <slideshow v-if="data.acf.media !== 'none'" :data="data" />
+    </div>
     <div class="map-marker-content" v-html="data.acf.content" />
   </div>
 </template>
@@ -27,6 +30,7 @@ export default {
   methods: {
     opened() {
       this.open = true
+      console.log(this.data)
     }
   }
 }
@@ -44,6 +48,16 @@ export default {
 </style>
 
 <style lang="scss">
+.flex {
+  display: flex;
+  max-height: inherit;
+  height: inherit;
+  flex-direction: column;
+}
+.title {
+  text-align: center;
+  padding-bottom: 10px;
+}
 .map-marker {
   .slideshow {
     .slideshow-video {

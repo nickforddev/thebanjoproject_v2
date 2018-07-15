@@ -27,7 +27,7 @@
         </div>
       </div>
       <sidebar>
-        <dvd />
+        <!-- <dvd /> -->
       </sidebar>
     </div>
   </div>
@@ -38,7 +38,7 @@
 <script>
 import { Collection } from 'vue-collections'
 import Sidebar from '@/components/sidebar'
-import Dvd from '@/components/sidebar/dvd'
+// import Dvd from '@/components/sidebar/dvd'
 
 export default {
   name: 'narratives',
@@ -71,8 +71,8 @@ export default {
     }
   },
   components: {
-    Sidebar,
-    Dvd
+    Sidebar
+    // Dvd
   }
 }
 </script>
