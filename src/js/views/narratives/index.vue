@@ -5,7 +5,8 @@
       <h1>Narratives</h1>
     </header>
     <div class="content">
-      <div class="layout-left">
+      <!-- <div class="layout-left"> -->
+      <div>
         <div v-if="fetched_page">
           <div v-html="data.content.rendered" />
         </div>
@@ -26,9 +27,8 @@
           </div>
         </div>
       </div>
-      <sidebar>
-        <!-- <dvd /> -->
-      </sidebar>
+      <!-- <sidebar>
+      </sidebar> -->
     </div>
   </div>
 </template>
