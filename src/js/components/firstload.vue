@@ -7,7 +7,7 @@
       <div v-else>
         <logo />
         <div class="tagline">
-          A Digital Musem
+          A Digital Museum
         </div>
       </div>
     </div>
