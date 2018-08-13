@@ -7,13 +7,13 @@
           :key="index"
           :class="{ disabled: model.acf.disabled }">
           <router-link v-if="!model.acf.disabled" :to="`/players/${model.slug}`">
-            <div class="tooltip">
+            <div class="player-tooltip">
               {{ model.title.rendered }}
             </div>
             <img :src="model.acf.lineup_photo.url" :alt="`${model.slug}`">
           </router-link>
           <a :href="`/players/${model.slug}`" v-else @click.prevent>
-            <div class="tooltip align-center">
+            <div class="player-tooltip align-center">
               {{ model.title.rendered }}
               <div class="small">Coming Soon</div>
             </div>
@@ -147,7 +147,7 @@ export default {
 <style scoped lang="scss">
 @import '~%/colors';
 
-.tooltip {
+.player-tooltip {
   position: absolute;
   top: -20px;
   left: 50%;
@@ -217,7 +217,7 @@ export default {
           cursor: pointer;
           z-index: 99;
 
-          .tooltip {
+          .player-tooltip {
             opacity: 1;
           }
         }
