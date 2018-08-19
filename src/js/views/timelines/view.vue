@@ -15,6 +15,14 @@
           </div>
         </div>
         <h2 v-html="event.title.rendered"></h2>
+        <div class="group" v-if="event.acf.audio.length">
+          <h3>Audio</h3>
+          <ul>
+            <li v-for="(audio, index) in event.acf.audio" :key="index">
+              <audio-link :uid="audio.ID" />
+            </li>
+          </ul>
+        </div>
         <div v-html="event.content.rendered"></div>
         <!-- <pre>{{ event }}</pre> -->
       </div>
@@ -26,6 +34,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import AudioLink from '@/components/audio'
 
 export default {
   name: 'timeline-view',
@@ -63,6 +72,9 @@ export default {
       this.event = response[0]
       this.fetched = true
     }
+  },
+  components: {
+    AudioLink
   }
 }
 </script>

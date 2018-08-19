@@ -5,7 +5,7 @@
       :to="`/timelines/${this.data.slug}`"
       class="timeline-event-dot"
       :style="{ 'background-color': color }" />
-    <div class="tooltip" v-html="tooltip_text" />
+    <div class="timeline-tooltip" v-html="tooltip_text" />
   </div>
 </template>
 
@@ -70,12 +70,12 @@ $triangle-size: 8px;
       transform: scale($point-active-scale);
     }
 
-    .tooltip {
+    .timeline-ooltip {
       display: inline-block;
     }
   }
 
-  .tooltip {
+  .timeline-tooltip {
     display: none;
     position: absolute;
     bottom: #{$point-radius / 2};
