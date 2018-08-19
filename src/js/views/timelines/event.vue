@@ -70,7 +70,7 @@ $triangle-size: 8px;
       transform: scale($point-active-scale);
     }
 
-    .timeline-ooltip {
+    .timeline-tooltip {
       display: inline-block;
     }
   }
