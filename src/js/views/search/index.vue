@@ -4,6 +4,20 @@
       <h1>Search</h1>
     </header>
     <div class="content">
+      <p>
+        Is there a banjo-related story you want to explore?
+      </p>
+      <p>
+        For example, search for a player (<search-tag :set="setTerm" term="Earl Scruggs" />,
+        <search-tag :set="setTerm" term="Lotta Crabtree" />,
+        <search-tag :set="setTerm" term="Danny Barker" />),
+        a style (<search-tag :set="setTerm" term="bluegrass" />,
+        <search-tag :set="setTerm" term="jazz" />,
+        <search-tag :set="setTerm" term="classic" />),
+        or a theme (<search-tag :set="setTerm" term="folk revival" />,
+        <search-tag :set="setTerm" term="banjo as African diaspora instrument" />,
+        <search-tag :set="setTerm" term="banjo and dance" />)
+      </p>
       <form @submit.prevent="validate">
         <field name="search" :errors="errors">
           <input type="search" v-model="search_term" v-validate.disable="'required'" name="search">
@@ -38,6 +52,7 @@
 
 <script>
 import Result from './result'
+import SearchTag from './search_tag'
 
 export default {
   name: 'search',
@@ -76,10 +91,15 @@ export default {
         return a.type < b.type ? -1 : 1
       })
       this.loading = false
+    },
+    setTerm(term) {
+      this.search_term = term
+      this.search()
     }
   },
   components: {
-    Result
+    Result,
+    SearchTag
   }
 }
 </script>
