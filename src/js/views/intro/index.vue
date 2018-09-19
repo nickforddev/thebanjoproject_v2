@@ -14,7 +14,7 @@
         <div class="video-title">
           {{ active_video.title }} 
         </div>
-        <div class="video-link" v-if="active_video.link">
+        <div class="video-link" v-if="active_video.link || active_video.link_custom">
           {{ active_video.link_title }} &rarr;
         </div>
       </div>
@@ -61,6 +61,7 @@ export default {
   },
   watch: {
     active_video() {
+      console.log(this.active_video)
       this.ended = false
     }
   },
@@ -73,7 +74,6 @@ export default {
       this.active_video = null
       await this.$nextTick()
       this.active_video = video
-      console.log(this.active_video)
     },
     setRandomVideo() {
       this.active_video = getRandomFromArray(this.data.acf.videos)
@@ -146,6 +146,10 @@ footer {
 
     &:hover {
       cursor: pointer;
+
+      .video-link {
+        color: $color-highlight;
+      }
     }
 
     &.emphasize {
