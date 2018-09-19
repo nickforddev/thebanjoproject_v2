@@ -6,6 +6,9 @@
       </v-map>
     </div>
     <h4>{{ data.name }}</h4>
+    <div class="description">
+      {{ data.description }}
+    </div>
   </div>
 </template>
 
@@ -23,6 +26,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.data)
     if (this.location) {
       this.setMapSettings()
     }
@@ -86,6 +90,9 @@ export default {
       left: 0;
       z-index: 9;
     }
+  }
+  .description {
+    font-size: 0.8em;
   }
 }
 </style>

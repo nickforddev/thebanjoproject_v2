@@ -192,7 +192,7 @@ export default {
   flex: 1;
   height: 100%;
   min-height: 100vh;
-  padding: 0 180px 0 4px;
+  padding: 0 220px 0 4px;
   white-space: nowrap;
   overflow: hidden;
 }
@@ -217,15 +217,14 @@ export default {
   right: 0;
   padding: 20px;
   padding-bottom: 10px;
-  // width: 170px;
-  width: 150px;
+  width: 186px;
   background: #282834;
   pointer-events: none;
   // text-align: right;
 
   .key {
     margin-bottom: 6px;
-    font-size: 0.7em;
+    font-size: 0.8em;
   }
 
   .key-color {

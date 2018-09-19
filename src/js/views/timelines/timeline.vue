@@ -42,7 +42,7 @@ export default {
     display: inline-block;
     position: relative;
     width: 10px;
-    margin: 0 2px;
+    margin: 0 4px;
     height: 100%;
   }
   .line {

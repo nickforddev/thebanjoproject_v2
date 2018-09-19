@@ -6,6 +6,7 @@
         Stories of America's Instrument
       </div> -->
     </router-link>
+    <img src="/static/backer-button.png" />
     <ul>
       <li>
         <router-link to="/narratives">Narratives</router-link>
@@ -63,7 +64,7 @@ nav {
 
   .logo {
     display: inline-block;
-    width: 220px;
+    width: 260px;
     // margin-bottom: 20px;
     color: $color-text-light;
   }

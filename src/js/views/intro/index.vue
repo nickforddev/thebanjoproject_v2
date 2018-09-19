@@ -11,7 +11,12 @@
         @click="goToLink"
         class="meta"
         :class="{ emphasize: ended }">
-        {{ active_video.title }} &rarr;
+        <div class="video-title">
+          {{ active_video.title }} 
+        </div>
+        <div class="video-link" v-if="active_video.link">
+          {{ active_video.link_title }} &rarr;
+        </div>
       </div>
       <div class="thumbnails">
         <div
@@ -68,6 +73,7 @@ export default {
       this.active_video = null
       await this.$nextTick()
       this.active_video = video
+      console.log(this.active_video)
     },
     setRandomVideo() {
       this.active_video = getRandomFromArray(this.data.acf.videos)
@@ -148,6 +154,10 @@ footer {
       transition: all 0.6s;
     }
   }
+}
+
+.video-link {
+  margin-top: 10px;
 }
 
 .thumbnails {
