@@ -6,7 +6,9 @@
         Stories of America's Instrument
       </div> -->
     </router-link>
-    <!-- <img class="kickstarter" src="/static/backer-button.png" /> -->
+    <a href="https://kck.st/2zSz8LB" target="_blank">
+      <img class="kickstarter" src="/static/backer-button.png" />
+    </a>
     <ul>
       <li>
         <router-link to="/narratives">Narratives</router-link>
