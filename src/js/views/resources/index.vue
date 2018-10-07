@@ -4,8 +4,9 @@
       <h1>Resources</h1>
     </header>
     <div class="content">
+      Coming soon... Bibliography, Filmography, Links to Partner Institutions
       <!-- <pre>{{ data }}</pre> -->
-      <div class="bibliography" v-html="data.content.rendered" />
+      <!-- <div class="bibliography" v-html="data.content.rendered" /> -->
     </div>
   </div>
   <loading v-else />
