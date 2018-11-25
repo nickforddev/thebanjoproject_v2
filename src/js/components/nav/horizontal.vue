@@ -6,9 +6,19 @@
         Stories of America's Instrument
       </div> -->
     </router-link>
-    <a href="https://kck.st/2zSz8LB" target="_blank">
+    <!-- <a href="https://kck.st/2zSz8LB" target="_blank">
       <img class="kickstarter" src="/static/backer-button.png" />
-    </a>
+    </a> -->
+    <div class="donate-container">
+      <div>
+        <a class="button success" href="https://secure.donationpay.org/documentaries/film_no_stats.php?f=banjo" target="_blank">
+          Donate Now
+        </a>
+      </div>
+      <div>
+        Finish the Digital Museum
+      </div>
+    </div>
     <ul>
       <li>
         <router-link to="/narratives">Narratives</router-link>
@@ -113,6 +123,18 @@ nav {
     height: 2px;
     margin: 10px -#{$nav-padding};
     background-color: darken($color-nav-background, 10%);
+  }
+}
+
+.donate-container {
+  margin-left: 20px;
+  padding-left: 20px;
+  border-left: 1px solid;
+  white-space: nowrap;
+
+  .button {
+    margin-bottom: 10px;
+    padding: .30em .55em;
   }
 }
 </style>

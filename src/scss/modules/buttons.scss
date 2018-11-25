@@ -124,10 +124,10 @@ button, .button {
 
   &.success {
     background-color: $color-status-success;
-    color: $color-text-dark;
+    color: $color-text-light;
 
     &:hover {
-      color: $color-text-dark;
+      color: $color-text-light;
     }
 
     &:active {
