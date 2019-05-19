@@ -56,14 +56,16 @@ const router = new Router({
       name: 'Map',
       component(resolve) {
         require(['@/views/maps/region'], resolve)
-      }
-    },
-    {
-      path: '/maps/:region/:slug',
-      name: 'Map Marker',
-      component(resolve) {
-        require(['@/views/maps/region'], resolve)
-      }
+      },
+      children: [
+        {
+          path: '/maps/:region/:slug',
+          name: 'Map Marker',
+          component(resolve) {
+            require(['@/views/maps/content'], resolve)
+          }
+        }
+      ]
     },
     {
       path: '/timelines',

@@ -26,7 +26,7 @@
       </v-marker-cluster>
     </v-map>
     <div class="marker-content" v-if="$route.params.slug">
-      <marker-content />
+      <router-view :key="$route.params.slug"/>
     </div>
   </div>
 </template>
@@ -87,7 +87,6 @@ export default {
       this.$refs.map.mapObject.fitBounds(this.bounds, {
         padding: [200, 200]
       })
-      // console.log(this.$refs.map)
     }
   },
   components: {

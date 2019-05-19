@@ -1,6 +1,8 @@
 <template>
   <div v-if="data">
     <h1 v-html="data.title.rendered" />
+
+    <div class="body" v-html="data.acf.content" />
   </div>
 </template>
 
