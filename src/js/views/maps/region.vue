@@ -21,14 +21,12 @@
           ]"
           @click="delegateOpen(index)"
         >
-          <v-popup>
-            <fake-popup />
-          </v-popup>
+          <v-popup />
         </v-marker>
       </v-marker-cluster>
     </v-map>
-    <div v-if="$route.params.slug">
-      {{ $route.params.slug }}
+    <div class="marker-content" v-if="$route.params.slug">
+      <marker-content />
     </div>
   </div>
 </template>
@@ -36,13 +34,10 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
-// import debounce from 'debounce'
-// import { latLngBounds, latLng } from 'leaflet';
 import { Collection } from 'vue-collections'
 import config from '@/config'
 import Region from '@/models/region'
-import MapMarker from './marker'
-import FakePopup from './fakepopup'
+import MarkerContent from './content'
 
 export default {
   name: 'region',
@@ -81,13 +76,8 @@ export default {
       await this.collection.fetch()
     },
     delegateOpen(index) {
-      console.log('open', index)
       this.$router.push(`/maps/${this.$route.params.region}/${this.models[index].slug}`)
     },
-    // delegateOpen: debounce(function(index) {
-    //   console.log('open', index)
-    //   this.$router.push(`/maps/${this.$route.params.region}/${this.models[index].slug}`)
-    // }, 5000),
     setBounds() {
       this.bounds = window.L.latLngBounds()
       this.models.map(event => {
@@ -101,8 +91,7 @@ export default {
     }
   },
   components: {
-    MapMarker,
-    FakePopup
+    MarkerContent
   }
 }
 </script>
@@ -114,5 +103,12 @@ export default {
   display: flex;
   height: 100vh;
   width: 100%;
+}
+
+.marker-content {
+  width: 600px;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 </style>
