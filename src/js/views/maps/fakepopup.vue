@@ -1,0 +1,21 @@
+<template>
+  <div>
+  </div>
+</template>
+
+<!--/////////////////////////////////////////////////////////////////////////-->
+
+<script>
+export default {
+  name: 'fake-popup',
+  mounted() {
+    console.log('wooo')
+  }
+}
+</script>
+
+<!--/////////////////////////////////////////////////////////////////////////-->
+
+<style scoped lang="scss">
+
+</style>

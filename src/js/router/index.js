@@ -113,7 +113,7 @@ const router = new Router({
     },
     {
       path: '/search/:term',
-      name: 'Search',
+      name: 'Search Results',
       component(resolve) {
         require(['@/views/search'], resolve)
       }

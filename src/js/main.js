@@ -14,7 +14,8 @@ import VueCollections from 'vue-collections'
 import VeeValidate from 'vee-validate'
 
 // maps plugins
-import Vue2Leaflet from 'vue2-leaflet'
+// import Vue2Leaflet from 'vue2-leaflet'
+import { LMap, LTileLayer, LMarker, LPopup } from 'vue2-leaflet'
 import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
 
 // vimeo
@@ -67,11 +68,13 @@ const install = (Vue) => {
     Vue.component(component.name, component)
   })
 
-  Vue.component('v-map', Vue2Leaflet.Map)
-  Vue.component('v-tilelayer', Vue2Leaflet.TileLayer)
+  // LMap, LTileLayer, LMarker
+
+  Vue.component('v-map', LMap)
+  Vue.component('v-tilelayer', LTileLayer)
   Vue.component('v-marker-cluster', Vue2LeafletMarkerCluster)
-  Vue.component('v-marker', Vue2Leaflet.Marker)
-  Vue.component('v-popup', Vue2Leaflet.Popup)
+  Vue.component('v-marker', LMarker)
+  Vue.component('v-popup', LPopup)
 }
 
 install(Vue)

@@ -8,7 +8,8 @@
         <thumbnail
           v-for="(region, index) in filtered_collection"
           :data="region"
-          :key="index" />
+          :key="index"
+        />
       </div>
     </div>
   </div>

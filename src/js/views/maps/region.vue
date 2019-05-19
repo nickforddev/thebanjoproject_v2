@@ -1,32 +1,48 @@
 <template>
-  <v-map v-if="collection" ref="map" :zoom="-1" :center="[47.413220, -1.219482]">
-    <v-tilelayer :url="`https://api.mapbox.com/styles/v1/mapbox/${map_id}/tiles/{z}/{x}/{y}?access_token=${access_token}`" />
+  <div class="map-container">
+    <v-map
+      v-if="collection"
+      ref="map"
+      :zoom="-1"
+      :center="[47.413220, -1.219482]"
+    >
+      <v-tilelayer
+        :url="`https://api.mapbox.com/styles/v1/mapbox/${map_id}/tiles/{z}/{x}/{y}?access_token=${access_token}`"
+      />
 
-    <v-marker-cluster>
-      <v-marker
-      ref="marker"
-      v-for="(model, index) in collection.models"
-      v-if="model.acf.location !== null"
-      :lat-lng="[model.acf.location.lat, model.acf.location.lng]"
-      :key="index"
-      @l-popupopen="delegateOpen(index)">
-        <v-popup>
-          <map-marker :data="model" :ref="`marker-${index}`" />
-        </v-popup>
-
-      </v-marker>
-    </v-marker-cluster>
-  </v-map>
-  <!-- <pre v-if="collection">{{ collection.models }}</pre> -->
+      <v-marker-cluster>
+        <v-marker
+          ref="marker"
+          v-for="(model, index) in models"
+          :key="index"
+          :lat-lng="[
+            model.acf.location.lat,
+            model.acf.location.lng
+          ]"
+          @click="delegateOpen(index)"
+        >
+          <v-popup>
+            <fake-popup />
+          </v-popup>
+        </v-marker>
+      </v-marker-cluster>
+    </v-map>
+    <div v-if="$route.params.slug">
+      {{ $route.params.slug }}
+    </div>
+  </div>
 </template>
 
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
+// import debounce from 'debounce'
+// import { latLngBounds, latLng } from 'leaflet';
 import { Collection } from 'vue-collections'
 import config from '@/config'
 import Region from '@/models/region'
 import MapMarker from './marker'
+import FakePopup from './fakepopup'
 
 export default {
   name: 'region',
@@ -48,6 +64,13 @@ export default {
     await this.fetch()
     this.setBounds()
   },
+  computed: {
+    models() {
+      return this.collection.models.filter(model => {
+        return model.acf.location
+      })
+    }
+  },
   methods: {
     async fetch() {
       const response = await this.$request(`wp/v2/region?slug=${this.$route.params.region}`)
@@ -58,22 +81,38 @@ export default {
       await this.collection.fetch()
     },
     delegateOpen(index) {
-      this.$refs[`marker-${index}`][0].opened()
+      console.log('open', index)
+      this.$router.push(`/maps/${this.$route.params.region}/${this.models[index].slug}`)
     },
+    // delegateOpen: debounce(function(index) {
+    //   console.log('open', index)
+    //   this.$router.push(`/maps/${this.$route.params.region}/${this.models[index].slug}`)
+    // }, 5000),
     setBounds() {
       this.bounds = window.L.latLngBounds()
-      this.collection.models.map(event => {
+      this.models.map(event => {
         const {lat, lng} = event.acf.location
         this.bounds.extend(window.L.latLng(lat, lng))
       })
-      this.$refs.map.mapObject.fitBounds(this.bounds, { padding: [200, 200] })
+      this.$refs.map.mapObject.fitBounds(this.bounds, {
+        padding: [200, 200]
+      })
+      // console.log(this.$refs.map)
     }
   },
   components: {
-    MapMarker
+    MapMarker,
+    FakePopup
   }
 }
 </script>
 
 <!--/////////////////////////////////////////////////////////////////////////-->
 
+<style lang="scss">
+.map-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+</style>
