@@ -39,6 +39,17 @@
             </li>
           </ul>
         </div>
+        <div class="group" v-if="data.acf.related_players && data.acf.related_players.length">
+          <h2>Related Players</h2>
+          <ul v-for="(player, index) in data.acf.related_players" :key="index">
+            <li>
+              <router-link
+                v-html="player.post_title"
+                :to="`/players/${player.post_name}`"
+              />
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
