@@ -1,6 +1,7 @@
 <template>
   <div v-if="data">
     <slideshow
+      v-if="data.acf.media !== 'none'"
       class="map-slideshow"
       :data="data"
     />

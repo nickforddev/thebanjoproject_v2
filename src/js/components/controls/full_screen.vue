@@ -48,6 +48,8 @@ export default {
 .controls-full-screen {
   width: 30px;
   color: $color-text-light;
+  background: rgba(0,0,0, 0.3);
+  border-radius: 100%;
 
   &:hover {
     cursor: pointer;
