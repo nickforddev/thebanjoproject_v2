@@ -113,6 +113,7 @@ export default {
   height: 100%;
   max-height: inherit;
   user-select: none;
+  outline: none;
 
   &.fullscreen {
     position: fixed !important;

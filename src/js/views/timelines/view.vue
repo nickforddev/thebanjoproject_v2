@@ -57,7 +57,8 @@ export default {
   },
   computed: {
     timeline() {
-      return this.timelines && this.event && this.timelines.find(timeline => timeline.id === this.event.timeline[0])
+      return this.timelines && this.event && this.timelines
+        .find(timeline => timeline.id === this.event.timeline[0])
     },
     ...mapGetters([
       'timelines',

@@ -25,7 +25,7 @@
         </v-marker>
       </v-marker-cluster>
     </v-map>
-    <div class="marker-content" v-if="$route.params.slug">
+    <div class="marker-view" v-if="$route.params.slug">
       <router-view :key="$route.params.slug"/>
     </div>
   </div>
@@ -98,16 +98,20 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style lang="scss">
+@import '~%/colors';
+
 .map-container {
   display: flex;
   height: 100vh;
   width: 100%;
 }
 
-.marker-content {
-  width: 600px;
+.marker-view {
+  width: 800px;
   height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
+  background: $color-background-dark;
+  color: $color-text-light;
 }
 </style>
