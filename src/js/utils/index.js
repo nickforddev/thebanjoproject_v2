@@ -31,3 +31,14 @@ export function convertPermalinks (type, target = 'name') {
   }
   return data[target]
 }
+
+export function debounce(fn, time) {
+  console.log(fn, time)
+  let timeout
+  return (...args) => {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => {
+      fn(...args)
+    }, time)
+  }
+}

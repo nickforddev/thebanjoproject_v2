@@ -56,14 +56,16 @@ const router = new Router({
       name: 'Map',
       component(resolve) {
         require(['@/views/maps/region'], resolve)
-      }
-    },
-    {
-      path: '/maps/:region/:slug',
-      name: 'Map Marker',
-      component(resolve) {
-        require(['@/views/maps/region'], resolve)
-      }
+      },
+      children: [
+        {
+          path: '/maps/:region/:slug',
+          name: 'Map Marker',
+          component(resolve) {
+            require(['@/views/maps/content'], resolve)
+          }
+        }
+      ]
     },
     {
       path: '/timelines',
@@ -113,7 +115,7 @@ const router = new Router({
     },
     {
       path: '/search/:term',
-      name: 'Search',
+      name: 'Search Results',
       component(resolve) {
         require(['@/views/search'], resolve)
       }

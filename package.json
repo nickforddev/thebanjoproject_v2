@@ -15,6 +15,8 @@
     "@vimeo/player": "^2.6.1",
     "fscreen": "^1.0.2",
     "glob-move": "^1.0.1",
+    "howler": "^2.1.2",
+    "leaflet": "^1.5.1",
     "node-sass": "^4.6.0",
     "ramda": "^0.25.0",
     "sass-loader": "^6.0.6",
@@ -25,8 +27,8 @@
     "vue-requests": "^1.0.15",
     "vue-router": "^3.0.1",
     "vue-vimeo-player": "0.0.6",
-    "vue2-leaflet": "0.0.57",
-    "vue2-leaflet-markercluster": "^1.3.0",
+    "vue2-leaflet": "^2.1.1",
+    "vue2-leaflet-markercluster": "^3.0.0",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
