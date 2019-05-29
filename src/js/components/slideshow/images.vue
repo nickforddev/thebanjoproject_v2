@@ -113,6 +113,7 @@ export default {
   height: 100%;
   max-height: inherit;
   user-select: none;
+  outline: none;
 
   &.fullscreen {
     position: fixed !important;
@@ -132,14 +133,8 @@ export default {
     display: flex;
   }
 }
-// .image {
-//   height: 100%;
-//   background-size: cover;
-//   background-position: center center;
-// }
 img {
   max-width: 100%;
-  // max-height: 100%;
   max-height: inherit;
   margin: auto;
 }

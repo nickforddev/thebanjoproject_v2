@@ -1,5 +1,3 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './components/main'
 import router from './router'
@@ -14,7 +12,7 @@ import VueCollections from 'vue-collections'
 import VeeValidate from 'vee-validate'
 
 // maps plugins
-import Vue2Leaflet from 'vue2-leaflet'
+import { LMap, LTileLayer, LMarker, LPopup } from 'vue2-leaflet'
 import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
 
 // vimeo
@@ -28,12 +26,14 @@ import config from '@/config'
 // custom components
 import Loading from '@/components/loading'
 import Field from '@/components/field'
+import Player from '@/components/player'
 import Validation from '@/components/validation'
 import Slideshow from '@/components/slideshow'
 import ComingSoon from '@/components/comingsoon'
 
 // eslint-disable-next-line  
-delete L.Icon.Default.prototype._getIconUrl  
+delete L.Icon.Default.prototype._getIconUrl
+
 // eslint-disable-next-line  
 L.Icon.Default.mergeOptions({  
   iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
@@ -44,6 +44,7 @@ L.Icon.Default.mergeOptions({
 const components = [
   Loading,
   Field,
+  Player,
   Validation,
   Slideshow,
   ComingSoon
@@ -67,11 +68,13 @@ const install = (Vue) => {
     Vue.component(component.name, component)
   })
 
-  Vue.component('v-map', Vue2Leaflet.Map)
-  Vue.component('v-tilelayer', Vue2Leaflet.TileLayer)
+  // LMap, LTileLayer, LMarker
+
+  Vue.component('v-map', LMap)
+  Vue.component('v-tilelayer', LTileLayer)
   Vue.component('v-marker-cluster', Vue2LeafletMarkerCluster)
-  Vue.component('v-marker', Vue2Leaflet.Marker)
-  Vue.component('v-popup', Vue2Leaflet.Popup)
+  Vue.component('v-marker', LMarker)
+  Vue.component('v-popup', LPopup)
 }
 
 install(Vue)
