@@ -14,6 +14,10 @@
         </div>
       </div>
 
+      <div v-if="data.acf.audio">
+        <player class="player" :data="data.acf.audio" />
+      </div>
+
       <div class="body" v-html="data.acf.content" />
 
       <div class="related">
@@ -106,5 +110,8 @@ export default {
       margin-left: 20px;
     }
   }
+}
+.player {
+  margin: 0 -20px;
 }
 </style>
