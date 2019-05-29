@@ -56,6 +56,7 @@ export default {
   },
   watch: {
     async '$route.params.slug'(value) {
+      window.dispatchEvent(new Event('resize'))
       await this.$nextTick()
       const { lat, lng } = this.models
         .find(model => model.slug === value)
