@@ -1,5 +1,5 @@
 <template>
-  <svg viewBox="0 0 30 30" class="icon-full-screen" @click="emitClick">
+  <svg viewBox="0 0 30 30" class="icon-full-screen" v-on="$listeners">
     <polygon class="st0" points="22.2,14 22.2,7.8 16,7.8 "/>
     <rect x="16.5" y="9.5" transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 21.531 33.508)" class="st0" width="2.4" height="5.6"/>
     <polygon class="st0" points="7.8,16 7.8,22.2 14,22.2 "/>
@@ -12,12 +12,7 @@
 
 <script>
 export default {
-  name: 'icon-fullscreen',
-  methods: {
-    emitClick(e) {
-      this.$emit('click', e)
-    }
-  }
+  name: 'icon-fullscreen'
 }
 </script>
 

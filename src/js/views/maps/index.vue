@@ -1,5 +1,6 @@
 <template>
   <div class="map-container">
+    <home-btn @click="closeMarker" />
     <v-map
       v-if="collection && fetched"
       ref="map"
@@ -25,14 +26,25 @@
         </v-marker>
       </v-marker-cluster>
     </v-map>
-    <div class="marker-view">
+    <div class="marker-view" v-if="collection && fetched">
       <router-view
         v-if="$route.params.slug && fetched"
         :key="$route.params.slug"
         @close="closeMarker"
       />
-      <div v-else-if="region">
-        <h1>{{ region.name }}</h1>
+      <div v-else class="region-info">
+        <div v-if="active_region">
+          <div v-if="active_region.acf && active_region.acf.image" class="slideshow">
+            <images-slideshow :image="{ url: active_region.acf.image }" title="test" />
+          </div>
+          <div class="region-content">
+            <h1>{{ active_region.name }}</h1>
+            <p class="description">
+              {{ active_region.description }}
+            </p>
+            <p>{{ region_count }} Locations</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -41,19 +53,20 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
-// import { Collection } from 'vue-collections'
 import { equals, props } from 'ramda'
 import config from '@/config'
-import Region from '@/models/region'
+// import Region from '@/models/region'
+import HomeBtn from '@/components/controls/home'
+import ImagesSlideshow from '@/components/slideshow/images'
 import MarkerContent from './content'
 
 export default {
   name: 'region',
-  models: {
-    region() {
-      return new Region()
-    }
-  },
+  // models: {
+  //   region() {
+  //     return new Region()
+  //   }
+  // },
   data() {
     return {
       fetched: false,
@@ -61,13 +74,20 @@ export default {
       map_id: 'light-v9',
       collection: null,
       bounds: null,
-      region: null
+      active_region: {
+        name: 'The Banjo map',
+        description: 'Hover over a cluster or click a marker to see more info',
+        acf: {
+          image: null
+        }
+      },
+      region_count: null,
+      hovered: false
     }
   },
   watch: {
     async '$route.params.slug'(value) {
       if (value) {
-        window.dispatchEvent(new Event('resize'))
         await this.$nextTick()
         const { lat, lng } = this.markers
           .find(model => model.slug === value)
@@ -75,7 +95,6 @@ export default {
           .location
         this.focus(lat, lng, false)
       } else {
-        window.dispatchEvent(new Event('resize'))
         this.setBounds()
       }
     }
@@ -123,17 +142,36 @@ export default {
         }
       }
       this.collection = models
+      this.region_count = models.length
       this.fetched = true
     },
     async hoverCluster(cluster) {
       const markers = cluster.layer.getAllChildMarkers()
-      const firstMarker = this.markers.find(m => {
-        return equals(
-          props(['lat', 'lng'], m.acf.location),
-          props(['lat', 'lng'], markers[0]._latlng)
-        )
-      })
-      this.region = await this.$request(`wp/v2/region/${firstMarker.region[0]}`)
+      this.region_count = markers.length
+      const zoomLevel = this.$refs.map.mapObject.getZoom()
+      if (zoomLevel > 2) {
+        const firstMarker = this.markers.find(m => {
+          return equals(
+            props(['lat', 'lng'], m.acf.location),
+            props(['lat', 'lng'], markers[0]._latlng)
+          )
+        })
+        this.active_region = await this.$request(`wp/v2/region/${firstMarker.region[0]}`)
+      } else {
+        this.active_region = {
+          name: 'The Americas',
+          description: 'Lorem ipsum',
+          acf: {
+            image: null
+          }
+        }
+      }
+      if (!this.hovered) {
+        setTimeout(() => {
+          this.setBounds()
+          this.hovered = true
+        }, 10)
+      }
     },
     async openMarker(index) {
       this.$router.push(`/maps/${this.markers[index].slug}`)
@@ -163,7 +201,9 @@ export default {
     }
   },
   components: {
-    MarkerContent
+    MarkerContent,
+    ImagesSlideshow,
+    HomeBtn
   }
 }
 </script>
@@ -180,11 +220,30 @@ export default {
 }
 
 .marker-view {
+  position: relative;
   width: 800px;
   height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
   background: $color-background-dark;
   color: $color-text-light;
+}
+
+.region-info {
+  display: flex;
+  // position: absolute;
+  // overflow-x: hidden;
+  width: 100%;
+
+  .region-content {
+    padding: 20px;
+  }
+}
+
+.home-btn {
+  position: absolute;
+  top: 80px;
+  left: 10px;
+  z-index: 9999;
 }
 </style>

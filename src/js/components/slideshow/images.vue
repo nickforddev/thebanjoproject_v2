@@ -33,7 +33,9 @@ import FullScreen from '@/components/controls/full_screen'
 export default {
   name: 'slideshow-images',
   props: {
-    data: Object
+    data: Object,
+    image: Object,
+    title: String
   },
   data() {
     return {
@@ -43,12 +45,12 @@ export default {
   },
   computed: {
     images() {
-      return this.data.acf.images.length
+      return this.data && this.data.acf.images.length
         ? this.data.acf.images
         : [{
           image: {
-            url: this.data._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url,
-            title: this.data._embedded['wp:featuredmedia'][0].title.rendered
+            url: this.image.url || this.data._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url,
+            title: this.title || this.data._embedded['wp:featuredmedia'][0].title.rendered
           }
         }]
     },

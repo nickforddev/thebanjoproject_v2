@@ -1,5 +1,5 @@
 <template>
-  <svg class="icon-close" viewBox="0 0 22 22" @click="$emit('click')">
+  <svg class="icon-close" viewBox="0 0 22 22" v-on="$listeners">
     <g stroke="none" stroke-width="1" fill-rule="evenodd">
       <g transform="translate(-154.000000, -285.000000)">
         <path
@@ -23,7 +23,6 @@ export default {
 
 <style scoped lang="scss">
 svg {
-  width: 100%;
   fill: currentColor;
 }
 </style>
