@@ -48,18 +48,11 @@ const router = new Router({
       path: '/maps',
       name: 'Maps',
       component(resolve) {
-        require(['@/views/maps/'], resolve)
-      }
-    },
-    {
-      path: '/maps/:region',
-      name: 'Map',
-      component(resolve) {
-        require(['@/views/maps/region'], resolve)
+        require(['@/views/maps/index'], resolve)
       },
       children: [
         {
-          path: '/maps/:region/:slug',
+          path: '/maps/:slug',
           name: 'Map Marker',
           component(resolve) {
             require(['@/views/maps/content'], resolve)

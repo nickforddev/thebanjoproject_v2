@@ -1,5 +1,6 @@
 <template>
   <div v-if="data">
+    <close-btn @click="$emit('close')" />
     <slideshow
       v-if="data.acf.media !== 'none'"
       class="map-slideshow"
@@ -63,10 +64,12 @@
 
 <script>
 import topic from './topic'
+import closeBtn from '@/components/controls/close'
 
 export default {
   name: 'map-content',
   components: {
+    closeBtn,
     topic
   },
   data() {
@@ -95,6 +98,7 @@ export default {
   background: darken($color-background-dark, 10%);
 }
 .marker-content {
+  position: relative;
   padding: 20px;
 }
 .related {
@@ -114,4 +118,10 @@ export default {
 .player {
   margin: 0 -20px;
 }
+.close-btn {
+  position: fixed;
+  top: 20px;
+  transform: translateX(-50%);
+}
+
 </style>
