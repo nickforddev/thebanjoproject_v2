@@ -1,7 +1,7 @@
 <template>
   <div class="map-container">
     <v-map
-      v-if="collection"
+      v-if="collection && fetched"
       ref="map"
       :zoom="-1"
       :center="[47.413220, -1.219482]"
@@ -10,10 +10,10 @@
         :url="`https://api.mapbox.com/styles/v1/mapbox/${map_id}/tiles/{z}/{x}/{y}?access_token=${access_token}`"
       />
 
-      <v-marker-cluster>
+      <v-marker-cluster @clustermouseover="hoverCluster">
         <v-marker
           ref="marker"
-          v-for="(model, index) in models"
+          v-for="(model, index) in markers"
           :key="index"
           :lat-lng="[
             model.acf.location.lat,
@@ -25,7 +25,7 @@
         </v-marker>
       </v-marker-cluster>
     </v-map>
-    <div class="marker-view" v-if="$route.params.slug">
+    <div class="marker-view" v-if="$route.params.slug && fetched">
       <router-view :key="$route.params.slug"/>
     </div>
   </div>
@@ -34,7 +34,7 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
-import { Collection } from 'vue-collections'
+// import { Collection } from 'vue-collections'
 import config from '@/config'
 import Region from '@/models/region'
 import MarkerContent from './content'
@@ -48,6 +48,7 @@ export default {
   },
   data() {
     return {
+      fetched: false,
       access_token: config.mapbox,
       map_id: 'light-v9',
       collection: null,
@@ -66,8 +67,8 @@ export default {
     }
   },
   computed: {
-    models() {
-      return this.collection.models.filter(model => {
+    markers() {
+      return this.fetched && this.collection.filter(model => {
         return model.acf.location
       })
     },
@@ -79,7 +80,8 @@ export default {
     await this.fetch()
     const slug = this.$route.params.slug
     if (slug) {
-      const { lat, lng } = this.models
+      console.log(slug, this.markers)
+      const { lat, lng } = this.markers
         .find(model => model.slug === slug)
         .acf
         .location
@@ -90,18 +92,35 @@ export default {
   },
   methods: {
     async fetch() {
-      this.$region = (await this.$request(`wp/v2/region?slug=${this.$route.params.region}`))[0]
-      this.collection = new Collection({
-        basePath: `wp/v2/maps?region=${this.$region.id}`
+      // this.$region = (await this.$request(`wp/v2/region?slug=${this.$route.params.region}`))[0]
+      // this.$region = (await this.$request(`wp/v2/region?slug=${this.$route.params.region}`))[0]
+      let models = []
+      const request = await this.$request('wp/v2/maps?per_page=100', {
+        responseHeaders: true
       })
-      await this.collection.fetch()
+      models = models.concat(request.body)
+      for (const header of request.headers) {
+        if (header[0] === 'x-wp-totalpages') {
+          let totalPages = header[1]
+          let currentPage = 2
+          while (currentPage <= totalPages) {
+            models = models.concat(await this.$request(`wp/v2/maps?per_page=100&page=${currentPage}`))
+            currentPage++
+          }
+        }
+      }
+      this.collection = models
+      this.fetched = true
+    },
+    hoverCluster() {
+      console.log(arguments)
     },
     async openMarker(index) {
-      this.$router.push(`/maps/${this.$route.params.region}/${this.models[index].slug}`)
+      this.$router.push(`/maps/${this.$route.params.region}/${this.markers[index].slug}`)
     },
     focus(lat, lng, zoom = false) {
       this.bounds = window.L.latLngBounds()
-      this.models.map(model => {
+      this.markers.map(model => {
         this.bounds.extend(window.L.latLng(lat, lng))
       })
       this.map.fitBounds(this.bounds, {
@@ -110,12 +129,12 @@ export default {
     },
     setBounds() {
       this.bounds = window.L.latLngBounds()
-      this.models.map(model => {
+      this.markers.map(model => {
         const {lat, lng} = model.acf.location
         this.bounds.extend(window.L.latLng(lat, lng))
       })
       this.map.fitBounds(this.bounds, {
-        padding: [200, 200]
+        padding: [0, 0]
       })
     }
   },
