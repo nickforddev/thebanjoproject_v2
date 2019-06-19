@@ -104,7 +104,7 @@ export default {
   },
   async created() {
     await this.fetchAll()
-    const timelines = await this.$collection.fetch()
+    const timelines = (await this.$collection.fetch()).body
     this.$store.dispatch('set_timelines', timelines)
     if (!this.active_event) {
       this.selectRandomEvent()
@@ -124,7 +124,7 @@ export default {
       const collection = new Collection({
         basePath: 'wp/v2/timelines?per_page=99'
       })
-      this.all_events = await collection.fetch()
+      this.all_events = (await collection.fetch()).body
       const dates = this.all_events.map(model => parseInt(model.acf.date))
       const padding = 20
       const min = (Math.floor(Math.min(...dates) / 10) * 10) - padding
