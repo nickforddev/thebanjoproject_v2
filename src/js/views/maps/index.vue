@@ -39,9 +39,7 @@
           </div>
           <div class="region-content">
             <h1>{{ active_region.name }}</h1>
-            <p class="description">
-              {{ active_region.description }}
-            </p>
+            <p class="description" v-html="active_region.description" />
             <p>{{ region_count }} Locations</p>
           </div>
         </div>
@@ -75,8 +73,24 @@ export default {
       collection: null,
       bounds: null,
       active_region: {
-        name: 'The Banjo map',
-        description: 'Hover over a cluster or click a marker to see more info',
+        name: 'Maps',
+        description: `
+          <p>
+            The Maps are invitations to explore banjo "hot spots" since the 17th
+            century, where the banjo emerged and developed out of cultural
+            collisions and exchanges that we can document. 
+          </p>
+          <h2>Transatlantic Culture</h2>
+          <p>
+            The banjo’s odyssey goes far beyond the mainland United States, 
+            highlighting continuous cycles of transculturation over a period 
+            of three centuries beginning with the colonial slave trade. 
+            In the banjo’s history, we can see how the connections between the
+            cultures of Africa, the Caribbean, North America and Europe shaped
+            one another to create something new while never fully erasing its
+            roots in Africa and the Atlantic slave trade. 
+          </p>
+        `,
         acf: {
           image: null
         }
@@ -159,8 +173,25 @@ export default {
         this.active_region = await this.$request(`wp/v2/region/${firstMarker.region[0]}`)
       } else {
         this.active_region = {
-          name: 'The Americas',
-          description: 'Lorem ipsum',
+          name: 'Maps',
+          description: `
+            <p>
+              The Maps are invitations to explore banjo "hot spots" since the 17th
+              century, where the banjo emerged and developed out of cultural
+              collisions and exchanges that we can document. 
+            </p>
+            <h2>Transatlantic Culture</h2>
+            <p>
+              The banjo’s odyssey goes far beyond the mainland United States, 
+              highlighting continuous cycles of transculturation over a period 
+              of three centuries beginning with the colonial slave trade. 
+              In the banjo’s history, we can see how the connections between the
+              cultures of Africa, the Caribbean, North America and Europe shaped
+              one another to create something new while never fully erasing its
+              roots in Africa and the Atlantic slave trade. 
+            </p>
+
+          `,
           acf: {
             image: null
           }
