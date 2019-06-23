@@ -119,7 +119,7 @@ export default {
   computed: {
     markers() {
       return this.fetched && this.collection.filter(model => {
-        return model.acf.location
+        return model.acf.location && model.acf.location.lat
       })
     },
     map() {
@@ -167,10 +167,16 @@ export default {
       this.region_count = markers.length
       const zoomLevel = this.$refs.map.mapObject.getZoom()
       if (zoomLevel > 2) {
+        const marker = markers[0]
+        const latLng = {
+          lat: `${marker._latlng.lat}`,
+          lng: `${marker._latlng.lng}`
+        }
+        window.markers = this.markers
         const firstMarker = this.markers.find(m => {
           return equals(
             props(['lat', 'lng'], m.acf.location),
-            props(['lat', 'lng'], markers[0]._latlng)
+            props(['lat', 'lng'], latLng)
           )
         })
         this.active_region = await this.$request(`wp/v2/region/${firstMarker.region[0]}`)
