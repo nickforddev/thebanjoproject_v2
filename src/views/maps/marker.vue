@@ -30,7 +30,6 @@ export default {
   methods: {
     opened() {
       this.open = true
-      console.log(this.data)
     }
   }
 }

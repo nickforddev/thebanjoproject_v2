@@ -26,7 +26,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.data)
     if (this.location) {
       this.setMapSettings()
     }

@@ -1,7 +1,5 @@
 <template>
-  <div>
-
-  </div>
+  <div />
 </template>
 
 <!--/////////////////////////////////////////////////////////////////////////-->
@@ -11,15 +9,6 @@ export default {
   name: 'slideshow-audio',
   props: {
     videos: Array
-  },
-  created() {
-    console.log(this.data)
   }
 }
 </script>
-
-<!--/////////////////////////////////////////////////////////////////////////-->
-
-<style scoped lang="scss">
-
-</style>

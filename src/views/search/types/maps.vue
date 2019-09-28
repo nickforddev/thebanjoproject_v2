@@ -13,10 +13,6 @@ import base from './base'
 
 export default mergeDeepLeft(base, {
   name: 'maps-result',
-  created() {
-    console.log(this.data)
-    console.log(this.data.acf.content)
-  },
   computed: {
     regionSlug() {
       return this.data._embedded['wp:term'].find(item => {

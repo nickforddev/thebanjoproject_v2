@@ -29,12 +29,12 @@ export default {
       type: Object
     }
   },
-  created() {
-    // console.log(this.data.type)
-    if (this.data.type === 'maps') {
-      console.log(this.data)
-    }
-  },
+  // created() {
+  //   // console.log(this.data.type)
+  //   if (this.data.type === 'maps') {
+  //     console.log(this.data)
+  //   }
+  // },
   computed: {
     type_name() {
       return convertPermalinks(this.data.type)

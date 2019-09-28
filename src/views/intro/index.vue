@@ -61,7 +61,6 @@ export default {
   },
   watch: {
     active_video() {
-      console.log(this.active_video)
       this.ended = false
     }
   },

@@ -27,12 +27,9 @@ export default {
       if (!this.initialized) {
         await this.init()
       } else {
-        // console.log('song changed, already initted')
-        // await this.$nextTick()
         setTimeout(() => {
           this.widget.play()
         }, 300)
-        // this.widget.play()
       }
       this.$store.dispatch('play_audio')
     },
@@ -60,19 +57,19 @@ export default {
       return new Promise(resolve => {
         this.widget.on(SoundcloudWidget.events.READY, () => {
           this.ready = true
-          this.attachEventListeners()
+          // this.attachEventListeners()
           resolve()
         })
       })
-    },
-    attachEventListeners() {
-      this.widget.on(SoundcloudWidget.events.PLAY, () => {
-        console.log('play event!!!!!')
-      })
-      this.widget.on(SoundcloudWidget.events.PAUSE, (e) => {
-        console.log('pause event!!!!')
-      })
     }
+    // attachEventListeners() {
+    //   this.widget.on(SoundcloudWidget.events.PLAY, () => {
+    //     console.log('play event!!!!!')
+    //   })
+    //   this.widget.on(SoundcloudWidget.events.PAUSE, (e) => {
+    //     console.log('pause event!!!!')
+    //   })
+    // }
   }
 }
 </script>

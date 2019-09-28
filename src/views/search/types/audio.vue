@@ -17,9 +17,6 @@ import AudioLink from '@/components/audio'
 
 export default mergeDeepLeft(base, {
   name: 'audio-result',
-  created() {
-    console.log(this.data)
-  },
   components: {
     AudioLink
   }

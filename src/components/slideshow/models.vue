@@ -18,9 +18,6 @@ export default {
   name: 'slideshow-models',
   props: {
     data: Object
-  },
-  mounted() {
-    console.log(this.data)
   }
 }
 </script>
