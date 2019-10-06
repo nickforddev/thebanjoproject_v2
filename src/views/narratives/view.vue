@@ -11,6 +11,8 @@
 
 <script>
 import ThreeBanjoSongsters from './templates/ThreeBanjoSongsters'
+import MusicalPassage from './templates/MusicalPassage'
+
 export default {
   name: 'narrative',
   data() {
@@ -21,10 +23,13 @@ export default {
   mounted() {
     if (this.$route.params.slug === 'three-banjo-songsters') {
       this.template = 'ThreeBanjoSongsters'
+    } else if (this.$route.params.slug === 'musical-passage') {
+      this.template = 'MusicalPassage'
     }
   },
   components: {
-    ThreeBanjoSongsters
+    ThreeBanjoSongsters,
+    MusicalPassage
   }
 }
 </script>

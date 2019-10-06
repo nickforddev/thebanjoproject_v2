@@ -13,6 +13,8 @@
     "core-js": "^2.6.5",
     "fscreen": "^1.0.2",
     "howler": "^2.1.2",
+    "image-map": "^1.1.7",
+    "jquery": "^3.4.1",
     "leaflet": "^1.5.1",
     "ramda": "^0.26.1",
     "soundcloud-widget": "^0.2.1",

@@ -97,6 +97,7 @@ export default {
 
   .thumbnail {
     flex: 1 0 auto;
+    flex-grow: 0;
     width: 280px;
 
     img {

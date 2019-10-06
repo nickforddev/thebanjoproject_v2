@@ -39,6 +39,5 @@ export default {
   right: 0;
   height: $player-height;
   z-index: 9;
-  // background: red;
 }
 </style>
