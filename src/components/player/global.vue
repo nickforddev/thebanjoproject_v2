@@ -23,7 +23,6 @@ export default {
   },
   async mounted() {
     const { acf } = await this.$request('acf/v3/options/options')
-    console.log(acf)
     this.$store.dispatch('set_active_song', acf.default_audio_track)
     this.loaded = true
   }
