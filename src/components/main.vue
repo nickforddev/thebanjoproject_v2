@@ -3,12 +3,12 @@
     <div id="app" v-if="loaded">
       <div v-if="$route.path !== '/'">
         <navigation />
-
         <main>
           <audio-player />
           <video-player />
           <router-view />
         </main>
+        <global-audio-player />
       </div>
       <div v-else>
         <navigation-horizontal />
@@ -23,14 +23,12 @@
 import Firstload from '@/components/firstload'
 import Navigation from '@/components/nav'
 import NavigationHorizontal from '@/components/nav/horizontal'
+import GlobalAudioPlayer from '@/components/player/global'
 import AudioPlayer from '@/components/audioplayer'
 import VideoPlayer from '@/components/videoplayer'
 
 export default {
   name: 'app',
-  // created() {
-  //   console.log(this.$route)
-  // },
   data() {
     return {
       loaded: false
@@ -45,6 +43,7 @@ export default {
     Firstload,
     Navigation,
     NavigationHorizontal,
+    GlobalAudioPlayer,
     AudioPlayer,
     VideoPlayer
   }
@@ -61,8 +60,7 @@ main {
   position: relative;
   left: $nav-width;
   width: calc(100% - #{$nav-width});
-  // height: 100%;
-  height: 100vh;
+  height: calc(100vh - #{$player-height});
   overflow-x: hidden;
   overflow-y: auto
 }

@@ -49,22 +49,25 @@ export default {
       progress: 0
     }
   },
-  mounted() {
-    this.sound = new Howl({
-      src: this.data.url
-    })
-    this.sound.once('load', () => {
-      this.loaded = true
-    })
-    this.sound.on('end', () => {
-      this.is_playing = false
-      this.progress = 0
-    })
+  async mounted() {
+    this.load()
   },
   beforeDestroy() {
     this.stop()
   },
   methods: {
+    load() {
+      this.sound = new Howl({
+        src: this.data.url
+      })
+      this.sound.once('load', () => {
+        this.loaded = true
+      })
+      this.sound.on('end', () => {
+        this.is_playing = false
+        this.progress = 0
+      })
+    },
     play() {
       this.sound.play()
       this.is_playing = true

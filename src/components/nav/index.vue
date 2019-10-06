@@ -56,12 +56,13 @@ export default {
 nav {
   position: fixed;
   top: 0;
-  bottom: 0;
   left: 0;
   width: $nav-width;
+  height: calc(100vh - #{$player-height});
   padding: $nav-padding;
   background: $color-nav-background;
   color: $color-text-light;
+  overflow-y: auto;
 
   .logo {
     margin-bottom: 20px;

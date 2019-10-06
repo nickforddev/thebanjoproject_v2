@@ -1,3 +1,4 @@
+<!-- deprecated -->
 <template>
   <div v-if="initialized" class="audioplayer">
     <iframe
@@ -9,6 +10,7 @@
 </template>
 
 <!--/////////////////////////////////////////////////////////////////////////-->
+<!-- deprecated -->
 
 <script>
 import { mapGetters } from 'vuex'
