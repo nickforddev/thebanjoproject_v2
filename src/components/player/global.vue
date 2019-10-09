@@ -1,6 +1,6 @@
 <template>
   <div class="global-audio-player" v-if="loaded">
-    <player :data="active_song" />
+    <player ref="player" :data="active_song" />
   </div>
 </template>
 
@@ -18,13 +18,24 @@ export default {
   },
   computed: {
     ...mapGetters({
-      active_song: 'audio:active_song'
+      active_song: 'audio:active_song',
+      is_playing: 'audio:playing'
     })
   },
+  // watch: {
+  //   is_playing(value) {
+  //     if (value) {
+  //       this.$refs.player.play()
+  //     } else {
+  //       this.$refs.player.pause()
+  //     }
+  //   }
+  // },
   async mounted() {
     const { acf } = await this.$request('acf/v3/options/options')
     this.$store.dispatch('set_active_song', acf.default_audio_track)
     this.loaded = true
+    window.$player = this
   }
 }
 </script>

@@ -7,21 +7,20 @@
       <span v-html="data.title.rendered" />
     </div>
     <div class="intro padded" v-html="data.content.rendered" />
-    <!-- <pre>{{data}}</pre> -->
     <div class="book-container">
       <div class="book">
         <img :src="currentBookImage" usemap="#image-map">
         <map name="image-map">
-          <area @click.prevent target="" alt="" title="" href="" coords="505,143,631,179" shape="rect">
-          <area @click.prevent target="" alt="" title="" href="" coords="633,182,716,217" shape="rect">
-          <area @click.prevent target="" alt="" title="" href="" coords="202,220,278,256" shape="rect">
-          <area @click.prevent target="" alt="" title="" href="" coords="285,255,472,295" shape="rect">
-          <area @click.prevent target="" alt="" title="" href="" coords="429,323,558,359" shape="rect">
-          <area @click.prevent target="" alt="" title="" href="" coords="381,416,561,456" shape="rect">
+          <area @click.prevent="modals.festivals = true" target="" alt="" title="" href="" coords="505,143,631,179" shape="rect">
+          <area @click.prevent="modals.musicians = true" target="" alt="" title="" href="" coords="633,182,716,217" shape="rect">
+          <area @click.prevent="modals.musicians = true" target="" alt="" title="" href="" coords="202,220,278,256" shape="rect">
+          <area @click.prevent="modals.baptiste = true" target="" alt="" title="" href="" coords="285,255,472,295" shape="rect">
+          <area @click.prevent="modals.music = true" target="" alt="" title="" href="" coords="429,323,558,359" shape="rect">
+          <area @click.prevent="modals.clap = true" target="" alt="" title="" href="" coords="381,416,561,456" shape="rect">
           <area
             @mouseenter="swapImage(1)"
             @mouseleave="swapImage(null)"
-            @click.prevent
+            @click.prevent="modals.angola = true"
             target=""
             alt="Angola"
             title="Angola"
@@ -32,7 +31,7 @@
           <area
             @mouseenter="swapImage(2)"
             @mouseleave="swapImage(null)"
-            @click.prevent
+            @click.prevent="modals.papa = true"
             target=""
             alt="Papa"
             title="Papa"
@@ -43,7 +42,7 @@
           <area
             @mouseenter="swapImage(3)"
             @mouseleave="swapImage(null)"
-            @click.prevent
+            @click.prevent="modals.koromanti1 = true"
             target=""
             alt="Koromanti 1"
             title="Koromanti 1"
@@ -54,7 +53,7 @@
           <area
             @mouseenter="swapImage(4)"
             @mouseleave="swapImage(null)"
-            @click.prevent
+            @click.prevent="modals.koromanti2 = true"
             target=""
             alt="Koromanti 2"
             title="Koromanti 2"
@@ -65,7 +64,7 @@
           <area
             @mouseenter="swapImage(5)"
             @mouseleave="swapImage(null)"
-            @click.prevent
+            @click.prevent="modals.koromanti3 = true"
             target=""
             alt="Koromanti 3"
             title="Koromanti 3"
@@ -74,6 +73,91 @@
             shape="rect"
           >
         </map>
+        <mp-modal
+          side="right"
+          v-if="modals.festivals"
+          @close="modals.festivals = false"
+        >
+          <div slot="title" v-html="data.acf.festivals_modal_title" />
+          <div slot="body" v-html="data.acf.festivals_modal_content" />
+        </mp-modal>
+        <mp-modal
+          side="right"
+          v-if="modals.musicians"
+          @close="modals.musicians = false"
+        >
+          <div slot="title" v-html="data.acf.musicians_modal_title" />
+          <div slot="body" v-html="data.acf.musicians_modal_content" />
+        </mp-modal>
+        <mp-modal
+          side="right"
+          v-if="modals.baptiste"
+          @close="modals.baptiste = false"
+        >
+          <div slot="title" v-html="data.acf.baptiste_modal_title" />
+          <div slot="body" v-html="data.acf.baptiste_modal_content" />
+        </mp-modal>
+        <mp-modal
+          side="right"
+          v-if="modals.music"
+          @close="modals.music = false"
+        >
+          <div slot="title" v-html="data.acf.music_modal_title" />
+          <div slot="body" v-html="data.acf.music_modal_content" />
+        </mp-modal>
+        <mp-modal
+          side="right"
+          v-if="modals.clap"
+          @close="modals.clap = false"
+        >
+          <div slot="title" v-html="data.acf.clap_modal_title" />
+          <div slot="body" v-html="data.acf.clap_modal_content" />
+        </mp-modal>
+        <mp-modal
+          side="right"
+          v-if="modals.angola"
+          @close="modals.angola = false"
+          :audio="data.acf.angola_modal_audio"
+        >
+          <div slot="title" v-html="data.acf.angola_modal_title" />
+          <div slot="body" v-html="data.acf.angola_modal_content" />
+        </mp-modal>
+        <mp-modal
+          side="right"
+          v-if="modals.papa"
+          @close="modals.papa = false"
+          :audio="data.acf.papa_modal_audio"
+        >
+          <div slot="title" v-html="data.acf.papa_modal_title" />
+          <div slot="body" v-html="data.acf.papa_modal_content" />
+        </mp-modal>
+        <mp-modal
+          side="left"
+          v-if="modals.koromanti1"
+          @close="modals.koromanti1 = false"
+          :audio="data.acf.koromanti_modal_1_audio"
+        >
+          <div slot="title" v-html="data.acf.koromanti_modal_1_title" />
+          <div slot="body" v-html="data.acf.koromanti_modal_1_content" />
+        </mp-modal>
+        <mp-modal
+          side="left"
+          v-if="modals.koromanti2"
+          @close="modals.koromanti2 = false"
+          :audio="data.acf.koromanti_modal_2_audio"
+        >
+          <div slot="title" v-html="data.acf.koromanti_modal_2_title" />
+          <div slot="body" v-html="data.acf.koromanti_modal_2_content" />
+        </mp-modal>
+        <mp-modal
+          side="left"
+          v-if="modals.koromanti3"
+          @close="modals.koromanti3 = false"
+          :audio="data.acf.koromanti_modal_3_audio"
+        >
+          <div slot="title" v-html="data.acf.koromanti_modal_3_title" />
+          <div slot="body" v-html="data.acf.koromanti_modal_3_content" />
+        </mp-modal>
       </div>
     </div>
   </div>
@@ -81,14 +165,28 @@
 
 <script>
 import ImageMap from 'image-map'
+import MpModal from './modal'
 import { sleep } from '@/utils'
 
 export default {
   name: 'musical-passage',
+  components: { MpModal },
   data() {
     return {
       data: null,
-      currentImage: null
+      currentImage: null,
+      modals: {
+        festivals: false,
+        musicians: false,
+        baptiste: false,
+        music: false,
+        clap: false,
+        angola: false,
+        papa: false,
+        koromanti1: false,
+        koromanti2: false,
+        koromanti3: false
+      }
     }
   },
   mounted() {
@@ -112,9 +210,6 @@ export default {
     },
     swapImage(number) {
       this.currentImage = number
-    },
-    test() {
-      console.log('test')
     }
   }
 }
@@ -131,6 +226,7 @@ export default {
   padding: 20px;
 
   .book {
+    position: relative;
     width: 100%;
 
     img {

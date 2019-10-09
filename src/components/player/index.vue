@@ -49,6 +49,13 @@ export default {
       progress: 0
     }
   },
+  watch: {
+    data() {
+      this.stop()
+      this.reset()
+      this.load()
+    }
+  },
   async mounted() {
     this.load()
   },
@@ -80,6 +87,10 @@ export default {
     stop() {
       this.is_playing = false
       this.sound.stop()
+    },
+    reset() {
+      this.progress = 0
+      this.time = null
     },
     seek(event) {
       const { target } = event
