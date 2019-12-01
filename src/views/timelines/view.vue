@@ -1,6 +1,6 @@
 <template>
-  <div v-if="active_event && timeline">
-    <div class="event-content" v-if="fetched">
+  <div class="full-height" v-if="active_event && timeline">
+    <div class="event-content full-height" v-if="fetched">
       <div class="media">
         <slideshow :data="event" />
       </div>
@@ -48,8 +48,9 @@ export default {
     this.fetch()
   },
   watch: {
-    $route() {
-      this.fetch()
+    async $route() {
+      await this.fetch()
+      window.dispatchEvent(new Event('resize'))
     },
     event(val) {
       this.$store.dispatch('set_active_event', val)
@@ -85,7 +86,7 @@ export default {
 <style scoped lang="scss">
 @import '~%/colors';
 
-$media-height: 70vh;
+$media-height: 70%;
 
 .media {
   // height: 50vh;
@@ -96,11 +97,31 @@ $media-height: 70vh;
   max-height: $media-height;
   overflow: hidden;
   background: $color-slideshow-background;
+
+  .slideshow {
+    max-height: 100%;
+
+    ::v-deep .slideshow-images {
+      img {
+        max-height: 70vh;
+      }
+    }
+  }
 }
 .body {
   padding: 20px;
-  height: 30vh;
+  height: 30%;
   overflow: auto;
+
+  &::-webkit-scrollbar {
+      -webkit-appearance: none;
+      width: 7px;
+  }
+  &::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: rgba(0,0,0,.5);
+      box-shadow: 0 0 1px rgba(255,255,255,.5);
+  }
 }
 .meta {
   margin-bottom: 10px;
@@ -119,5 +140,8 @@ $media-height: 70vh;
   display: inline-block;
   height: 10px;
   width: 10px;
+}
+.full-height {
+  height: 100%;
 }
 </style>
