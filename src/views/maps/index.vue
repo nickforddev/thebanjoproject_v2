@@ -238,14 +238,14 @@ export default {
 
 .map-container {
   display: flex;
-  height: 100vh;
+  height: 100%;
   width: 100%;
 }
 
 .marker-view {
   position: relative;
   width: 800px;
-  height: 100vh;
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   background: $color-background-dark;
