@@ -13,7 +13,6 @@
           :value="value"
           class="slider-input"
           v-on="$listeners"
-          @blur="onBlur"
         />
       </div>
     </div>
@@ -42,9 +41,6 @@ export default {
     },
     emit(value) {
       this.$emit('input', value)
-    },
-    onBlur() {
-      console.log('blur')
     }
   },
   components: {
