@@ -18,15 +18,28 @@
           </li>
         </ul>
       </div>
-      <!-- <pre>{{ $player.acf.related_audio }}</pre> -->
-      <div class="group" v-if="$player.acf.related_audio && $player.acf.related_audio.length">
+
+      <!-- <pre>{{ $player.acf.audio }}</pre> -->
+
+      <div class="group" v-if="$player.acf.audio && $player.acf.audio.length">
         <h3>Audio</h3>
+        <ul>
+          <li v-for="(audio, index) in $player.acf.audio" :key="index">
+            <div class="audio-track">
+              <a href="#" @click.prevent="playAudio(audio.audio)">{{ audio.audio.title }}</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- <div class="group" v-if="$player.acf.related_audio && $player.acf.related_audio.length">
+        <h3>Audio2</h3>
         <ul>
           <li v-for="(audio, index) in $player.acf.related_audio" :key="index">
             <audio-link :uid="audio.ID" />
           </li>
         </ul>
-      </div>
+      </div> -->
 
       <div class="group" v-if="videos.length">
         <h3>Videos</h3>
@@ -74,11 +87,11 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
-// import { Model } from 'vue-models'
 import Player from '@/models/player'
 import Sidebar from '@/components/sidebar'
 import StyleTag from '@/components/style'
-import AudioLink from '@/components/audio'
+// import AudioLink from '@/components/audio'
+import { sleep } from '@/utils'
 
 export default {
   name: 'profile',
@@ -141,12 +154,19 @@ export default {
     },
     playVideo(slug) {
       this.$store.dispatch('set_active_video', slug)
+    },
+    playAudio(songData) {
+      this.$store.dispatch('set_active_song', songData)
+      this.$nextTick(async() => {
+        await sleep(500)
+        window.$player.$refs.player.play()
+      })
     }
   },
   components: {
     Sidebar,
-    StyleTag,
-    AudioLink
+    StyleTag
+    // AudioLink
   }
 }
 </script>
