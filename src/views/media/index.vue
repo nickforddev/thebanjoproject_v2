@@ -1,22 +1,27 @@
 <template>
   <div>
     <header>
-      <h1>Videos</h1>
+      <h1>Media</h1>
     </header>
     <ul class="tabs">
       <li>
-        <router-link to="/videos/full-interviews">
+        <router-link to="/media/full-interviews">
           Full Interviews
         </router-link>
       </li>
       <li>
-        <router-link to="/videos/performances">
+        <router-link to="/media/performances">
           Performances
         </router-link>
       </li>
       <li>
-        <router-link to="/videos/mini-narratives">
+        <router-link to="/media/mini-narratives">
           Mini Narratives
+        </router-link>
+      </li>
+      <li>
+        <router-link to="/media/playlists">
+          Playlists
         </router-link>
       </li>
     </ul>
@@ -30,22 +35,7 @@
 
 <script>
 export default {
-  name: 'videos',
-  mounted() {
-    this.checkRoute()
-  },
-  watch: {
-    $route() {
-      this.checkRoute()
-    }
-  },
-  methods: {
-    checkRoute() {
-      if (!this.$route.params.type) {
-        this.$router.push('/videos/full-interviews')
-      }
-    }
-  }
+  name: 'media'
 }
 </script>
 

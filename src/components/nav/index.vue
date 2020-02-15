@@ -17,7 +17,7 @@
         <router-link to="/maps">Maps</router-link>
       </li>
       <li>
-        <router-link to="/videos">Videos</router-link>
+        <router-link to="/media">Media</router-link>
       </li>
       <li>
         <router-link to="/search">Search</router-link>

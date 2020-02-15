@@ -5,7 +5,7 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
-import Thumbnail from '@/views/videos/thumbnail'
+import Thumbnail from '@/views/media/thumbnail'
 
 export default {
   name: 'video-thumnail',

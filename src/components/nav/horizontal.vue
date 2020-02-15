@@ -6,9 +6,6 @@
         Stories of America's Instrument
       </div> -->
     </router-link>
-    <!-- <a href="https://kck.st/2zSz8LB" target="_blank">
-      <img class="kickstarter" src="/static/backer-button.png" />
-    </a> -->
     <div class="donate-container">
       <div>
         <a class="button success" href="https://secure.donationpay.org/documentaries/film_no_stats.php?f=banjo" target="_blank">
@@ -33,7 +30,7 @@
         <router-link to="/maps">Maps</router-link>
       </li>
       <li>
-        <router-link to="/videos">Videos</router-link>
+        <router-link to="/media">Media</router-link>
       </li>
       <li>
         <router-link to="/search">Search</router-link>

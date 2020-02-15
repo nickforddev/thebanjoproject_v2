@@ -1,5 +1,8 @@
 <template>
-  <div v-if="fetched" class="grid">
+  <div v-if="type === 'playlists'">
+    Content coming soon!
+  </div>
+  <div v-else-if="fetched" class="grid">
     <thumbnail
       v-for="(video, index) in data"
       :data="video"
@@ -11,7 +14,6 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
-// import { Collection } from 'vue-collections'
 import Thumbnail from './thumbnail'
 
 export default {
@@ -27,13 +29,6 @@ export default {
       fetched: false
     }
   },
-  // collection() {
-  //   // const self = this
-  //   return new Collection({
-  //     basePath: `wp/v2/videos?per_page=99&_embed&filter[type]=${this.type}`,
-  //     id_attribute: 'slug'
-  //   })
-  // },
   watch: {
     type() {
       this.fetch()
@@ -44,10 +39,11 @@ export default {
   },
   methods: {
     async fetch() {
-      this.fetched = false
-      this.data = await this.$request(`wp/v2/videos?per_page=99&_embed&filter[type]=${this.type}`)
-      // await this.$collection.fetch()
-      this.fetched = true
+      if (this.type !== 'playlists') {
+        this.fetched = false
+        this.data = await this.$request(`wp/v2/videos?per_page=99&_embed&filter[type]=${this.type}`)
+        this.fetched = true
+      }
     }
   },
   components: {

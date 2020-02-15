@@ -77,10 +77,11 @@ const router = new Router({
       ]
     },
     {
-      path: '/videos',
-      name: 'Videos',
+      path: '/media',
+      name: 'Media',
+      redirect: '/media/full-interviews',
       component(resolve) {
-        require(['@/views/videos'], resolve)
+        require(['@/views/media'], resolve)
       },
       children: [
         // {
@@ -92,9 +93,9 @@ const router = new Router({
         // },
         {
           path: ':type',
-          name: 'Video Type',
+          name: 'Media Type',
           component(resolve) {
-            require(['@/views/videos/list'], resolve)
+            require(['@/views/media/list'], resolve)
           }
         }
       ]
