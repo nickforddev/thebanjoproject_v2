@@ -45,9 +45,6 @@
         <h3>Videos</h3>
         <ul>
           <li v-for="(video, index) in videos" :key="index">
-            <!-- <router-link :to="`/videos/${video.post_name}`">
-              {{ video.post_title }}
-            </router-link> -->
             <a href="#" @click.prevent="playVideo(video.post_name)">
               {{ video.post_title }}
             </a>
@@ -148,7 +145,6 @@ export default {
       this.videos = []
       this.timeline = []
       const response = await this.$request(`related/people/${this.$player.id}`)
-      // console.log({response})
       this.videos = response.videos
       this.timeline = response.timeline
     },

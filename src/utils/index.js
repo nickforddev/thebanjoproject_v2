@@ -1,3 +1,5 @@
+import { format } from 'date-fns'
+
 export function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
@@ -40,4 +42,10 @@ export function debounce(fn, time) {
       fn(...args)
     }, time)
   }
+}
+
+export function getTimeFromSeconds(seconds) {
+  const date = new Date(null)
+  date.setSeconds(seconds || 0)
+  return format(date, 'm:ss')
 }

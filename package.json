@@ -11,6 +11,7 @@
   "dependencies": {
     "@vimeo/player": "^2.10.0",
     "core-js": "^2.6.5",
+    "date-fns": "^2.9.0",
     "fscreen": "^1.0.2",
     "howler": "^2.1.2",
     "image-map": "^1.1.7",

@@ -18,7 +18,6 @@ export default {
       state.active_song = data
     },
     PLAY_AUDIO(state) {
-      console.log('play!')
       state.audio_playing = true
     },
     PAUSE_AUDIO(state) {

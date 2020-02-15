@@ -6,7 +6,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Player from './index'
+import Player from './new_player'
 
 export default {
   name: 'global-audio-player',
@@ -22,15 +22,6 @@ export default {
       is_playing: 'audio:playing'
     })
   },
-  // watch: {
-  //   is_playing(value) {
-  //     if (value) {
-  //       this.$refs.player.play()
-  //     } else {
-  //       this.$refs.player.pause()
-  //     }
-  //   }
-  // },
   async mounted() {
     const { acf } = await this.$request('acf/v3/options/options')
     this.$store.dispatch('set_active_song', acf.default_audio_track)
