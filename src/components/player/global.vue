@@ -40,6 +40,6 @@ export default {
   left: 0;
   right: 0;
   height: $player-height;
-  z-index: 9;
+  z-index: 100;
 }
 </style>

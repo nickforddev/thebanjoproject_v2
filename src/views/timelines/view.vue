@@ -109,9 +109,6 @@ export default {
 $media-height: 70%;
 
 .media {
-  // height: 50vh;
-  // min-height: 40vh;
-  // max-height: 50vh;
   height: $media-height;
   min-height: $media-height;
   max-height: $media-height;

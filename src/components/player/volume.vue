@@ -7,15 +7,18 @@
     <button @click="toggle">
       <icon-volume class="icon-volume" :value="value" />
     </button>
-    <div v-if="open" class="slider-container">
-      <div class="slider">
-        <slider
-          :value="value"
-          class="slider-input"
-          v-on="$listeners"
-        />
+    <transition name="fade">
+      <div v-if="open" class="slider-container">
+        <div class="slider">
+          <slider
+            :value="value"
+            class="slider-input"
+            v-on="$listeners"
+          />
+        </div>
+        <div class="pointer" />
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -54,11 +57,13 @@ export default {
 @import '~%/colors';
 
 $height: 140px;
+$background: darken($color-background-dark, 8%);
 
 .volume-container {
   position: relative;
 
   button {
+    height: 60px;
     padding: 8px;
     background: none;
     border-radius: 100px;
@@ -75,18 +80,42 @@ $height: 140px;
 
   .slider-container {
     position: absolute;
-    bottom: 90%;
-    left: 2px;
-    width: 30px;
+    bottom: calc(100% - 6px);
+    left: 0;
+    width: 41px;
     height: $height + 20px;
     background: darken($color-background-dark, 8%);
-    border-radius: 100px;
-    z-index: 9999;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    border-radius: 2px;
+    z-index: 999999;
+
+    .pointer {
+      position: absolute;
+      top: 100%;
+      left: 14px;
+      width: 12px;
+      height: 18px;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: -8px;
+        width: 12px;
+        height: 12px;
+        background-color: $background;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+        transform: rotate(45deg);
+      }
+    }
 
     .slider {
       position: relative;
       top: 72px;
-      left: -57px;
+      left: -52px;
 
       .slider-input {
         width: $height !important;
