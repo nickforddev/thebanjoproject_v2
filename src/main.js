@@ -82,3 +82,15 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
+
+const TABFOCUS_CLASSNAME = 'tabfocus'
+
+window.addEventListener('keydown', event => {
+  if (event.key === 'Tab') {
+    document.body.classList.add(TABFOCUS_CLASSNAME)
+  }
+})
+
+window.addEventListener('mousedown', () => {
+  document.body.classList.remove(TABFOCUS_CLASSNAME)
+})

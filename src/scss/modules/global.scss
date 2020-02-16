@@ -57,3 +57,16 @@ header {
 ::-moz-selection {
   background: $color-highlight;
 }
+
+$input-focus-box-shadow: 0 0 3px 2px #7584b9;
+
+button:focus {
+  outline: 0;
+}
+
+.tabfocus {
+  a:focus, button:focus {
+    outline: 0;
+    box-shadow: $input-focus-box-shadow;
+  }
+}

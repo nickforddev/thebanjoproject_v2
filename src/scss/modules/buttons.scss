@@ -1,6 +1,6 @@
 @import 'colors';
 
-button, .button {
+button:not(.plain), .button {
   display: inline-block;
   position: relative;
   padding: .60em .75em;
@@ -39,10 +39,10 @@ button, .button {
     background-color: darken($color-button-background, 10%);
   }
 
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 5px 2px #7584b9;
-  }
+  // &:focus {
+  //   outline: none;
+  //   box-shadow: 0 0 5px 2px #7584b9;
+  // }
 
   &:disabled, .disabled {
     opacity: 0.5;
@@ -217,4 +217,11 @@ button, .button {
     display: block;
     width: 100%;
   }
+}
+
+button.plain {
+  background: none;
+  border: none;
+  padding: 0;
+  -webkit-appearance: none;
 }

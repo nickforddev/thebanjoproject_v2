@@ -184,6 +184,11 @@ $progress-bar-border-radius: 100px;
     border-radius: 100%;
     overflow: hidden;
 
+    // &:focus {
+    //   outline: none;
+    //   box-shadow: 0 0 5px 2px #7584b9;
+    // }
+
     ::v-deep {
       path.background {
         fill: $color-background-dark;
