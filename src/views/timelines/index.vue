@@ -216,9 +216,7 @@ export default {
   padding: 20px;
   padding-bottom: 10px;
   width: 186px;
-  background: #282834;
-  pointer-events: none;
-  // text-align: right;
+  background: $color-background-dark;
 
   .key {
     margin-bottom: 6px;

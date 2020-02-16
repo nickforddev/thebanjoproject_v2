@@ -1,5 +1,4 @@
 @import 'colors';
-// @import 'breakpoints';
 
 button, .button {
   display: inline-block;
@@ -31,8 +30,9 @@ button, .button {
   &:hover {
     color: $color-button-text;
     box-shadow: 0 3px 4px rgba(0,0,0, 0.3);
-    cursor: pointer;
     transition: box-shadow 0.4s;
+    text-decoration: none;
+    cursor: pointer;
   }
 
   &:active {

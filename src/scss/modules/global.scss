@@ -7,13 +7,10 @@ body {
   font-family: 'Interstate', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  // color: #2c3e50;
-  // height: 100%;
 }
 
 header {
   display: flex;
-  // align-items: baseline;
   height: 100px;
   background-image: url('/static/banjo-banner.jpg');
   background-size: cover;
@@ -52,4 +49,11 @@ header {
   padding-right: $gutter-width;
   margin-right: $gutter-width;
   border-right: 1px solid $color-divider;
+}
+
+::selection {
+  background: $color-highlight;
+}
+::-moz-selection {
+  background: $color-highlight;
 }

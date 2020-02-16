@@ -3,9 +3,10 @@
     <div
       class="timeline-event-dot"
       :style="{ 'background-color': color }" />
-    <!-- <div class="tooltip"> -->
-    <div class="label" v-html="label" />
-    <!-- </div> -->
+    <div class="label">
+      <div v-html="label"></div>
+      <div class="tooltip" v-html="full" />
+    </div>
   </div>
 </template>
 
@@ -21,6 +22,9 @@ export default {
   computed: {
     label() {
       return `${this.data.acf.date} – ${filters.limit(this.data.title.rendered)}`
+    },
+    full() {
+      return this.data.title.rendered
     },
     top() {
       return `${(2 + (this.data.acf.date - this.min) * this.scale) + this.padding}px`
@@ -59,9 +63,31 @@ $triangle-size: 8px;
 
 .label {
   position: relative;
+  width: 200px;
   left: 20px;
   top: -3px;
-  width: 200px;
   font-size: 10px;
+
+  .text {
+    position: relative;
+    width: 200px;
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    .tooltip {
+      opacity: 1;
+    }
+  }
+}
+
+.tooltip {
+  opacity: 0;
+  left: 0;
+  transform: none;
+  z-index: 99;
+  max-width: 160px;
+  white-space: normal;
 }
 </style>

@@ -15,16 +15,28 @@
           </div>
         </div>
         <h2 v-html="event.title.rendered"></h2>
-        <div class="group" v-if="event.acf.audio.length">
+
+        <div class="group" v-if="event.acf.related_audio">
+          <h3>Audio</h3>
+          <ul>
+            <li>
+              <div class="audio-track">
+                <a href="#" @click.prevent="playAudio(event.acf.related_audio)">{{ event.acf.related_audio.title }}</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- <div class="group" v-if="event.acf.audio.length">
           <h3>Audio</h3>
           <ul>
             <li v-for="(audio, index) in event.acf.audio" :key="index">
               <audio-link :uid="audio.ID" />
             </li>
           </ul>
-        </div>
+        </div> -->
+
         <div v-html="event.content.rendered"></div>
-        <!-- <pre>{{ event }}</pre> -->
       </div>
     </div>
   </div>
@@ -34,7 +46,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import AudioLink from '@/components/audio'
+// import AudioLink from '@/components/audio'
+import { sleep } from '@/utils'
 
 export default {
   name: 'timeline-view',
@@ -73,11 +86,18 @@ export default {
       const response = await this.$request(`wp/v2/timelines?slug=${this.$route.params.slug}&_embed`)
       this.event = response[0]
       this.fetched = true
+    },
+    playAudio(songData) {
+      this.$store.dispatch('set_active_song', songData)
+      this.$nextTick(async() => {
+        await sleep(500)
+        window.$player.$refs.player.play()
+      })
     }
-  },
-  components: {
-    AudioLink
   }
+  // components: {
+  //   AudioLink
+  // }
 }
 </script>
 
