@@ -70,3 +70,8 @@ button:focus {
     box-shadow: $input-focus-box-shadow;
   }
 }
+
+svg {
+  display: block;
+  height: auto;
+}

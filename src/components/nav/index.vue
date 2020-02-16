@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <router-link to="/">
+    <router-link class="logo" to="/">
       <logo />
     </router-link>
     <ul>
@@ -64,7 +64,7 @@ nav {
   color: $color-text-light;
   overflow-y: auto;
 
-  .logo {
+  & > .logo {
     margin-bottom: 20px;
     color: $color-text-light;
   }
