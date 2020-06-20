@@ -11,7 +11,9 @@
         :url="`https://api.mapbox.com/styles/v1/mapbox/${map_id}/tiles/{z}/{x}/{y}?access_token=${access_token}`"
       />
 
-      <v-marker-cluster @clustermouseover="hoverCluster">
+      <v-marker-cluster
+        @clustermouseover="hoverCluster"
+        @clustermouseout="currentRegions = []">
         <v-marker
           ref="marker"
           v-for="(model, index) in markers"
@@ -20,6 +22,8 @@
             model.acf.location.lat,
             model.acf.location.lng
           ]"
+          @mouseover="hoverMarker"
+          @mouseleave="currentRegions = []"
           @click="openMarker(index)"
         >
           <v-popup />
@@ -40,7 +44,20 @@
           <div class="region-content">
             <h1>{{ active_region.name }}</h1>
             <p class="description" v-html="active_region.description" />
-            <p>{{ region_count }} Locations</p>
+            <!-- <p>{{ region_count }} Locations</p> -->
+            <h2>Regions</h2>
+            <p
+              v-for="region in regions"
+              :key="region.id"
+              class="region-name-wrapper">
+              <a
+                href="#"
+                @click.prevent="zoomRegion(region)"
+                class="region-name"
+                :class="[currentRegions.includes(region) && 'active']">
+                {{ region.name }}
+              </a>
+            </p>
           </div>
         </div>
       </div>
@@ -65,31 +82,28 @@ const ZERO_STATE_DESCRIPTION = `
     century, where the banjo emerged and developed out of cultural
     collisions and exchanges that we can document. 
   </p>
-  <h2>Transatlantic Culture</h2>
-  <p>
-    The banjo’s odyssey goes far beyond the mainland United States, 
-    highlighting continuous cycles of transculturation over a period 
-    of three centuries beginning with the colonial slave trade. 
-    In the banjo’s history, we can see how the connections between the
-    cultures of Africa, the Caribbean, North America and Europe shaped
-    one another to create something new while never fully erasing its
-    roots in Africa and the Atlantic slave trade. 
-  </p>
 `
+// <h2>Transatlantic Culture</h2>
+// <p>
+//   The banjo’s odyssey goes far beyond the mainland United States,
+//   highlighting continuous cycles of transculturation over a period
+//   of three centuries beginning with the colonial slave trade.
+//   In the banjo’s history, we can see how the connections between the
+//   cultures of Africa, the Caribbean, North America and Europe shaped
+//   one another to create something new while never fully erasing its
+//   roots in Africa and the Atlantic slave trade.
+// </p>
 
 export default {
   name: 'region',
-  // models: {
-  //   region() {
-  //     return new Region()
-  //   }
-  // },
   data() {
     return {
       fetched: false,
       access_token: config.mapbox,
       map_id: 'light-v9',
       collection: null,
+      regions: null, // filtered to only regions that have markers
+      currentRegions: [],
       bounds: null,
       active_region: {
         name: ZERO_STATE_TITLE,
@@ -141,6 +155,7 @@ export default {
   },
   methods: {
     async fetch() {
+      const regionRequest = this.$request(`wp/v2/region?per_page=100`)
       let models = []
       const request = await this.$request('wp/v2/maps?per_page=100', {
         responseHeaders: true
@@ -161,40 +176,47 @@ export default {
       this.collection = models
       this.region_count = models.length
       this.fetched = true
+      this.regions = (await regionRequest)
+        .filter(region => this.markers.some(marker => marker.region.includes(region.id)))
+        .sort((a, b) => a.name < b.name ? -1 : 1)
     },
     async hoverCluster(cluster) {
       const markers = cluster.layer.getAllChildMarkers()
       this.region_count = markers.length
-      const zoomLevel = this.$refs.map.mapObject.getZoom()
-      if (zoomLevel > 2) {
-        const marker = markers[0]
-        const latLng = {
-          lat: `${marker._latlng.lat}`,
-          lng: `${marker._latlng.lng}`
-        }
-        window.markers = this.markers
-        const firstMarker = this.markers.find(m => {
-          return equals(
-            props(['lat', 'lng'], m.acf.location),
-            props(['lat', 'lng'], latLng)
-          )
-        })
-        this.active_region = await this.$request(`wp/v2/region/${firstMarker.region[0]}`)
-      } else {
-        this.active_region = {
-          name: ZERO_STATE_TITLE,
-          description: ZERO_STATE_DESCRIPTION,
-          acf: {
-            image: null
-          }
-        }
-      }
+
+      this.highlightRegions(markers, '_latlng')
+
       if (!this.hovered) {
         setTimeout(() => {
           this.setBounds()
           this.hovered = true
         }, 10)
       }
+    },
+    hoverMarker(marker) {
+      this.highlightRegions([marker])
+    },
+    highlightRegions(markers, latlngKey = 'latlng') {
+      const latlngs = markers.map(marker => {
+        return {
+          lat: `${marker[latlngKey].lat}`,
+          lng: `${marker[latlngKey].lng}`
+        }
+      })
+      const mappedMarkers = this.markers.filter(marker => {
+        return latlngs.some(latlng => {
+          return equals(
+            props(['lat', 'lng'], marker.acf.location),
+            props(['lat', 'lng'], latlng)
+          )
+        })
+      })
+      const matchedRegions = this.regions.filter(region => {
+        return mappedMarkers.some(marker => {
+          return marker.region.includes(region.id)
+        })
+      })
+      this.currentRegions = matchedRegions
     },
     async openMarker(index) {
       this.$router.push(`/maps/${this.markers[index].slug}`)
@@ -208,9 +230,9 @@ export default {
         maxZoom: zoom ? 12 : this.map.getZoom()
       })
     },
-    setBounds() {
+    setBounds(markers = this.markers) {
       this.bounds = window.L.latLngBounds()
-      this.markers.map(model => {
+      markers.map(model => {
         const { lat, lng } = model.acf.location
         this.bounds.extend(window.L.latLng(lat, lng))
       })
@@ -218,13 +240,18 @@ export default {
         padding: [0, 0]
       })
     },
+    zoomRegion(region) {
+      const markers = this.markers.filter(marker => {
+        return marker.region.includes(region.id)
+      })
+      this.setBounds(markers)
+    },
     closeMarker() {
       this.$router.push(`/maps/`)
       this.setBounds()
     }
   },
   components: {
-    // MarkerContent,
     ImagesSlideshow,
     HomeBtn
   }
@@ -254,8 +281,6 @@ export default {
 
 .region-info {
   display: flex;
-  // position: absolute;
-  // overflow-x: hidden;
   width: 100%;
 
   .region-content {
@@ -272,5 +297,22 @@ export default {
 
 .pad-bottom {
   padding-bottom: 18px;
+}
+
+.region-name-wrapper {
+  display: inline-block;
+  width: 50%;
+
+  .region-name {
+    display: inline-block;
+    padding: 2px;
+    border-radius: 3px;
+
+    &:hover, &.active {
+      color: $color-background-dark;
+      background: $color-highlight;
+      text-decoration: none;
+    }
+  }
 }
 </style>
