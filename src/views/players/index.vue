@@ -77,17 +77,14 @@ export default {
   methods: {
     async fetch() {
       await this.$collection.fetch()
-      this.$collection.models.sort(model => {
-        return model.acf.disabled ? 1 : -1
-      })
+      // this.$collection.models.sort(model => {
+      //   return model.acf.disabled ? -1 : 1
+      // })
       this.fetched = true
     },
     setActive(model) {
       this.active = model.id
     },
-    // setPace(amount) {
-    //   this.pace = amount
-    // },
     async setScrolling(bool, direction) {
       if (bool) {
         await this.$nextTick()
