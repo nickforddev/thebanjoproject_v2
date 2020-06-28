@@ -182,6 +182,7 @@ export default {
     width: 100%;
     height: 400px;
     padding-top: 45px;
+    padding-left: 30px;
     white-space: nowrap;
     overflow-x: scroll;
     overflow-y: hidden;
@@ -189,8 +190,10 @@ export default {
     li {
       display: inline-block;
       position: relative;
-      margin: 0 -70px -24px 0;
-      width: 280px;
+      // margin: 0 -70px -24px 0;
+      margin: 0 -20px -24px 0;
+      // width: 280px;
+      width: 300px;
 
       &.disabled {
         // background: red;
@@ -206,7 +209,7 @@ export default {
 
         &.router-link-active {
           img {
-            transform: scale(0.9);
+            transform: scale(0.9) translateX(-25%);
           }
         }
 
@@ -223,7 +226,7 @@ export default {
       img {
         position: relative;
         height: 400px;
-        transform: scale(0.8);
+        transform: scale(0.8) translateX(-25%);
         transition: all 0.2s;
         pointer-events: none;
       }

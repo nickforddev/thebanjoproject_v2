@@ -1,6 +1,6 @@
 <template>
   <div class="map-container">
-    <home-btn @click="closeMarker" />
+    <home-btn @click="closeMarker(true)" />
     <v-map
       v-if="collection && fetched"
       ref="map"
@@ -37,27 +37,25 @@
         @close="closeMarker"
       />
       <div v-else class="region-info">
-        <div v-if="active_region">
-          <div v-if="active_region.acf && active_region.acf.image" class="slideshow">
-            <images-slideshow :image="{ url: active_region.acf.image }" title="test" />
-          </div>
-          <div class="region-content">
-            <h1>{{ active_region.name }}</h1>
-            <p class="description" v-html="active_region.description" />
-            <!-- <p>{{ region_count }} Locations</p> -->
-            <h2>Regions</h2>
-            <p
-              v-for="region in regions"
-              :key="region.id"
-              class="region-name-wrapper">
-              <a
-                href="#"
-                @click.prevent="zoomRegion(region)"
-                class="region-name"
-                :class="[currentRegions.includes(region) && 'active']">
-                {{ region.name }}
-              </a>
-            </p>
+        <div class="region-content">
+          <h1>{{ name }}</h1>
+          <p class="description" v-html="description" />
+          <h2>Regions</h2>
+          <p
+            v-for="region in regions"
+            :key="region.id"
+            class="region-name-wrapper">
+            <router-link
+              :to="`/maps/region/${region.slug}`"
+              @click="zoomRegion(region)"
+              class="region-name"
+              :class="[currentRegions.includes(region) && 'active']">
+              {{ region.name }}
+            </router-link>
+          </p>
+          <div v-if="active_region" class="region-details">
+            <h2>{{ active_region.name }}</h2>
+            <p class="description" v-html="active_region.description || '(Description coming soon)'" />
           </div>
         </div>
       </div>
@@ -72,7 +70,7 @@ import { equals, props } from 'ramda'
 import config from '@/config'
 // import Region from '@/models/region'
 import HomeBtn from '@/components/controls/home'
-import ImagesSlideshow from '@/components/slideshow/images'
+// import ImagesSlideshow from '@/components/slideshow/images'
 // import MarkerContent from './content'
 
 const ZERO_STATE_TITLE = 'Maps'
@@ -96,27 +94,40 @@ const ZERO_STATE_DESCRIPTION = `
 
 export default {
   name: 'region',
+  props: {
+    regionSlug: String
+  },
   data() {
     return {
       fetched: false,
+      last_section: '/maps',
       access_token: config.mapbox,
       map_id: 'light-v9',
       collection: null,
       regions: null, // filtered to only regions that have markers
       currentRegions: [],
       bounds: null,
-      active_region: {
-        name: ZERO_STATE_TITLE,
-        description: ZERO_STATE_DESCRIPTION,
-        acf: {
-          image: null
-        }
-      },
+      name: ZERO_STATE_TITLE,
+      description: ZERO_STATE_DESCRIPTION,
+      active_region: null,
       region_count: null,
       hovered: false
     }
   },
   watch: {
+    '$route.params'(params) {
+      const { slug, regionSlug } = params
+      if (slug) {
+        // do nothing
+      } else if (regionSlug) {
+        this.last_section = `/maps/region/${regionSlug}`
+        this.fetchRegion(regionSlug)
+      } else {
+        this.active_region = null
+        this.last_section = '/maps'
+        this.setBounds()
+      }
+    },
     async '$route.params.slug'(value) {
       if (value) {
         await this.$nextTick()
@@ -125,8 +136,12 @@ export default {
           .acf
           .location
         this.focus(lat, lng, false)
-      } else {
-        this.setBounds()
+      }
+    },
+    async '$route.params.regionSlug'(value) {
+      if (value) {
+        const region = this.regions.find(r => r.slug === value)
+        this.zoomRegion(region)
       }
     }
   },
@@ -142,13 +157,17 @@ export default {
   },
   async created() {
     await this.fetch()
-    const slug = this.$route.params.slug
+    const { slug, regionSlug } = this.$route.params
     if (slug) {
       const { lat, lng } = this.markers
         .find(model => model.slug === slug)
         .acf
         .location
       this.focus(lat, lng, true)
+    } else if (regionSlug) {
+      const region = this.regions.find(r => r.slug === regionSlug)
+      this.zoomRegion(region)
+      this.fetchRegion(regionSlug)
     } else {
       this.setBounds()
     }
@@ -178,7 +197,9 @@ export default {
       this.fetched = true
       this.regions = (await regionRequest)
         .filter(region => this.markers.some(marker => marker.region.includes(region.id)))
-        .sort((a, b) => a.name < b.name ? -1 : 1)
+    },
+    async fetchRegion(regionSlug) {
+      this.active_region = (await this.$request(`wp/v2/region?slug=${regionSlug}`))[0]
     },
     async hoverCluster(cluster) {
       const markers = cluster.layer.getAllChildMarkers()
@@ -219,7 +240,7 @@ export default {
       this.currentRegions = matchedRegions
     },
     async openMarker(index) {
-      this.$router.push(`/maps/${this.markers[index].slug}`)
+      this.$router.push(`/maps/location/${this.markers[index].slug}`)
     },
     focus(lat, lng, zoom = false) {
       this.bounds = window.L.latLngBounds()
@@ -246,13 +267,12 @@ export default {
       })
       this.setBounds(markers)
     },
-    closeMarker() {
-      this.$router.push(`/maps/`)
+    closeMarker(goHome) {
+      this.$router.push(goHome ? '/maps' : this.last_section)
       this.setBounds()
     }
   },
   components: {
-    ImagesSlideshow,
     HomeBtn
   }
 }
@@ -286,6 +306,10 @@ export default {
   .region-content {
     padding: 20px;
   }
+
+  .region-details {
+    margin-top: 20px;
+  }
 }
 
 .home-btn {
@@ -307,8 +331,9 @@ export default {
     display: inline-block;
     padding: 2px;
     border-radius: 3px;
+    user-select: none;
 
-    &:hover, &.active {
+    &:hover, &.active, &.router-link-exact-active {
       color: $color-background-dark;
       background: $color-highlight;
       text-decoration: none;

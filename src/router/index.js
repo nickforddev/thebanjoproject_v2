@@ -52,7 +52,14 @@ const router = new Router({
       },
       children: [
         {
-          path: '/maps/:slug',
+          path: '/maps/region/:regionSlug',
+          name: 'Map Region',
+          component(resolve) {
+            require(['@/views/maps/index'], resolve)
+          }
+        },
+        {
+          path: '/maps/location/:slug',
           name: 'Map Marker',
           component(resolve) {
             require(['@/views/maps/content'], resolve)

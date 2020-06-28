@@ -28,7 +28,7 @@
             <li>
               <router-link
                 v-html="location.post_title"
-                :to="`/maps/${$route.params.region}/${location.post_name}`"
+                :to="`/maps/location/${location.post_name}`"
               />
             </li>
           </ul>

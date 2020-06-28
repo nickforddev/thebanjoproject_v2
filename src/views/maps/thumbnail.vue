@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     goToMap() {
-      this.$router.push(`/maps/${this.data.slug}`)
+      this.$router.push(`/maps/locations/${this.data.slug}`)
     },
     setMapSettings() {
       const map = this.$refs.map.mapObject

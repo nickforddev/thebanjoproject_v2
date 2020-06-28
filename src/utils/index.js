@@ -49,3 +49,13 @@ export function getTimeFromSeconds(seconds) {
   date.setSeconds(seconds || 0)
   return format(date, 'm:ss')
 }
+
+// export class Deferred {
+//   constructor() {
+//     this.promise = new Promise((resolve, reject) => {
+//       this.resolve = resolve
+//       this.reject = reject
+//     })
+//     Object.freeze(this)
+//   }
+// }
