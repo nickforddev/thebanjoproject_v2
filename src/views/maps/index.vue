@@ -55,7 +55,7 @@
           </p>
           <div v-if="active_region" class="region-details">
             <h2>{{ active_region.name }}</h2>
-            <p class="description" v-html="active_region.description || '(Description coming soon)'" />
+            <p class="description" v-html="active_region.acf.description || '(Description coming soon)'" />
           </div>
         </div>
       </div>
