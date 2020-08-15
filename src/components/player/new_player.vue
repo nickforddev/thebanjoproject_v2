@@ -6,11 +6,20 @@
   >
     <div class="main">
       <div class="controls">
+        <seek
+          :disabled="!has_previous"
+          @click="prevTrack"
+          reverse
+        />
         <playpause
           class="playpause"
           :playing="is_playing"
           @play="play"
           @pause="pause"
+        />
+        <seek
+          :disabled="!has_next"
+          @click="nextTrack"
         />
       </div>
       <div class="progress-container">
@@ -33,15 +42,18 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
+import { mapGetters } from 'vuex'
 import { Howl, Howler } from 'howler'
 import { sleep, getTimeFromSeconds } from '@/utils'
 import Playpause from '@/components/controls/playpause'
+import Seek from '@/components/controls/seek'
 import Volume from './volume'
 
 export default {
   name: 'player',
   components: {
     Playpause,
+    Seek,
     Volume
   },
   props: {
@@ -60,6 +72,18 @@ export default {
       duration: 0,
       volume: 100
     }
+  },
+  computed: {
+    has_previous() {
+      return this.activePlaylist && this.activeSongIndex > 0
+    },
+    has_next() {
+      return this.activePlaylist && this.activeSongIndex < this.activePlaylist.acf.songs.length - 1
+    },
+    ...mapGetters({
+      activePlaylist: 'audio:active_playlist',
+      activeSongIndex: 'audio:active_song_index'
+    })
   },
   watch: {
     data() {
@@ -127,6 +151,26 @@ export default {
     },
     onVolumeChange(value) {
       Howler.volume(value / 100)
+    },
+    prevTrack() {
+      if (this.has_previous) {
+        const { song } = this.activePlaylist.acf.songs[this.activeSongIndex - 1]
+        this.$store.dispatch('set_active_song', song)
+        this.$nextTick(async() => {
+          await sleep(500)
+          window.$player.$refs.player.play()
+        })
+      }
+    },
+    nextTrack() {
+      if (this.has_next) {
+        const { song } = this.activePlaylist.acf.songs[this.activeSongIndex + 1]
+        this.$store.dispatch('set_active_song', song)
+        this.$nextTick(async() => {
+          await sleep(500)
+          window.$player.$refs.player.play()
+        })
+      }
     }
   }
 }
@@ -178,16 +222,15 @@ $progress-bar-border-radius: 100px;
     }
   }
 
+  .controls {
+    display: flex;
+  }
+
   .playpause {
     flex-shrink: 0;
     width: 50px;
     border-radius: 100%;
     overflow: hidden;
-
-    // &:focus {
-    //   outline: none;
-    //   box-shadow: 0 0 5px 2px #7584b9;
-    // }
 
     ::v-deep {
       path.background {
@@ -197,6 +240,10 @@ $progress-bar-border-radius: 100px;
         fill: $color-highlight;
       }
     }
+  }
+
+  .seek {
+    width: 40px;
   }
 
   .readout {

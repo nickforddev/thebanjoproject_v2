@@ -40,6 +40,7 @@ export default {
   },
   methods: {
     playAudio(songData) {
+      this.$store.dispatch('set_active_playlist', null)
       this.$store.dispatch('set_active_song', songData)
       this.$nextTick(async() => {
         await sleep(500)

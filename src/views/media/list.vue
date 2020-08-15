@@ -1,6 +1,6 @@
 <template>
   <div v-if="type === 'playlists'">
-    Content coming soon!
+    <playlists />
   </div>
   <div v-else-if="fetched" class="grid">
     <thumbnail
@@ -14,6 +14,7 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
+import Playlists from './playlists'
 import Thumbnail from './thumbnail'
 
 export default {
@@ -47,6 +48,7 @@ export default {
     }
   },
   components: {
+    Playlists,
     Thumbnail
   }
 }
