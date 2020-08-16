@@ -75,13 +75,13 @@ export default {
   },
   computed: {
     has_previous() {
-      return this.activePlaylist && this.activeSongIndex > 0
+      return this.playlist && this.activeSongIndex > 0
     },
     has_next() {
-      return this.activePlaylist && this.activeSongIndex < this.activePlaylist.acf.songs.length - 1
+      return this.playlist && this.activeSongIndex < this.playlist.acf.songs.length - 1
     },
     ...mapGetters({
-      activePlaylist: 'audio:active_playlist',
+      playlist: 'audio:active_playlist',
       activeSongIndex: 'audio:active_song_index'
     })
   },
@@ -154,22 +154,16 @@ export default {
     },
     prevTrack() {
       if (this.has_previous) {
-        const { song } = this.activePlaylist.acf.songs[this.activeSongIndex - 1]
-        this.$store.dispatch('set_active_song', song)
-        this.$nextTick(async() => {
-          await sleep(500)
-          window.$player.$refs.player.play()
-        })
+        const { playlist } = this
+        const { song } = this.playlist.acf.songs[this.activeSongIndex - 1]
+        this.playAudio({ song, playlist })
       }
     },
     nextTrack() {
       if (this.has_next) {
-        const { song } = this.activePlaylist.acf.songs[this.activeSongIndex + 1]
-        this.$store.dispatch('set_active_song', song)
-        this.$nextTick(async() => {
-          await sleep(500)
-          window.$player.$refs.player.play()
-        })
+        const { playlist } = this
+        const { song } = this.playlist.acf.songs[this.activeSongIndex + 1]
+        this.playAudio({ song, playlist })
       }
     }
   }
@@ -190,7 +184,6 @@ $progress-bar-border-radius: 100px;
   height: $player-height;
   padding: 0 30px;
   background: darken($color-background-dark, 8%);
-  // overflow: hidden;
 
   .main {
     display: flex;
@@ -224,6 +217,10 @@ $progress-bar-border-radius: 100px;
 
   .controls {
     display: flex;
+
+    button:not(:last-child) {
+      margin-right: 4px;
+    }
   }
 
   .playpause {

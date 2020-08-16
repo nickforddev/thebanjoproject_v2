@@ -49,6 +49,10 @@ export default {
     },
     pause_audio({ commit }) {
       commit('PAUSE_AUDIO')
+    },
+    async play_song({ dispatch }, { song, playlist }) {
+      dispatch('set_active_playlist', playlist)
+      dispatch('set_active_song', song)
     }
   }
 }

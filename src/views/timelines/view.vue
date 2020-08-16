@@ -21,7 +21,12 @@
           <ul>
             <li>
               <div class="audio-track">
-                <a href="#" @click.prevent="playAudio(event.acf.related_audio)">{{ event.acf.related_audio.title }}</a>
+                <a
+                  href="#"
+                  @click.prevent="playAudio({ song: event.acf.related_audio })
+                ">
+                  {{ event.acf.related_audio.title }}
+                </a>
               </div>
             </li>
           </ul>
@@ -47,7 +52,6 @@
 <script>
 import { mapGetters } from 'vuex'
 // import AudioLink from '@/components/audio'
-import { sleep } from '@/utils'
 
 export default {
   name: 'timeline-view',
@@ -86,19 +90,8 @@ export default {
       const response = await this.$request(`wp/v2/timelines?slug=${this.$route.params.slug}&_embed`)
       this.event = response[0]
       this.fetched = true
-    },
-    playAudio(songData) {
-      this.$store.dispatch('set_active_playlist', null)
-      this.$store.dispatch('set_active_song', songData)
-      this.$nextTick(async() => {
-        await sleep(500)
-        window.$player.$refs.player.play()
-      })
     }
   }
-  // components: {
-  //   AudioLink
-  // }
 }
 </script>
 

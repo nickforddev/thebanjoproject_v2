@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 
 import filters from './modules/filters'
+import audioMixin from './mixins/audio'
 
 // core plugins
 import VueRequests from 'vue-requests'
@@ -74,6 +75,8 @@ Vue.component('v-tilelayer', LTileLayer)
 Vue.component('v-marker-cluster', Vue2LeafletMarkerCluster)
 Vue.component('v-marker', LMarker)
 Vue.component('v-popup', LPopup)
+
+Vue.mixin(audioMixin)
 
 Vue.config.productionTip = false
 

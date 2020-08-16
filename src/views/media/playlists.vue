@@ -6,20 +6,17 @@
         <li v-for="({ song }, index) in playlist.acf.songs" :key="index">
           <a
             href="#"
-            @click.prevent="playPlaylistAudio(playlist, song)"
+            @click.prevent="playAudio({ song, playlist })"
           >
             {{ song.title }}
           </a>
         </li>
       </ul>
     </div>
-    <!-- <pre>{{data}}</pre> -->
   </div>
 </template>
 
 <script>
-import { sleep } from '@/utils'
-
 export default {
   name: 'playlists',
   data() {
@@ -36,14 +33,6 @@ export default {
       this.fetched = false
       this.data = await this.$request('wp/v2/playlists?per_page=99')
       this.fetched = true
-    },
-    playPlaylistAudio(playlist, song) {
-      this.$store.dispatch('set_active_playlist', playlist)
-      this.$store.dispatch('set_active_song', song)
-      this.$nextTick(async() => {
-        await sleep(500)
-        window.$player.$refs.player.play()
-      })
     }
   }
 }

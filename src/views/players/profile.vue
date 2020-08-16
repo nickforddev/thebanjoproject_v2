@@ -24,9 +24,9 @@
       <div class="group" v-if="$player.acf.audio && $player.acf.audio.length">
         <h3>Audio</h3>
         <ul>
-          <li v-for="(audio, index) in $player.acf.audio" :key="index">
+          <li v-for="({ audio }, index) in $player.acf.audio" :key="index">
             <div class="audio-track">
-              <a href="#" @click.prevent="playAudio(audio.audio)">{{ audio.audio.title }}</a>
+              <a href="#" @click.prevent="playAudio({ song: audio })">{{ audio.title }}</a>
             </div>
           </li>
         </ul>
@@ -88,7 +88,6 @@ import Player from '@/models/player'
 import Sidebar from '@/components/sidebar'
 import StyleTag from '@/components/style'
 // import AudioLink from '@/components/audio'
-import { sleep } from '@/utils'
 
 export default {
   name: 'profile',
@@ -141,7 +140,6 @@ export default {
       this.fetched_relationships = true
     },
     async fetch_relationships() {
-      // this.$collection.fetch()
       this.videos = []
       this.timeline = []
       const response = await this.$request(`related/people/${this.$player.id}`)
@@ -150,13 +148,6 @@ export default {
     },
     playVideo(slug) {
       this.$store.dispatch('set_active_video', slug)
-    },
-    playAudio(songData) {
-      this.$store.dispatch('set_active_song', songData)
-      this.$nextTick(async() => {
-        await sleep(500)
-        window.$player.$refs.player.play()
-      })
     }
   },
   components: {

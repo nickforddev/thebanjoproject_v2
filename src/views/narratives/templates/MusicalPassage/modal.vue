@@ -7,8 +7,8 @@
           <slot name="title" />
         </div>
         <div v-if="audio" class="audio">
-          <div class="audio-track" v-for="(audio, index) in audio" :key="index">
-            <a href="#" @click.prevent="playAudio(audio.audio)">{{ audio.audio.title }}</a>
+          <div class="audio-track" v-for="({ audio }, index) in audio" :key="index">
+            <a href="#" @click.prevent="playAudio({ song: audio })">{{ audio.title }}</a>
           </div>
         </div>
         <div class="body">
@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import { sleep } from '@/utils'
 export default {
   name: 'mp-modal',
   props: {
@@ -36,16 +35,6 @@ export default {
   computed: {
     className() {
       return [this.side]
-    }
-  },
-  methods: {
-    playAudio(songData) {
-      this.$store.dispatch('set_active_playlist', null)
-      this.$store.dispatch('set_active_song', songData)
-      this.$nextTick(async() => {
-        await sleep(500)
-        window.$player.$refs.player.play()
-      })
     }
   }
 }

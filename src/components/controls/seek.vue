@@ -1,14 +1,14 @@
 <template>
   <button class="plain seek" @click.prevent="emit">
     <svg
+      viewBox="0 0 83.373 82.196"
       :class="[
         disabled && 'disabled',
         $attrs.reverse && 'reverse'
       ]"
-      viewBox="0 0 100 125"
     >
-      <path data-name="Compound Path"
-        d="M50,10.5A39.5,39.5,0,1,0,89.5,50,39.5,39.5,0,0,0,50,10.5Zm13,57H57.9V54.3L37,73.3V26.7l20.9,19V32.5H63Z" />
+      <circle cx="41.982" cy="40.915" r="40.829"/>
+      <path data-name="Compound Path" d="M 54.596 58.869 L 49.496 58.869 L 49.496 45.669 L 28.596 64.669 L 28.596 18.069 L 49.496 37.069 L 49.496 23.869 L 54.596 23.869 L 54.596 58.869 Z" />
     </svg>
   </button>
 </template>
@@ -38,8 +38,12 @@ export default {
   }
 }
 
+circle {
+  fill: $color-background-dark;
+}
+
 path {
-  fill: $color-text-dark;
+  fill: $color-highlight;
 }
 .disabled {
   opacity: 0.5;
