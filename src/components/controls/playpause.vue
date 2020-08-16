@@ -28,6 +28,7 @@ export default {
         ? 'pause'
         : 'play'
       this[method](e)
+      this.$emit('click', e)
     },
     play(e) {
       this.$emit('play', e)

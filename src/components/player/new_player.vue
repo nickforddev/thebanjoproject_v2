@@ -116,14 +116,17 @@ export default {
       this.sound.play()
       this.is_playing = true
       this.step()
+      this.$store.dispatch('play_audio')
     },
     pause() {
       this.sound.pause()
       this.is_playing = false
+      this.$store.dispatch('pause_audio')
     },
     stop() {
       this.is_playing = false
       this.sound.stop()
+      this.$store.dispatch('pause_audio')
     },
     reset() {
       this.progress = 0
