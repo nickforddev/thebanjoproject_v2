@@ -7,17 +7,16 @@
       />
     </div>
     <div class="main">
-      <h2 v-html="playlist.title.rendered"></h2>
+      <h2 v-html="playlist.title.rendered" />
       <ul v-if="playlist.acf.songs">
-        <li v-for="({ song }, index) in playlist.acf.songs" :key="index">
-          <span class="number">{{ index + 1 }}</span>
-          <a
-            href="#"
-            @click.prevent="playAudio({ song, playlist })"
-          >
-            {{ song.title }}
-          </a>
-        </li>
+        <playlist-song
+          v-for="({ song }, index) in playlist.acf.songs"
+          :key="index"
+          :index="index"
+          :song="song"
+          :playlist="playlist"
+          :is-active-playlist="isActivePlaylist"
+        />
       </ul>
     </div>
   </div>
@@ -26,6 +25,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import Playpause from '@/components/controls/playpause'
+import PlaylistSong from './playlist_song'
 
 export default {
   name: 'playlist',
@@ -57,7 +57,8 @@ export default {
     }
   },
   components: {
-    Playpause
+    Playpause,
+    PlaylistSong
   }
 }
 </script>
@@ -84,18 +85,6 @@ export default {
 
   ul {
     margin-bottom: 0;
-
-    li:last-child {
-      margin-bottom: 0;
-    }
-  }
-
-  .number {
-    display: inline-block;
-    width: 20px;
-    font-family:'Courier New', Courier, monospace;
-    font-weight: bold;
-    color: #ababab;
   }
 }
 </style>

@@ -23,7 +23,7 @@
         />
       </div>
       <div class="progress-container">
-        <div class="time">{{ time }}</div>
+        <div class="time">{{ time || '0:00' }}</div>
         <div class="progress-bar" @click.self="seek">
           <div class="progress" :style="{ width: `${progress}%` }" />
         </div>
@@ -110,6 +110,9 @@ export default {
       this.sound.on('end', () => {
         this.is_playing = false
         this.progress = 0
+        if (this.has_next) {
+          this.nextTrack()
+        }
       })
     },
     play() {
