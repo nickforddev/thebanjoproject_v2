@@ -100,12 +100,15 @@ export default {
 <style scoped lang="scss">
 @import '~%/colors';
 
-$media-height: 70%;
+$media-height: 56;
+$media-height-percent: #{$media-height + '%'};
+
+$content-height: 100 - $media-height;
 
 .media {
-  height: $media-height;
-  min-height: $media-height;
-  max-height: $media-height;
+  height: $media-height-percent;
+  min-height: $media-height-percent;
+  max-height: $media-height-percent;
   overflow: hidden;
   background: $color-slideshow-background;
 
@@ -114,14 +117,14 @@ $media-height: 70%;
 
     ::v-deep .slideshow-images {
       img {
-        max-height: 70vh;
+        max-height: #{$media-height + 'vh'};
       }
     }
   }
 }
 .body {
   padding: 20px;
-  height: 30%;
+  height: #{$content-height + '%'};
   overflow: auto;
 
   &::-webkit-scrollbar {
