@@ -68,6 +68,7 @@
 <script>
 import { equals, props } from 'ramda'
 import config from '@/config'
+import { sleep } from '@/utils'
 // import Region from '@/models/region'
 import HomeBtn from '@/components/controls/home'
 // import ImagesSlideshow from '@/components/slideshow/images'
@@ -251,7 +252,8 @@ export default {
         maxZoom: zoom ? 12 : this.map.getZoom()
       })
     },
-    setBounds(markers = this.markers) {
+    async setBounds(markers = this.markers) {
+      await sleep(200)
       this.bounds = window.L.latLngBounds()
       markers.map(model => {
         const { lat, lng } = model.acf.location
