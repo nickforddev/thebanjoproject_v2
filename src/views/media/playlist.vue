@@ -34,7 +34,7 @@ export default {
   },
   computed: {
     isActivePlaylist() {
-      return this.activePlaylist && this.activePlaylist.ID === this.playlist.ID
+      return this.activePlaylist && this.activePlaylist.id === this.playlist.id
     },
     ...mapGetters({
       activePlaylist: 'audio:active_playlist',
@@ -70,6 +70,10 @@ export default {
   background: #dedcdc;
   border: 1px solid #cdcdcd;
   border-radius: 6px;
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
 
   .play {
     width: 80px;

@@ -46,7 +46,7 @@ li {
   display: inline-block;
   width: 20px;
   flex-shrink: 0;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Roboto Mono', monospace;
   font-weight: bold;
   color: #ababab;
 }

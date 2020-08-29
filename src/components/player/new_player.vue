@@ -33,7 +33,10 @@
         <volume v-model="volume" @input="onVolumeChange" />
       </div>
       <div class="info">
-        <div class="title">{{ data.title }}</div>
+        <div class="info-inner">
+          <div v-if="playlist" v-html="playlist.title.rendered" class="title" />
+          <div class="title">{{ data.title }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -112,6 +115,8 @@ export default {
         this.progress = 0
         if (this.has_next) {
           this.nextTrack()
+        } else {
+          this.$store.dispatch('pause_audio')
         }
       })
     },
@@ -209,15 +214,19 @@ $progress-bar-border-radius: 100px;
       flex-grow: 1;
       height: inherit;
       align-items: center;
-      overflow: hidden;
       min-width: 26vw;
+
+      .info-inner {
+        overflow: hidden;
+      }
     }
 
     .title {
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
-      font-size: 0.85em;
+      font-size: 0.75em;
+      color: $color-text-light;
     }
   }
 
@@ -264,7 +273,7 @@ $progress-bar-border-radius: 100px;
     .time, .duration {
       width: 80px;
       text-align: center;
-      font-family: 'Consolas', monospace;
+      font-family: 'Roboto Mono', monospace;
       font-size: 0.9em;
       color: $color-text-light;
     }

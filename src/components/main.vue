@@ -4,7 +4,7 @@
       <div v-if="$route.path !== '/'">
         <navigation />
         <main>
-          <audio-player />
+          <!-- <audio-player /> -->
           <video-player />
           <router-view />
         </main>
@@ -24,7 +24,7 @@ import Firstload from '@/components/firstload'
 import Navigation from '@/components/nav'
 import NavigationHorizontal from '@/components/nav/horizontal'
 import GlobalAudioPlayer from '@/components/player/global'
-import AudioPlayer from '@/components/audioplayer'
+// import AudioPlayer from '@/components/audioplayer'
 import VideoPlayer from '@/components/videoplayer'
 
 export default {
@@ -44,7 +44,7 @@ export default {
     Navigation,
     NavigationHorizontal,
     GlobalAudioPlayer,
-    AudioPlayer,
+    // AudioPlayer,
     VideoPlayer
   }
 }
