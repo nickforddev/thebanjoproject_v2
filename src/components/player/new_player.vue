@@ -225,8 +225,8 @@ $progress-bar-border-radius: 100px;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
-      font-size: 0.75em;
-      color: $color-text-light;
+      font-size: 0.70em;
+      color: darken($color-text-light, 10%);
     }
   }
 
