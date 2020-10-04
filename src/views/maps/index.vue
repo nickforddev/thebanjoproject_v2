@@ -253,7 +253,7 @@ export default {
       })
     },
     async setBounds(markers = this.markers) {
-      await sleep(200)
+      await sleep(800)
       this.bounds = window.L.latLngBounds()
       markers.map(model => {
         const { lat, lng } = model.acf.location
