@@ -67,11 +67,22 @@
         <h3>Related Players</h3>
         <ul>
           <li v-for="(player, index) in $player.acf.influences" :key="index">
-            <!-- <pre>{{ player.from_database }}</pre> -->
             <router-link
               v-if="player.from_database[0]"
               :to="`/players/${player.from_database[0].post_name}`">
               {{ player.from_database[0].post_title }}
+            </router-link>
+          </li>
+        </ul>
+      </div>
+
+      <div class="group" v-if="maps.length">
+        <h3>Maps</h3>
+        <ul>
+          <li v-for="(marker, index) in maps" :key="index">
+            <router-link
+              :to="`/maps/location/${marker.post_name}`">
+              {{ marker.post_title }}
             </router-link>
           </li>
         </ul>
@@ -95,7 +106,8 @@ export default {
     return {
       fetched: false,
       fetched_relationships: false,
-      videos: []
+      videos: [],
+      maps: []
     }
   },
   models: {
@@ -145,6 +157,7 @@ export default {
       const response = await this.$request(`related/people/${this.$player.id}`)
       this.videos = response.videos
       this.timeline = response.timeline
+      this.maps = response.maps
     },
     playVideo(slug) {
       this.$store.dispatch('set_active_video', slug)
