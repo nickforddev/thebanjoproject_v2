@@ -12,6 +12,7 @@
 <script>
 import ThreeBanjoSongsters from './templates/ThreeBanjoSongsters'
 import MusicalPassage from './templates/MusicalPassage'
+import Revivalists from './templates/Revivalists'
 
 export default {
   name: 'narrative',
@@ -25,11 +26,14 @@ export default {
       this.template = 'ThreeBanjoSongsters'
     } else if (this.$route.params.slug === 'musical-passage') {
       this.template = 'MusicalPassage'
+    } else if (this.$route.params.slug === 'revivalists-rediscovery-reclamation-reinvention') {
+      this.template = 'Revivalists'
     }
   },
   components: {
     ThreeBanjoSongsters,
-    MusicalPassage
+    MusicalPassage,
+    Revivalists
   }
 }
 </script>
