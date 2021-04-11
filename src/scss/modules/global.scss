@@ -76,3 +76,17 @@ svg {
   height: auto;
   width: 100%;
 }
+
+@media screen and (max-width: 768px) {
+  .layout-left {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    padding-right: 0;
+    border-right: none;
+  }
+  .sidebar {
+    display: block !important;
+    width: 100% !important;
+  }
+}
