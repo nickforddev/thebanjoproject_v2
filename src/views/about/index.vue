@@ -61,4 +61,18 @@ export default {
   float: left;
   margin: 0 30px 25px 0;
 }
+
+@media screen and (max-width: 768px) {
+  .layout-left {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    padding-right: 0;
+    border-right: none;
+  }
+  .sidebar {
+    display: block;
+    width: 100%;
+  }
+}
 </style>
