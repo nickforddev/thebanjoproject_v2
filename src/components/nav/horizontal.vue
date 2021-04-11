@@ -32,6 +32,14 @@
       <li>
         <router-link to="/search">Search</router-link>
       </li>
+      <template v-if="active">
+        <li class="mobile-only">
+          <router-link to="/about">About</router-link>
+        </li>
+        <li class="mobile-only">
+          <router-link to="/resources">Resources</router-link>
+        </li>
+      </template>
     </ul>
     <div class="icon" @click="toggle" :class="[active && 'active']">
       <div class="lines"></div>
@@ -162,6 +170,10 @@ nav {
       display: inline-block;
       margin: 0;
 
+      &.mobile-only {
+        display: none;
+      }
+
       a {
         padding: 6px 14px;
         color: inherit;
@@ -204,6 +216,12 @@ nav {
   nav {
     ul {
       display: none;
+
+      li {
+        &.mobile-only {
+          display: block;
+        }
+      }
     }
 
     .icon {
