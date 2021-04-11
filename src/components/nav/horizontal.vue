@@ -1,10 +1,7 @@
 <template>
-  <nav>
+  <nav :class="[active && 'active']">
     <router-link to="/">
       <logo />
-      <!-- <div class="tagline">
-        Stories of America's Instrument
-      </div> -->
     </router-link>
     <div class="donate-container">
       <div>
@@ -13,10 +10,10 @@
         </a>
       </div>
       <div>
-        Finish the Digital Museum
+        Support the Digital Museum
       </div>
     </div>
-    <ul>
+    <ul @click="toggle">
       <li>
         <router-link to="/narratives">Narratives</router-link>
       </li>
@@ -36,6 +33,9 @@
         <router-link to="/search">Search</router-link>
       </li>
     </ul>
+    <div class="icon" @click="toggle" :class="[active && 'active']">
+      <div class="lines"></div>
+    </div>
   </nav>
 </template>
 
@@ -45,6 +45,16 @@
 import Logo from '@/components/logo_horizontal'
 export default {
   name: 'navigation-horizontal',
+  data() {
+    return {
+      active: false
+    }
+  },
+  methods: {
+    toggle() {
+      this.active = !this.active
+    }
+  },
   components: {
     Logo
   }
@@ -58,6 +68,7 @@ export default {
 @import '~%/variables';
 
 $nav-padding: 20px;
+$bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
 nav {
   display: flex;
@@ -70,11 +81,11 @@ nav {
   padding: $nav-padding;
   background: $color-nav-background;
   color: $color-text-light;
+  z-index: 9999999;
 
   .logo {
     display: inline-block;
     width: 260px;
-    // margin-bottom: 20px;
     color: $color-text-light;
   }
 
@@ -83,7 +94,63 @@ nav {
     margin-left: 16px;
   }
 
-  // .tagline {}
+  .icon {
+    display: none;
+    position: absolute;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    padding-top: 15px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.active {
+      .lines {
+        background: transparent;
+        transition: all 0.2s ;
+
+        &:before {
+          transform: rotate(45deg);
+          top: 0px;
+          transition: all 0.2s $bounce;
+        }
+
+        &:after {
+          transform: rotate(-45deg);
+          top: -2px;
+          transition: all 0.2s $bounce;
+        }
+      }
+    }
+
+    .lines {
+      height: 2px;
+      background: white;
+      transition: all 0.2s $bounce;
+
+      &:before {
+        content: '';
+        position: relative;
+        display: block;
+        height: 2px;
+        background: white;
+        top: -8px;
+        transition: all 0.2s $bounce;
+      }
+
+      &:after {
+        content: '';
+        position: relative;
+        display: block;
+        height: 2px;
+        background: white;
+        top: 6px;
+        transition: all 0.2s $bounce;
+      }
+    }
+  }
 
   ul {
     display: inline-block;
@@ -96,8 +163,6 @@ nav {
       margin: 0;
 
       a {
-        // display: block;
-        // padding: 6px 0;
         padding: 6px 14px;
         color: inherit;
 
@@ -132,6 +197,53 @@ nav {
   .button {
     margin-bottom: 10px;
     padding: .30em .55em;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  nav {
+    ul {
+      display: none;
+    }
+
+    .icon {
+      display: block;
+    }
+
+    &.active {
+      ul {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: $nav-horizontal-height;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: darken($color-nav-background, 10%);
+        overflow: auto;
+
+        li {
+          display: block;
+          flex-grow: 1;
+          text-align: center;
+
+          a {
+            width: 100%;
+            padding: 40px;
+
+            &:hover {
+              background: darken($color-nav-background, 20%)
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .donate-container {
+    display: none;
   }
 }
 </style>

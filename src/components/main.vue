@@ -2,9 +2,13 @@
   <transition name="fade">
     <div id="app" v-if="loaded">
       <div v-if="$route.path !== '/'">
-        <navigation />
-        <main>
-          <!-- <audio-player /> -->
+        <div v-if="!mobile">
+          <navigation />
+        </div>
+        <div v-else>
+          <navigation-horizontal />
+        </div>
+        <main :class="mobile && 'mobile'">
           <video-player />
           <router-view />
         </main>
@@ -31,12 +35,36 @@ export default {
   name: 'app',
   data() {
     return {
-      loaded: false
+      loaded: false,
+      width: window.innerWidth,
+      mobile: false
     }
   },
+  watch: {
+    width() {
+      this.checkScreenWidth()
+    }
+  },
+  mounted() {
+    this.checkScreenWidth()
+    window.addEventListener('resize', this.onResize)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.onResize)
+  },
   methods: {
+    onResize() {
+      this.width = window.innerWidth
+    },
     onLoaded() {
       this.loaded = true
+    },
+    checkScreenWidth() {
+      if (this.width < 768) {
+        this.mobile = true
+      } else {
+        this.mobile = false
+      }
     }
   },
   components: {
@@ -62,6 +90,14 @@ main {
   width: calc(100% - #{$nav-width});
   height: calc(100vh - #{$player-height});
   overflow-x: hidden;
-  overflow-y: auto
+  overflow-y: auto;
+
+  &.mobile {
+    left: 0;
+    top: $nav-horizontal-height;
+    width: 100%;
+    height: calc(100vh - #{$player-height} - #{$nav-horizontal-height});
+    margin-right: 0;
+  }
 }
 </style>
