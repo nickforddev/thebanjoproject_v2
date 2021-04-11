@@ -225,3 +225,10 @@ button.plain {
   padding: 0;
   -webkit-appearance: none;
 }
+
+@media screen and (max-width: 768px) {
+  .button {
+    padding: .80em 1em !important;
+    font-size: 1.2em !important;
+  }
+}

@@ -1,23 +1,23 @@
 <template>
   <transition name="fade">
     <div id="app" v-if="loaded">
-      <div v-if="$route.path !== '/'">
-        <div v-if="!mobile">
+      <template v-if="$route.path !== '/'">
+        <template v-if="!mobile">
           <navigation />
-        </div>
-        <div v-else>
+        </template>
+        <template v-else>
           <navigation-horizontal />
-        </div>
+        </template>
         <main :class="mobile && 'mobile'">
           <video-player />
           <router-view />
         </main>
         <global-audio-player />
-      </div>
-      <div v-else>
+      </template>
+      <template v-else>
         <navigation-horizontal />
         <router-view />
-      </div>
+      </template>
     </div>
     <firstload v-else @loaded="onLoaded" />
   </transition>

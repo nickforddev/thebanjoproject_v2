@@ -5,7 +5,6 @@
       <h1>Narratives</h1>
     </header>
     <div class="content">
-      <!-- <div class="layout-left"> -->
       <div>
         <div v-if="fetched_page">
           <div v-html="data.content.rendered" />
@@ -27,8 +26,6 @@
           </div>
         </div>
       </div>
-      <!-- <sidebar>
-      </sidebar> -->
     </div>
   </div>
 </template>
@@ -82,15 +79,6 @@ export default {
 <style scoped lang="scss">
 // @import '~%/variables';
 
-// .narratives-content {
-//   display: inline-block;
-//   width: 1068px;
-//   max-width: calc(100% - #{$sidebar-width + ($gutter-width * 2)});
-//   vertical-align: top;
-//   padding-right: $gutter-width;
-//   margin-right: $gutter-width;
-//   border-right: 1px solid #ccc;
-// }
 .narrative {
   display: flex;
   margin-bottom: 20px;
@@ -114,5 +102,27 @@ export default {
 }
 .divider {
   margin: 30px 0;
+}
+
+@media screen and (max-width: 560px) {
+  .narrative {
+    display: block;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #ccc;
+    }
+
+    .thumbnail {
+      width: 100%;
+    }
+
+    .meta {
+      padding: 20px 0 20px 0;
+
+      .excerpt {
+        font-size: 1em;
+      }
+    }
+  }
 }
 </style>
