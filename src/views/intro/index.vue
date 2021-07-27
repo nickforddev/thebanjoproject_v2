@@ -76,6 +76,7 @@ export default {
     async setActiveVideo(video) {
       this.active_video = null
       await this.$nextTick()
+      this.fresh = false
       this.active_video = video
     },
     setRandomVideo() {
@@ -87,7 +88,6 @@ export default {
         const url = new URL(url_string, window.location.origin)
         this.$router.push(url.pathname)
       }
-      this.fresh = false
     },
     onEnd() {
       this.ended = true
