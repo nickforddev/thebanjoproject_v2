@@ -108,6 +108,7 @@ export default {
   height: 100%;
   max-width: 100%;
   max-height: 100%;
+  padding: 0 !important;
 
   iframe {
     width: 100%;
