@@ -12,11 +12,11 @@
     <sidebar v-if="fetched && fetched_relationships">
       <div class="group">
         <h3>Born {{ $player.acf.year_born }} – Died {{ $player.acf.year_died }}</h3>
-        <ul>
+        <!-- <ul>
           <li v-for="(id, index) in $player.style" :key="index">
             <style-tag :uid="id" />
           </li>
-        </ul>
+        </ul> -->
       </div>
 
       <!-- <pre>{{ $player.acf.audio }}</pre> -->
@@ -97,7 +97,7 @@
 <script>
 import Player from '@/models/player'
 import Sidebar from '@/components/sidebar'
-import StyleTag from '@/components/style'
+// import StyleTag from '@/components/style'
 // import AudioLink from '@/components/audio'
 
 export default {
@@ -164,8 +164,8 @@ export default {
     }
   },
   components: {
-    Sidebar,
-    StyleTag
+    Sidebar
+    // StyleTag
     // AudioLink
   }
 }

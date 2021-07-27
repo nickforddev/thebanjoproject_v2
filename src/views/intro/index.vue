@@ -1,12 +1,12 @@
 <template>
   <div class="intro" v-if="fetched && active_video">
-    <player
-      class="intro-video"
-      :data="active_video"
-      :videos="data.acf.videos"
-      @ended="onEnd"
-      @next="onSelect" />
-    <footer>
+    <div class="video-container">
+      <player
+        class="intro-video"
+        :data="active_video"
+        :videos="data.acf.videos"
+        @ended="onEnd"
+        @next="onSelect" />
       <div
         @click="goToLink"
         class="meta"
@@ -18,6 +18,8 @@
           {{ active_video.link_title }} &rarr;
         </div>
       </div>
+    </div>
+    <footer>
       <div class="thumbnails">
         <div
           class="thumbnail"
@@ -101,9 +103,17 @@ export default {
 
 <style lang="scss">
 .intro-video {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+
   iframe {
     width: 100%;
-    height: 100%;
+    // height: 100%;
+    max-width: 100%;
+    max-height: 100%;
   }
 }
 </style>
@@ -114,6 +124,8 @@ export default {
 
 .intro {
   position: fixed;
+  display: flex;
+  flex-direction: column;
   top: $nav-horizontal-height;
   bottom: 0;
   left: 0;
@@ -122,41 +134,45 @@ export default {
   background: #000;
 }
 
-.intro-video {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
+.video-container {
+  position: relative;
+  flex-grow: 1;
   padding: 0;
+  display: flex;
+  width: 100%;
+  align-items: center;
+
+  .meta {
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+  }
+}
+
+.meta {
+  margin-bottom: 20px;
+  color: $color-text-light;
+  transition: all 0.6s;
+
+  &:hover {
+    cursor: pointer;
+
+    .video-link {
+      color: $color-highlight;
+    }
+  }
+
+  &.emphasize {
+    color: $color-highlight;
+    font-size: 1.2em;
+    transition: all 0.6s;
+  }
 }
 
 footer {
-  position: fixed;
-  bottom: 0;
   width: 100%;
   padding: 10px;
   background: linear-gradient(0deg, $color-background-dark 0, transparentize($color-background-dark, 1) 100%);
-
-  .meta {
-    margin-bottom: 20px;
-    color: $color-text-light;
-    transition: all 0.6s;
-
-    &:hover {
-      cursor: pointer;
-
-      .video-link {
-        color: $color-highlight;
-      }
-    }
-
-    &.emphasize {
-      color: $color-highlight;
-      font-size: 1.2em;
-      transition: all 0.6s;
-    }
-  }
 }
 
 .video-link {

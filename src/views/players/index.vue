@@ -59,13 +59,15 @@ export default {
       id_attribute: 'slug'
     })
   },
-  async created() {
-    await this.fetch()
-    if (this.$route.path === '/players') {
-      this.$router.replace('/players/uncle-dave-macon')
-    } else {
-      this.scrollToPlayer()
+  watch: {
+    $route() {
+      this.checkForActivePlayer()
     }
+  },
+  async mounted() {
+    await this.fetch()
+    this.checkForActivePlayer()
+    this.scrollToPlayer()
   },
   computed: {
     active_model() {
@@ -77,13 +79,15 @@ export default {
   methods: {
     async fetch() {
       await this.$collection.fetch()
-      // this.$collection.models.sort(model => {
-      //   return model.acf.disabled ? -1 : 1
-      // })
       this.fetched = true
     },
     setActive(model) {
       this.active = model.id
+    },
+    checkForActivePlayer() {
+      if (this.$route.path === '/players') {
+        this.$router.replace('/players/earl-scruggs')
+      }
     },
     async setScrolling(bool, direction) {
       if (bool) {

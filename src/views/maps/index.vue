@@ -4,7 +4,8 @@
     <v-map
       v-if="collection && fetched"
       ref="map"
-      :zoom="-1"
+      :zoom="1"
+      :min-zoom="1"
       :center="[47.413220, -1.219482]"
     >
       <v-tilelayer
