@@ -312,6 +312,11 @@ export default {
 
   .region-details {
     margin-top: 20px;
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
   }
 }
 

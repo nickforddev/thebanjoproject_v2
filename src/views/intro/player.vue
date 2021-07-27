@@ -4,7 +4,7 @@
     ref="player"
     :video-id="video_id"
     :options="options"
-    :autoplay="false"
+    :autoplay="!fresh"
     @ready="onReady"
     @ended="onEnd" />
   <div
@@ -40,7 +40,8 @@ export default {
     },
     videos: {
       type: Array
-    }
+    },
+    fresh: Boolean
   },
   data() {
     return {
@@ -78,7 +79,7 @@ export default {
   methods: {
     onReady() {
       this.ready = true
-      // this.$refs.player.play()
+      if (!this.fresh) this.$refs.player.play()
     },
     onEnd() {
       this.ended = true

@@ -5,6 +5,7 @@
         class="intro-video"
         :data="active_video"
         :videos="data.acf.videos"
+        :fresh="fresh"
         @ended="onEnd"
         @next="onSelect" />
       <div
@@ -53,6 +54,7 @@ export default {
     return {
       fetched: false,
       data: null,
+      fresh: true,
       active_video: null,
       ended: false
     }
@@ -85,6 +87,7 @@ export default {
         const url = new URL(url_string, window.location.origin)
         this.$router.push(url.pathname)
       }
+      this.fresh = false
     },
     onEnd() {
       this.ended = true
@@ -112,7 +115,6 @@ export default {
 
   iframe {
     width: 100%;
-    // height: 100%;
     max-width: 100%;
     max-height: 100%;
   }
