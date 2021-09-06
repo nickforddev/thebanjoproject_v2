@@ -21,7 +21,7 @@
       </li>
       <li>
         <router-link to="/media/playlists">
-          Playlists
+          Songbooks
         </router-link>
       </li>
     </ul>

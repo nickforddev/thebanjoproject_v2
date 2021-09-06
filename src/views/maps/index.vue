@@ -31,7 +31,7 @@
         </v-marker>
       </v-marker-cluster>
     </v-map>
-    <div class="marker-view" v-if="collection && fetched">
+    <div class="marker-view" ref="sidebar" v-if="collection && fetched">
       <router-view
         v-if="$route.params.slug && fetched"
         :key="$route.params.slug"
@@ -41,7 +41,7 @@
         <div class="region-content">
           <h1>{{ name }}</h1>
           <p class="description" v-html="description" />
-          <h2>Regions</h2>
+          <h2 ref="regionsHeader">Regions</h2>
           <p
             v-for="region in regions"
             :key="region.id"
@@ -80,7 +80,7 @@ const ZERO_STATE_DESCRIPTION = `
   <p class="pad-bottom">
     The Maps are invitations to explore banjo "hot spots" since the 17th
     century, where the banjo emerged and developed out of cultural
-    collisions and exchanges that we can document. 
+    collisions and exchanges that we can document. Click on Markers to find out more details…
   </p>
 `
 // <h2>Transatlantic Culture</h2>
@@ -300,6 +300,19 @@ export default {
   overflow-x: hidden;
   background: $color-background-dark;
   color: $color-text-light;
+
+  h1 {
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    margin-bottom: 16px;
+  }
+
+  p {
+    font-size: 0.9em;
+    margin-bottom: 0;
+  }
 }
 
 .region-info {
@@ -334,6 +347,7 @@ export default {
 .region-name-wrapper {
   display: inline-block;
   width: 50%;
+  margin-bottom: 4px;
 
   .region-name {
     display: inline-block;

@@ -2,7 +2,15 @@
   <div class="firstload">
     <div class="center">
       <div v-if="warning" class="warning">
-        CONTENT ADVISORY: The banjo has a long and contested history that includes racist and misogynistic images and language.  For a fuller understanding of the music, its players and audiences, we’ve included potentially offensive content and tried to put it in its cultural context, which should in no way be seen as excusing or condoning it.
+        <div class="message">
+          <h1>CONTENT ADVISORY:</h1>
+          <div class="text">
+            The banjo has a long and contested history that includes racist and misogynistic images and language.  For a fuller understanding of the music, its players and audiences, we’ve included potentially offensive content and tried to put it in its cultural context, which should in no way be seen as excusing or condoning it.
+          </div>
+        </div>
+        <div>
+          <button @click="emitLoaded">Continue</button>
+        </div>
       </div>
       <div v-else>
         <logo class="logo" />
@@ -35,15 +43,15 @@ export default {
       await sleep(2000)
       if (!JSON.parse(localStorage.getItem('warning_viewed'))) {
         await this.showWarning()
+      } else {
+        this.emitLoaded()
       }
-      localStorage.setItem('warning_viewed', true)
-      this.emitLoaded()
     },
     async showWarning() {
       this.warning = true
-      await sleep(7000)
     },
     emitLoaded() {
+      localStorage.setItem('warning_viewed', true)
       this.$emit('loaded')
     }
   },
@@ -86,5 +94,26 @@ export default {
 .warning {
   margin-top: 20px;
   font-size: 0.8em;
+
+  .message {
+    h1 {
+      font-size: 1.4em;
+      margin-bottom: 0.4em;
+    }
+    .text {
+      margin-bottom: 1.2em;
+    }
+  }
+
+  button {
+    background: $color-highlight;
+    color: $color-text-dark;
+    font-weight: 600;
+
+    &:hover {
+      color: darken($color-text-dark, 10);
+      background: darken($color-highlight, 10);
+    }
+  }
 }
 </style>

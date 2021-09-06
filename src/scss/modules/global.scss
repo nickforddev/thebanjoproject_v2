@@ -90,3 +90,19 @@ svg {
     width: 100% !important;
   }
 }
+
+.mobile-only, .desktop-only {
+  display: none;
+}
+
+@media screen and (max-width: 850px) {
+  .mobile-only {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 850px) {
+  .desktop-only {
+    display: block;
+  }
+}

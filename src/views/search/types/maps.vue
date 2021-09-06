@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="`${typeSlug}/${regionSlug}/${data.slug}`">
+  <router-link :to="`${typeSlug}/location/${data.slug}`">
     <result-title :typeName="typeName" :title="data.title.rendered" />
     <div class="excerpt" v-html="data.acf.content"></div>
   </router-link>

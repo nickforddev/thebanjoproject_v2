@@ -4,7 +4,7 @@
       @click.native.stop
       :to="`/timelines/${this.data.slug}`"
       class="timeline-event-dot"
-      :style="{ 'background-color': color }" />
+      :style="{ 'background-color': color, color }" />
     <div class="timeline-tooltip" v-html="tooltip_text" />
   </div>
 </template>
@@ -57,10 +57,15 @@ $triangle-size: 8px;
     width: #{$point-radius * 2};
     height: #{$point-radius * 2};
     border-radius: 100%;
+    border: 2px solid currentColor;
     z-index: 10;
 
     &.router-link-active {
       transform: scale($point-active-scale);
+    }
+
+    &:visited {
+      background: $color-background-dark !important;
     }
   }
 
@@ -78,13 +83,12 @@ $triangle-size: 8px;
   .timeline-tooltip {
     display: none;
     position: absolute;
-    bottom: #{$point-radius / 2};
-    left: $point-radius;
+    bottom: #{$point-radius / 2 + 6};
+    left: #{$point-radius - 40};
     padding: 4px;
-    // width: 100px;
     background: $color-background-light;
     color: $color-text-dark;
-    font-size: 10px;
+    font-size: 12px;
     pointer-events: none;
     z-index: 100;
 
@@ -93,11 +97,11 @@ $triangle-size: 8px;
       width: 0;
       height: 0;
       border-style: solid;
-      border-width: $triangle-size $triangle-size 0 0;
+      border-width: $triangle-size $triangle-size 0 $triangle-size;
       border-color:$color-background-light transparent transparent transparent;
       position: absolute;
       bottom: -#{$triangle-size - 2};
-      left: 0;
+      left: #{42 - $point-radius * 2};
     }
   }
 }

@@ -146,7 +146,6 @@ export default {
       }
     },
     checkScrollPosition() {
-      // await this.$nextTick()
       const $sidebar = this.$el.querySelector('.timeline-sidebar')
       if (this.active_event_offset > $sidebar.scrollTop + $sidebar.offsetHeight) {
         $sidebar.scrollTop = this.active_event_offset
@@ -184,24 +183,25 @@ export default {
   background: $color-background-dark;
   color: $color-text-light;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .timelines {
   flex: 1;
   height: 100%;
   min-height: 100vh;
-  padding: 0 220px 0 4px;
+  padding: 0 170px 0 4px;
   white-space: nowrap;
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 .markers {
   flex: 1;
   position: relative;
-  width: 50px;
   height: 100%;
+  width: 40px;
   min-height: 100vh;
-  padding: 0 14px;
+  padding: 0 0 0 14px;
   font-family: 'Myriad Pro', monospace;
 
   .marker {
@@ -213,21 +213,21 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
-  padding: 20px;
+  padding: 10px;
   padding-bottom: 10px;
-  width: 186px;
+  width: 168px;
   background: $color-background-dark;
+  box-shadow: 3px 3px 5px $color-background-dark;
 
   .key {
     margin-bottom: 6px;
-    font-size: 0.8em;
+    font-size: 0.9em;
   }
 
   .key-color {
     display: inline-block;
     width: 10px;
     height: 10px;
-    // margin-left: 4px;
     margin-right: 4px;
   }
 }
@@ -241,8 +241,8 @@ export default {
 
   .pointer {
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     background: inherit;
     transform: rotate(45deg);
     left: -8px;

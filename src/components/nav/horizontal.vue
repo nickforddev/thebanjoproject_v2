@@ -32,6 +32,9 @@
       <li>
         <router-link to="/search">Search</router-link>
       </li>
+      <li class="desktop-only">
+        <router-link to="/about">About</router-link>
+      </li>
       <template v-if="active">
         <li class="mobile-only">
           <router-link to="/about">About</router-link>
@@ -216,12 +219,6 @@ nav {
   nav {
     ul {
       display: none;
-
-      li {
-        &.mobile-only {
-          display: block;
-        }
-      }
     }
 
     .icon {

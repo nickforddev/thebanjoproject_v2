@@ -68,7 +68,7 @@ export default {
   left: 0;
   background: rgba(0,0,0, 0.8);
   color: white;
-  z-index: 99999;
+  z-index: 99999999;
 
   .video {
     position: absolute;
