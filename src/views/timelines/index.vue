@@ -14,11 +14,29 @@
         </div>
       </div>
       <div class="timelines" :style="{ height }">
-        <timeline v-for="(timeline, index) in collection_filtered" :key="index" :data="timeline" ref="timeline" />
-        <milestones v-if="milestones" :data="milestones" />
+        <timeline
+          v-for="(timeline, index) in collection_filtered"
+          :key="index"
+          :data="timeline"
+          :highlighted-timeline="highlighted_timeline"
+          @hoverTimeline="onHoverTimeline"
+          @leaveTimeline="onLeaveTimeline"
+          ref="timeline" />
+        <milestones
+          v-if="milestones"
+          :data="milestones"
+          :highlighted-timeline="highlighted_timeline"
+          @hoverTimeline="onHoverTimeline"
+          @leaveTimeline="onLeaveTimeline" />
       </div>
       <div class="keys">
-        <div v-for="(timeline, index) in collection" :key="index" class="key">
+        <div
+          v-for="(timeline, index) in collection"
+          :key="index"
+          class="key"
+          :class="[highlighted_key && highlighted_key === timeline && 'highlighted']"
+          @mouseover="onHover(timeline)"
+          @mouseleave="onLeave">
           <div class="key-color" :style="{ background: timeline.acf.color }" />
           {{ timeline.name }}
         </div>
@@ -41,7 +59,9 @@ export default {
   data() {
     return {
       active_event_offset: null,
-      all_events: null
+      all_events: null,
+      highlighted_timeline: null,
+      highlighted_key: null
     }
   },
   collection() {
@@ -150,6 +170,18 @@ export default {
       if (this.active_event_offset > $sidebar.scrollTop + $sidebar.offsetHeight) {
         $sidebar.scrollTop = this.active_event_offset
       }
+    },
+    onHover(timeline) {
+      this.highlighted_timeline = timeline
+    },
+    onLeave() {
+      this.highlighted_timeline = null
+    },
+    onHoverTimeline(timeline) {
+      this.highlighted_key = timeline
+    },
+    onLeaveTimeline() {
+      this.highlighted_key = null
     }
   },
   components: {
@@ -222,6 +254,20 @@ export default {
   .key {
     margin-bottom: 6px;
     font-size: 0.9em;
+    user-select: none;
+
+    &.highlighted {
+      .key-color {
+        background-image:
+          repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 2px,
+            #{$color-background-dark} 2px,
+            #{$color-background-dark} 4px
+          ) !important;
+      }
+    }
   }
 
   .key-color {
