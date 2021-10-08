@@ -162,6 +162,9 @@
         </div>
       </div>
     </div>
+    <div class="narrative-parts" v-if="parts && parts.length">
+      {{ parts }}
+    </div>
   </div>
 </template>
 
@@ -176,6 +179,7 @@ export default {
   data() {
     return {
       data: null,
+      parts: null,
       currentImage: null,
       modals: {
         festivals: false,
@@ -191,8 +195,9 @@ export default {
       }
     }
   },
-  mounted() {
-    this.fetch()
+  async mounted() {
+    await this.fetch()
+    await this.fetchParts()
   },
   computed: {
     currentBookImage() {
@@ -209,6 +214,9 @@ export default {
       ImageMap('img[usemap]', 0)
       await sleep(800)
       window.dispatchEvent(new Event('resize'))
+    },
+    async fetchParts() {
+      this.parts = (await this.$request(`wp/v2/narratives?parent=${this.data.id}&_embed&order=asc`))
     },
     swapImage(number) {
       this.currentImage = number

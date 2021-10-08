@@ -49,7 +49,11 @@ export default {
   left: 0;
 
   .modal {
-    position: relative;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     width: 100%;
     max-height: calc(100% - 40px);
     margin: 20px;
@@ -58,13 +62,22 @@ export default {
     color: #666;
     border-radius: 10px;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-    overflow-y: auto;
+
+    .content {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      overflow-y: auto;
+    }
 
     &.left, &.right {
       width: calc(50% - 40px);
     }
 
     &.right {
+      left: initial;
       right: 0;
     }
 
