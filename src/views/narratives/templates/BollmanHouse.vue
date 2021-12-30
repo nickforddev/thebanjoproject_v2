@@ -40,6 +40,7 @@ export default {
       const iframe = this.$refs.iframe
       const client = new Sketchfab(version, iframe)
 
+      // eslint-disable-next-line no-console
       const error = err => console.error('Sketchfab API error:', err)
 
       const success = api => {
