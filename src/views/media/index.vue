@@ -42,7 +42,30 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
+@import '~%/colors';
+
 .content {
   margin-top: 0;
+}
+
+::v-deep .search {
+  margin-bottom: 20px;
+
+  button {
+    background: $color-background-light;
+    color: $color-text-dark;
+    font-weight: 600;
+    border: 1px solid #{$color-text-dark};
+    padding-right: 30px;
+
+    svg {
+      width: 20px;
+      display: inline-block;
+      position: absolute;
+      right: 6px;
+      bottom: 1px;
+      fill: currentColor;
+    }
+  }
 }
 </style>

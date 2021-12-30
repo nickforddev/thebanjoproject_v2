@@ -9,6 +9,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@sketchfab/viewer-api": "^1.10.4",
     "@vimeo/player": "^2.10.0",
     "core-js": "^2.6.5",
     "date-fns": "^2.9.0",
