@@ -13,16 +13,18 @@
           <div class="divider" />
           <h2>Guided Narratives</h2>
           <div class="narrative" v-for="(model, index) in collection" :key="index">
-            <router-link class="thumbnail" :to="`/narratives/${model.slug}`">
-              <img :src="model._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url" />
-            </router-link>
-            <div class="meta">
-              <router-link :to="`/narratives/${model.slug}`">
-                <h3 v-html="model.title.rendered" />
+            <template v-if="model._embedded && model._embedded['wp:featuredmedia']">
+              <router-link class="thumbnail" :to="`/narratives/${model.slug}`">
+                <img :src="model._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url" />
               </router-link>
-              <div class="excerpt" v-html="model.excerpt.rendered" />
-              <router-link class="button small" :to="`/narratives/${model.slug}`">Explore</router-link>
-            </div>
+              <div class="meta">
+                <router-link :to="`/narratives/${model.slug}`">
+                  <h3 v-html="model.title.rendered" />
+                </router-link>
+                <div class="excerpt" v-html="model.excerpt.rendered" />
+                <router-link class="button small" :to="`/narratives/${model.slug}`">Explore</router-link>
+              </div>
+            </template>
           </div>
         </div>
       </div>
@@ -58,7 +60,7 @@ export default {
   methods: {
     async fetchPage() {
       this.fetched_page = false
-      this.data = (await this.$request('wp/v2/pages?slug=narratives'))[0]
+      this.data = (await this.$request('wp/v2/pages?_embed&slug=narratives'))[0]
       this.fetched_page = true
     },
     async fetchCollection() {
