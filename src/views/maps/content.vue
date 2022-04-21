@@ -94,6 +94,7 @@ export default {
 @import '~%/colors';
 
 .map-slideshow {
+  height: 100vh;
   max-height: 40vh !important;
   background: darken($color-background-dark, 10%);
 }
