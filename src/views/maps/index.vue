@@ -14,7 +14,7 @@
 
       <v-marker-cluster
         @clustermouseover="hoverCluster"
-        @clustermouseout="currentRegions = []">
+        @clustermouseout="clearCurrentRegions">
         <v-marker
           ref="marker"
           v-for="(model, index) in markers"
@@ -24,7 +24,7 @@
             model.acf.location.lng
           ]"
           @mouseover="hoverMarker"
-          @mouseleave="currentRegions = []"
+          @mouseout="clearCurrentRegions"
           @click="openMarker(index)"
         >
           <v-popup />
@@ -46,13 +46,13 @@
             v-for="region in regions"
             :key="region.id"
             class="region-name-wrapper">
-            <router-link
-              :to="`/maps/region/${region.slug}`"
+            <region-link
+              :region="region"
+              :currentRegions="currentRegions"
               @click="zoomRegion(region)"
-              class="region-name"
-              :class="[currentRegions.includes(region) && 'active']">
+            >
               {{ region.name }}
-            </router-link>
+            </region-link>
           </p>
           <div v-if="active_region" class="region-details">
             <h2>{{ active_region.name }}</h2>
@@ -70,8 +70,8 @@
 import { equals, props } from 'ramda'
 import config from '@/config'
 import { sleep } from '@/utils'
-// import Region from '@/models/region'
 import HomeBtn from '@/components/controls/home'
+import RegionLink from './region'
 // import ImagesSlideshow from '@/components/slideshow/images'
 // import MarkerContent from './content'
 
@@ -95,10 +95,7 @@ const ZERO_STATE_DESCRIPTION = `
 // </p>
 
 export default {
-  name: 'region',
-  props: {
-    regionSlug: String
-  },
+  name: 'map-main',
   data() {
     return {
       fetched: false,
@@ -107,13 +104,13 @@ export default {
       map_id: 'light-v9',
       collection: null,
       regions: null, // filtered to only regions that have markers
-      currentRegions: [],
+      currentRegions: [0],
       bounds: null,
       name: ZERO_STATE_TITLE,
       description: ZERO_STATE_DESCRIPTION,
       active_region: null,
       region_count: null,
-      hovered: false
+      hovered: true
     }
   },
   watch: {
@@ -173,6 +170,10 @@ export default {
     } else {
       this.setBounds()
     }
+    this.currentRegions = [1]
+    await this.$nextTick()
+    this.currentRegions = []
+    await this.$nextTick()
   },
   methods: {
     async fetch() {
@@ -208,24 +209,19 @@ export default {
       this.region_count = markers.length
 
       this.highlightRegions(markers, '_latlng')
-
-      if (!this.hovered) {
-        setTimeout(() => {
-          this.setBounds()
-          this.hovered = true
-        }, 10)
-      }
     },
     hoverMarker(marker) {
+      console.log('hoverMarker')
       this.highlightRegions([marker])
     },
+    clearCurrentRegions() {
+      this.currentRegions = []
+    },
     highlightRegions(markers, latlngKey = 'latlng') {
-      const latlngs = markers.map(marker => {
-        return {
-          lat: `${marker[latlngKey].lat}`,
-          lng: `${marker[latlngKey].lng}`
-        }
-      })
+      const latlngs = markers.map(marker => ({
+        lat: `${marker[latlngKey].lat}`,
+        lng: `${marker[latlngKey].lng}`
+      }))
       const mappedMarkers = this.markers.filter(marker => {
         return latlngs.some(latlng => {
           return equals(
@@ -239,14 +235,14 @@ export default {
           return marker.region.includes(region.id)
         })
       })
-      this.currentRegions = matchedRegions
+      this.currentRegions = matchedRegions.map(region => region.id)
     },
     async openMarker(index) {
       this.$router.push(`/maps/location/${this.markers[index].slug}`)
     },
     focus(lat, lng, zoom = false) {
       this.bounds = window.L.latLngBounds()
-      this.markers.map(model => {
+      this.markers.map(() => {
         this.bounds.extend(window.L.latLng(lat, lng))
       })
       this.map.fitBounds(this.bounds, {
@@ -264,11 +260,17 @@ export default {
         padding: [0, 0]
       })
     },
-    zoomRegion(region) {
+    async zoomRegion(region) {
       const markers = this.markers.filter(marker => {
         return marker.region.includes(region.id)
       })
-      this.setBounds(markers)
+      // HACK: for weird bug where map changes bounds when currentRegions changes for the first time
+      await this.setBounds(markers)
+      this.currentRegions = [null]
+      await this.$nextTick()
+      this.currentRegions = []
+      await this.$nextTick()
+      await this.setBounds(markers)
     },
     closeMarker(goHome) {
       this.$router.push(goHome ? '/maps' : this.last_section)
@@ -276,7 +278,8 @@ export default {
     }
   },
   components: {
-    HomeBtn
+    HomeBtn,
+    RegionLink
   }
 }
 </script>
@@ -348,18 +351,5 @@ export default {
   display: inline-block;
   width: 50%;
   margin-bottom: 4px;
-
-  .region-name {
-    display: inline-block;
-    padding: 2px;
-    border-radius: 3px;
-    user-select: none;
-
-    &:hover, &.active, &.router-link-exact-active {
-      color: $color-background-dark;
-      background: $color-highlight;
-      text-decoration: none;
-    }
-  }
 }
 </style>
