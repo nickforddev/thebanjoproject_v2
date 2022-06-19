@@ -19,11 +19,11 @@
           Mini Narratives
         </router-link>
       </li>
-      <li>
+      <!-- <li>
         <router-link to="/media/playlists">
           Songbooks
         </router-link>
-      </li>
+      </li> -->
     </ul>
     <div class="content">
       <router-view :type="$route.params.type" />
