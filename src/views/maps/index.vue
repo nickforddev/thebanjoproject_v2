@@ -211,7 +211,6 @@ export default {
       this.highlightRegions(markers, '_latlng')
     },
     hoverMarker(marker) {
-      console.log('hoverMarker')
       this.highlightRegions([marker])
     },
     clearCurrentRegions() {
