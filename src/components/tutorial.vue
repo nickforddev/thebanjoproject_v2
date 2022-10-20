@@ -57,7 +57,6 @@ export default {
       localStorage.setItem('tutorial_viewed', true)
     },
     playVideo() {
-      console.log(this.$refs.video)
       this.$refs.video.play()
     },
     dismiss() {
