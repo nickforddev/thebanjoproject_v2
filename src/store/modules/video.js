@@ -2,7 +2,8 @@ export default {
   state() {
     return {
       active_video: null,
-      playing_video: false
+      playing_video: false,
+      tutorial_video: null
     }
   },
   getters: {
@@ -11,6 +12,9 @@ export default {
     },
     'video:playing': state => {
       return state.playing_video
+    },
+    'video:tutorial_video': state => {
+      return state.tutorial_video
     }
   },
   mutations: {
@@ -22,6 +26,9 @@ export default {
     },
     PAUSE_VIDEO(state) {
       state.playing_video = false
+    },
+    SET_TUTORIAL_VIDEO(state, data) {
+      state.tutorial_video = data
     }
   },
   actions: {
@@ -33,6 +40,9 @@ export default {
     },
     pause_video({ commit }) {
       commit('PAUSE_VIDEO')
+    },
+    set_tutorial_video({ commit }, data) {
+      commit('SET_TUTORIAL_VIDEO', data)
     }
   }
 }

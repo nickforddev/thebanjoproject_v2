@@ -18,6 +18,9 @@
         <navigation-horizontal />
         <router-view />
       </template>
+      <template>
+        <tutorial />
+      </template>
     </div>
     <firstload v-else @loaded="onLoaded" />
   </transition>
@@ -30,6 +33,7 @@ import NavigationHorizontal from '@/components/nav/horizontal'
 import GlobalAudioPlayer from '@/components/player/global'
 // import AudioPlayer from '@/components/audioplayer'
 import VideoPlayer from '@/components/videoplayer'
+import Tutorial from '@/components/tutorial'
 
 export default {
   name: 'app',
@@ -73,7 +77,8 @@ export default {
     NavigationHorizontal,
     GlobalAudioPlayer,
     // AudioPlayer,
-    VideoPlayer
+    VideoPlayer,
+    Tutorial
   }
 }
 </script>
