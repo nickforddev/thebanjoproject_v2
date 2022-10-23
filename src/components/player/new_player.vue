@@ -104,7 +104,8 @@ export default {
   methods: {
     load() {
       this.sound = new Howl({
-        src: this.data.url
+        src: this.data.url,
+        html5: true
       })
       this.sound.once('load', () => {
         this.loaded = true
