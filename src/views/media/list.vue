@@ -2,7 +2,7 @@
   <div v-if="type === 'playlists'">
     <playlists />
   </div>
-  <div v-else-if="fetched">
+  <div v-else-if="fetched" @scroll="onScroll">
     <div class="search">
       <pre></pre>
       <button v-if="!show_filters && filters && filters.length" @click="showFilters">
@@ -38,6 +38,7 @@
           :key="index" />
       </template>
     </div>
+    <loading class="infinite-scroll-loading" v-if="loading" />
   </div>
   <loading v-else />
 </template>
@@ -47,6 +48,7 @@
 <script>
 import Playlists from './playlists'
 import Thumbnail from './thumbnail'
+import Loading from '@/components/loading'
 
 export default {
   name: 'videos-list',
@@ -61,7 +63,12 @@ export default {
       filtered_data: null,
       fetched: false,
       show_filters: false,
-      current_filter: null
+      current_filter: null,
+      page: 1,
+      perPage: 16,
+      loading: false,
+      loadedAll: false,
+      eventListeners: []
     }
   },
   watch: {
@@ -90,29 +97,67 @@ export default {
         })
         return acc
       }, filters)]
+    },
+    url() {
+      return `wp/v2/videos?per_page=${this.perPage}&page=${this.page}&_embed&filter[type]=${this.type}`
     }
   },
   mounted() {
+    this.addEventListeners()
     this.fetch()
+  },
+  beforeDestroy() {
+    this.removeEventListeners()
   },
   methods: {
     async fetch() {
       if (this.type !== 'playlists') {
         this.fetched = false
-        this.data = await this.$request(`wp/v2/videos?per_page=99&_embed&filter[type]=${this.type}`)
+        this.data = await this.$request(this.url)
         this.fetched = true
       }
+    },
+    async loadMore() {
+      this.loading = true
+      this.page += 1
+      try {
+        const data = await this.$request(this.url)
+        this.data = [...this.data, ...data]
+      } catch (error) {
+        this.loadedAll = true
+      }
+      this.loading = false
     },
     showFilters() {
       this.show_filters = true
     },
     filter(e) {
       this.current_filter = e.target.innerText
+    },
+    addEventListeners() {
+      // haxx
+      const $main = document.querySelector('main')
+      const onScroll = this.onScroll.bind(this)
+      $main.addEventListener('scroll', onScroll)
+      this.eventListeners.push(onScroll)
+    },
+    removeEventListeners() {
+      const $main = document.querySelector('main')
+      this.eventListeners.forEach(eventListener => {
+        $main.removeEventListener('scroll', eventListener)
+      })
+    },
+    onScroll({ target: { scrollTop, clientHeight, scrollHeight } }) {
+      if (this.loadedAll) return
+      if (scrollTop + clientHeight >= scrollHeight) {
+        this.loadMore()
+      }
     }
   },
   components: {
     Playlists,
-    Thumbnail
+    Thumbnail,
+    Loading
   }
 }
 </script>
@@ -120,5 +165,8 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
-
+.infinite-scroll-loading {
+  position: relative;
+  // width: 28px;
+}
 </style>
