@@ -129,6 +129,13 @@ const router = new Router({
       }
     },
     {
+      path: '/help',
+      name: 'Help',
+      component(resolve) {
+        require(['@/views/help'], resolve)
+      }
+    },
+    {
       path: '/resources',
       name: 'Resources',
       component(resolve) {
