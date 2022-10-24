@@ -72,6 +72,9 @@ export default {
     }
   },
   watch: {
+    $route() {
+      this.page = 1
+    },
     type() {
       this.fetch()
       this.show_filters = false
@@ -85,9 +88,6 @@ export default {
       } else {
         this.filtered_data = null
       }
-    },
-    $route() {
-      this.page = 1
     }
   },
   computed: {
