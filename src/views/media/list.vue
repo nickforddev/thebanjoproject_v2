@@ -74,6 +74,7 @@ export default {
   watch: {
     $route() {
       this.page = 1
+      this.loadedAll = false
     },
     type() {
       this.fetch()
