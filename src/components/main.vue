@@ -49,10 +49,11 @@ export default {
       this.checkScreenWidth()
     }
   },
-  mounted() {
+  async mounted() {
     this.checkScreenWidth()
-    this.$recaptchaInstance.hideBadge()
     window.addEventListener('resize', this.onResize)
+    await this.$recaptchaLoaded()
+    this.$recaptchaInstance.hideBadge()
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.onResize)
