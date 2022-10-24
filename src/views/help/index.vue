@@ -50,9 +50,7 @@
 
           <button type="submit">Submit</button>
 
-          <div class="message" v-if="form_message" :class="form_status">
-            {{ form_message }}
-          </div>
+          <div class="message" v-if="form_message" :class="form_status">{{ form_message }}</div>
 
           <!-- <pre>{{ error }}</pre> -->
         </form>

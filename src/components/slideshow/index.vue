@@ -20,9 +20,6 @@ export default {
   //     full: false
   //   }
   // },
-  mounted() {
-    console.log('ok', this.data.acf)
-  },
   // beforeDestroy() {
   //   fscreen.removeEventListener('fullscreenchange')
   // },
