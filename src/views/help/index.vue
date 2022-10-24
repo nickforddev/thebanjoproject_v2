@@ -13,21 +13,73 @@
         :src="tutorialVideo.url"
         controls
       />
+      <div class="contact-form">
+        <p>
+          Or send us a message:
+        </p>
+        <form :action="formAction" @submit.prevent="submitForm">
+          <label for="name">Your name</label>
+          <input id="name" type="text" name="your-name" value="Nick Ford">
+
+          <div class="message error" v-if="error['your-name']">
+            {{ error['your-name'] }}
+          </div>
+
+          <label for="email">Your email</label>
+          <input id="email" type="text" name="your-email" value="nickforddesign@gmail.com">
+
+          <div class="message error" v-if="error['your-email']">
+            {{ error['your-email'] }}
+          </div>
+
+          <label for="subject">Your subject</label>
+          <input id="subject" type="text" name="your-subject" value="Love the new site!">
+
+          <div class="message error" v-if="error['your-subject']">
+            {{ error['your-subject'] }}
+          </div>
+
+          <label for="message">Your message</label>
+          <textarea id="message" type="text" name="your-message">
+            test
+          </textarea>
+
+          <div class="message error" v-if="error['your-message']">
+            {{ error['your-message'] }}
+          </div>
+
+          <button type="submit">Submit</button>
+
+          <div class="message" v-if="form_message" :class="form_status">
+            {{ form_message }}
+          </div>
+
+          <!-- <pre>{{ error }}</pre> -->
+        </form>
+      </div>
     </div>
     <loading v-else />
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import { mapGetters } from 'vuex'
+import config from '@/config'
 import Loading from '@/components/loading'
 
 export default {
   name: 'help',
   data: () => ({
-    loaded: false
+    loaded: false,
+    form_status: null,
+    form_message: null,
+    error: {}
   }),
   computed: {
+    formAction() {
+      return `${config.api}/wp-json/contact-form-7/v1/contact-forms/1975/feedback`
+    },
     ...mapGetters({
       tutorialVideo: 'video:tutorial_video'
     })
@@ -39,6 +91,35 @@ export default {
     }
     this.loaded = true
   },
+  methods: {
+    async submitForm(event) {
+      const formElement = event.target
+      const body = new FormData(formElement)
+      await this.$recaptchaLoaded()
+      const token = await this.$recaptcha('login')
+      body.set('_wpcf7_recaptcha_response', token)
+
+      fetch(this.formAction, {
+        method: 'POST',
+        body
+      }).then((response) => response.json())
+        .then((response) => {
+          this.error = {}
+          if (response.status === 'validation_failed') {
+            for (const field of response.invalid_fields) {
+              Vue.set(this.error, field.field, field.message)
+            }
+          }
+          this.form_status = response.status
+          this.form_message = response.message
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.error(error)
+          // Handle the case when there's a problem with the request
+        })
+    }
+  },
   components: {
     Loading
   }
@@ -46,7 +127,41 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '~%/colors';
 .video {
   width: 100%;
+}
+
+.contact-form {
+  width: 100%;
+  max-width: 450px;
+
+  label:not(:first-child) {
+    margin-top: 12px;
+  }
+}
+
+.message {
+  padding: 8px;
+  color: $color-text-light;
+  background-color: $color-status-danger;
+  border-radius: 3px;
+  margin-top: 6px;
+  margin-bottom: 8px;
+
+  &.error {
+    color: $color-text-light;
+    background-color: $color-status-danger;
+  }
+
+  &.mail_sent {
+    color: $color-text-dark;
+    background-color: $color-status-success;
+  }
+
+  &.validation_failed {
+    color: $color-text-light;
+    background-color: $color-status-danger;
+  }
 }
 </style>

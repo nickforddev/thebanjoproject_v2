@@ -11,6 +11,7 @@ import VueRequests from 'vue-requests'
 import VueModels from 'vue-models'
 import VueCollections from 'vue-collections'
 import VeeValidate from 'vee-validate'
+import { VueReCaptcha } from 'vue-recaptcha-v3'
 
 // maps plugins
 import { LMap, LTileLayer, LMarker, LPopup } from 'vue2-leaflet'
@@ -63,6 +64,7 @@ Vue.use(VueModels, {
 Vue.use(VueCollections)
 Vue.use(VeeValidate)
 Vue.use(VueVimeoPlayer)
+Vue.use(VueReCaptcha, { siteKey: config.recaptcha })
 
 components.map(component => {
   Vue.component(component.name, component)
