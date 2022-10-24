@@ -51,6 +51,7 @@ export default {
   },
   mounted() {
     this.checkScreenWidth()
+    this.$recaptchaInstance.hideBadge()
     window.addEventListener('resize', this.onResize)
   },
   beforeDestroy() {

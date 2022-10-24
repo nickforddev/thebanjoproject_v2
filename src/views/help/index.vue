@@ -19,30 +19,28 @@
         </p>
         <form :action="formAction" @submit.prevent="submitForm">
           <label for="name">Your name</label>
-          <input id="name" type="text" name="your-name" value="Nick Ford">
+          <input id="name" type="text" name="your-name">
 
           <div class="message error" v-if="error['your-name']">
             {{ error['your-name'] }}
           </div>
 
           <label for="email">Your email</label>
-          <input id="email" type="text" name="your-email" value="nickforddesign@gmail.com">
+          <input id="email" type="text" name="your-email">
 
           <div class="message error" v-if="error['your-email']">
             {{ error['your-email'] }}
           </div>
 
           <label for="subject">Your subject</label>
-          <input id="subject" type="text" name="your-subject" value="Love the new site!">
+          <input id="subject" type="text" name="your-subject">
 
           <div class="message error" v-if="error['your-subject']">
             {{ error['your-subject'] }}
           </div>
 
           <label for="message">Your message</label>
-          <textarea id="message" type="text" name="your-message">
-            test
-          </textarea>
+          <textarea id="message" type="text" name="your-message" />
 
           <div class="message error" v-if="error['your-message']">
             {{ error['your-message'] }}
@@ -50,9 +48,9 @@
 
           <button type="submit">Submit</button>
 
-          <div class="message" v-if="form_message" :class="form_status">{{ form_message }}</div>
-
-          <!-- <pre>{{ error }}</pre> -->
+          <div class="message" v-if="form_message" :class="form_status">
+            {{ form_message }}
+          </div>
         </form>
       </div>
     </div>
