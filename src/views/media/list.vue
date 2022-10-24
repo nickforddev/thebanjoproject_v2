@@ -76,6 +76,7 @@ export default {
       this.fetch()
       this.show_filters = false
       this.current_filter = null
+      this.page = 1
     },
     current_filter(filter) {
       if (filter) {
