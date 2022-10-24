@@ -76,9 +76,9 @@ export default {
       this.fetch()
       this.show_filters = false
       this.current_filter = null
-      this.page = 1
     },
     current_filter(filter) {
+      this.page = 1
       if (filter) {
         this.filtered_data = this.data.filter(item => {
           return item._embedded['wp:term'][4].some(tag => tag.name === filter)
