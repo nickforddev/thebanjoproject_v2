@@ -78,7 +78,6 @@ export default {
       this.current_filter = null
     },
     current_filter(filter) {
-      this.page = 1
       if (filter) {
         this.filtered_data = this.data.filter(item => {
           return item._embedded['wp:term'][4].some(tag => tag.name === filter)
@@ -86,6 +85,9 @@ export default {
       } else {
         this.filtered_data = null
       }
+    },
+    $route() {
+      this.page = 1
     }
   },
   computed: {
