@@ -135,11 +135,13 @@ export default {
 
   .skip {
     position: absolute;
-    bottom: 54px;
+    // bottom: 54px;
+    bottom: 72px;
     right: 12px;
     visibility: visible;
     opacity: 1;
     transition: opacity 0.8s;
+    z-index: 10;
   }
 
   &.playing {
