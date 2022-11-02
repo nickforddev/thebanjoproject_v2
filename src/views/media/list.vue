@@ -103,7 +103,7 @@ export default {
       }, filters)]
     },
     url() {
-      return `wp/v2/videos?per_page=${this.perPage}&page=${this.page}&_embed&filter[type]=${this.type}`
+      return `wp/v2/videos?per_page=${this.perPage}&page=${this.page}&order=asc&_embed&filter[type]=${this.type}`
     }
   },
   mounted() {
