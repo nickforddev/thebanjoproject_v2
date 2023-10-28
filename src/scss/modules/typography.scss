@@ -52,6 +52,10 @@ em, i {
   font-style: italic;
 }
 
+blockquote {
+  padding: 1em 2em;
+}
+
 a {
   display: inline-block;
   color: $color-links;
