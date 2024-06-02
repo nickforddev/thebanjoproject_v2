@@ -12,21 +12,21 @@ const router = new Router({
       name: 'Intro',
       component(resolve) {
         require(['@/views/intro'], resolve)
-      },
+      }
     },
     {
       path: '/narratives',
       name: 'Narratives',
       component(resolve) {
         require(['@/views/narratives'], resolve)
-      },
+      }
     },
     {
       path: '/narratives/:slug',
       name: 'Narrative',
       component(resolve) {
         require(['@/views/narratives/view'], resolve)
-      },
+      }
     },
     {
       path: '/players',
@@ -40,9 +40,9 @@ const router = new Router({
           name: 'Player',
           component(resolve) {
             require(['@/views/players/profile'], resolve)
-          },
-        },
-      ],
+          }
+        }
+      ]
     },
     {
       path: '/maps',
@@ -56,16 +56,16 @@ const router = new Router({
           name: 'Map Region',
           component(resolve) {
             require(['@/views/maps/index'], resolve)
-          },
+          }
         },
         {
           path: '/maps/location/:slug',
           name: 'Map Marker',
           component(resolve) {
             require(['@/views/maps/content'], resolve)
-          },
-        },
-      ],
+          }
+        }
+      ]
     },
     {
       path: '/timelines',
@@ -79,9 +79,9 @@ const router = new Router({
           name: 'Timeline',
           component(resolve) {
             require(['@/views/timelines/view'], resolve)
-          },
-        },
-      ],
+          }
+        }
+      ]
     },
     {
       path: '/media',
@@ -103,46 +103,46 @@ const router = new Router({
           name: 'Media Type',
           component(resolve) {
             require(['@/views/media/list'], resolve)
-          },
-        },
-      ],
+          }
+        }
+      ]
     },
     {
       path: '/search',
       name: 'Search',
       component(resolve) {
         require(['@/views/search'], resolve)
-      },
+      }
     },
     {
       path: '/search/:term',
       name: 'Search Results',
       component(resolve) {
         require(['@/views/search'], resolve)
-      },
+      }
     },
     {
       path: '/about',
       name: 'About',
       component(resolve) {
         require(['@/views/about'], resolve)
-      },
+      }
     },
     {
       path: '/help',
       name: 'Help',
       component(resolve) {
         require(['@/views/help'], resolve)
-      },
+      }
     },
     {
       path: '/resources',
       name: 'Resources',
       component(resolve) {
         require(['@/views/resources'], resolve)
-      },
-    },
-  ],
+      }
+    }
+  ]
 })
 
 router.beforeEach((to, from, next) => {
