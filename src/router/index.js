@@ -145,6 +145,10 @@ const router = new Router({
   ]
 })
 
+router.afterEach((to, from) => {
+  window.gtag('event', 'page_view', to)
+})
+
 router.beforeEach((to, from, next) => {
   store.dispatch('pause_audio')
   next()
