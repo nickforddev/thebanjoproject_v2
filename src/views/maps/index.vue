@@ -6,23 +6,20 @@
       ref="map"
       :zoom="1"
       :min-zoom="1"
-      :center="[47.413220, -1.219482]"
+      :center="[47.41322, -1.219482]"
     >
       <v-tilelayer
-        :url="`https://api.mapbox.com/styles/v1/mapbox/${map_id}/tiles/{z}/{x}/{y}?access_token=${access_token}`"
+        :url="
+          `https://api.mapbox.com/styles/v1/mapbox/${map_id}/tiles/{z}/{x}/{y}?access_token=${access_token}`
+        "
       />
 
-      <v-marker-cluster
-        @clustermouseover="hoverCluster"
-        @clustermouseout="clearCurrentRegions">
+      <v-marker-cluster @clustermouseover="hoverCluster" @clustermouseout="clearCurrentRegions">
         <v-marker
           ref="marker"
           v-for="(model, index) in markers"
           :key="index"
-          :lat-lng="[
-            model.acf.location.lat,
-            model.acf.location.lng
-          ]"
+          :lat-lng="[model.acf.location.lat, model.acf.location.lng]"
           @mouseover="hoverMarker"
           @mouseout="clearCurrentRegions"
           @click="openMarker(index)"
@@ -42,10 +39,7 @@
           <h1>{{ name }}</h1>
           <p class="description" v-html="description" />
           <h2 ref="regionsHeader">Regions</h2>
-          <p
-            v-for="region in regions"
-            :key="region.id"
-            class="region-name-wrapper">
+          <p v-for="region in regions" :key="region.id" class="region-name-wrapper">
             <region-link
               :region="region"
               :currentRegions="currentRegions"
@@ -56,7 +50,10 @@
           </p>
           <div v-if="active_region" class="region-details">
             <h2>{{ active_region.name }}</h2>
-            <p class="description" v-html="active_region.acf.description || '(Description coming soon)'" />
+            <p
+              class="description"
+              v-html="active_region.acf.description || '(Description coming soon)'"
+            />
           </div>
         </div>
       </div>
@@ -130,10 +127,7 @@ export default {
     async '$route.params.slug'(value) {
       if (value) {
         await this.$nextTick()
-        const { lat, lng } = this.markers
-          .find(model => model.slug === value)
-          .acf
-          .location
+        const { lat, lng } = this.markers.find(model => model.slug === value).acf.location
         this.focus(lat, lng, false)
       }
     },
@@ -146,9 +140,12 @@ export default {
   },
   computed: {
     markers() {
-      return this.fetched && this.collection.filter(model => {
-        return model.acf.location && model.acf.location.lat
-      })
+      return (
+        this.fetched &&
+        this.collection.filter(model => {
+          return model.acf.location && model.acf.location.lat
+        })
+      )
     },
     map() {
       return this.$refs.map.mapObject
@@ -158,10 +155,7 @@ export default {
     await this.fetch()
     const { slug, regionSlug } = this.$route.params
     if (slug) {
-      const { lat, lng } = this.markers
-        .find(model => model.slug === slug)
-        .acf
-        .location
+      const { lat, lng } = this.markers.find(model => model.slug === slug).acf.location
       this.focus(lat, lng, true)
     } else if (regionSlug) {
       const region = this.regions.find(r => r.slug === regionSlug)
@@ -198,8 +192,9 @@ export default {
       this.collection = models
       this.region_count = models.length
       this.fetched = true
-      this.regions = (await regionRequest)
-        .filter(region => this.markers.some(marker => marker.region.includes(region.id)))
+      this.regions = (await regionRequest).filter(region =>
+        this.markers.some(marker => marker.region.includes(region.id))
+      )
     },
     async fetchRegion(regionSlug) {
       this.active_region = (await this.$request(`wp/v2/region?slug=${regionSlug}`))[0]
@@ -223,10 +218,7 @@ export default {
       }))
       const mappedMarkers = this.markers.filter(marker => {
         return latlngs.some(latlng => {
-          return equals(
-            props(['lat', 'lng'], marker.acf.location),
-            props(['lat', 'lng'], latlng)
-          )
+          return equals(props(['lat', 'lng'], marker.acf.location), props(['lat', 'lng'], latlng))
         })
       })
       const matchedRegions = this.regions.filter(region => {
@@ -312,7 +304,7 @@ export default {
   }
 
   p {
-    font-size: 0.9em;
+    font-size: 0.9rem;
     margin-bottom: 0;
   }
 }
